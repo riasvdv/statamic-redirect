@@ -94,7 +94,7 @@ class TestCase extends OrchestraTestCase
 
         $app->make(Manifest::class)->manifest = [
             'rias/statamic-redirect' => [
-                'id'        => 'rias/statamic-redirect',
+                'id' => 'rias/statamic-redirect',
                 'namespace' => 'Rias\\StatamicRedirect\\',
             ],
         ];

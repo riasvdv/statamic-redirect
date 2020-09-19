@@ -12,25 +12,29 @@ abstract class Record implements Arrayable, Jsonable
 {
     protected static $identifier = 'id';
 
-    protected abstract function __construct(array $attributes);
-    public abstract static function make(array $attributes);
-    public abstract static function create(array $attributes);
-    public abstract static function all(): Collection;
+    abstract protected function __construct(array $attributes);
+
+    abstract public static function make(array $attributes);
+
+    abstract public static function create(array $attributes);
+
+    abstract public static function all(): Collection;
 
     public static function find(string $id)
     {
         return static::all()->where(static::$identifier, $id)->first();
     }
 
-    public abstract function toArray(): array;
+    abstract public function toArray(): array;
 
     public function toJson($options = 0): string
     {
         return json_encode($this->toArray(), $options);
     }
 
-    public abstract function path(): string;
-    public abstract static function preparePath(): string;
+    abstract public function path(): string;
+
+    abstract public static function preparePath(): string;
 
     public function save()
     {

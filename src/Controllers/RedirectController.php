@@ -15,7 +15,7 @@ class RedirectController
 
         return view('redirect::redirects.index', [
             'redirects' => $redirects,
-            'columns'  => [
+            'columns' => [
                 Column::make('enabled')->label(''),
                 Column::make('source')->label('Source'),
                 Column::make('destination')->label('Destination'),
@@ -28,14 +28,14 @@ class RedirectController
     public function create()
     {
         $blueprint = new RedirectBlueprint();
-        $fields    = $blueprint()->fields()->preProcess();
+        $fields = $blueprint()->fields()->preProcess();
 
         return view('redirect::redirects.create', [
             'blueprint' => $blueprint()->toPublishArray(),
-            'values'    => $fields->values()->merge([
+            'values' => $fields->values()->merge([
                 'source' => request('source'),
             ]),
-            'meta'      => $fields->meta(),
+            'meta' => $fields->meta(),
         ]);
     }
 
@@ -48,8 +48,8 @@ class RedirectController
 
         return view('redirect::redirects.edit', [
             'blueprint' => $redirectBlueprint()->toPublishArray(),
-            'values'    => $redirectFields->values(),
-            'meta'      => $redirectFields->meta(),
+            'values' => $redirectFields->values(),
+            'meta' => $redirectFields->meta(),
         ]);
     }
 

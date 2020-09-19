@@ -3,8 +3,8 @@
 namespace Rias\StatamicRedirect;
 
 use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
-use Rias\StatamicRedirect\Listeners\CreateRedirect;
 use Rias\StatamicRedirect\Listeners\CacheOldUri;
+use Rias\StatamicRedirect\Listeners\CreateRedirect;
 use Rias\StatamicRedirect\Middleware\HandleNotFound;
 use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
@@ -32,7 +32,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         ],
         EntrySaved::class => [
             CreateRedirect::class,
-        ]
+        ],
     ];
 
     public function boot()

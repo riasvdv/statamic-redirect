@@ -17,6 +17,7 @@ class CleanErrorsCommand extends Command
     {
         if (! config('statamic.redirect.clean_errors', true)) {
             $this->info('Not cleaning errors. Change the config setting to enable cleaning.');
+
             return;
         }
 

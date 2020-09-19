@@ -2,8 +2,6 @@
 
 namespace Rias\StatamicRedirect\Models;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Statamic\Facades\File;

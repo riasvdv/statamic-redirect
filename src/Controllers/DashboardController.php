@@ -2,7 +2,6 @@
 
 namespace Rias\StatamicRedirect\Controllers;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
 use Rias\StatamicRedirect\Models\Error;
@@ -40,7 +39,7 @@ class DashboardController
             'notFoundMonth' => $notFoundMonth,
             'notFoundWeek' => $notFoundWeek,
             'notFoundDay' => $notFoundDay,
-            'columns'  => [
+            'columns' => [
                 Column::make('url')->label('Path'),
                 Column::make('hits')->label('Hits'),
                 Column::make('latest')->label('Latest error'),
@@ -88,6 +87,7 @@ class DashboardController
         foreach ($days as $day) {
             $count = count(array_filter($errors, function (array $error) use ($day) {
                 $date = Date::parse($error['date']);
+
                 return $date->isSameYear($day) && $date->isSameMonth($day) && $date->isSameDay($day);
             }));
             $notFoundWeek[] = [$count, $day->format('d')];

@@ -4,7 +4,6 @@ namespace Rias\StatamicRedirect\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Models\Error;
 use Rias\StatamicRedirect\Models\Redirect;
 use Statamic\Support\Str;

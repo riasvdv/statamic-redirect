@@ -2,7 +2,6 @@
 
 namespace Rias\StatamicRedirect\Controllers;
 
-use Illuminate\Support\Collection;
 use Rias\StatamicRedirect\Models\Error;
 
 class ErrorController
@@ -23,6 +22,5 @@ class ErrorController
 
     public function show()
     {
-
     }
 }
