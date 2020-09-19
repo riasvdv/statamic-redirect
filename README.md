@@ -1,7 +1,3 @@
-![Icon](icon.svg)
-
-[![Latest Version](https://img.shields.io/github/release/riasvdv/statamic-redirect.svg?style=flat-square)](https://github.com/riasvdv/statamic-redirect/releases)
-
 # Redirect plugin for Statamic
 
 Redirect allows you to redirect legacy URLs, so that you don't lose SEO value when rebuilding & restructuring a website.
