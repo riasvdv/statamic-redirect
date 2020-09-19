@@ -15,7 +15,7 @@ Redirect has no impact on your website's performance until a 404 exception happe
 ## License
 
 Redirect requires a license to be used while on a production site.  
-You can purchase one at https://statamic.com/marketplace/addons/redirect.
+You can purchase one at https://statamic.com/marketplace/addons/rias/redirect.
 
 You may use Redirect without a license while developing locally.
 
