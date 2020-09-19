@@ -4,6 +4,14 @@ Redirect allows you to redirect legacy URLs, so that you don't lose SEO value wh
 
 ![Screenshot](docs/img/redirect.png)
 
+Redirect supports traditional exact and RegEx matching of URL patterns.
+
+Redirect will also automatically create a redirect for you if you change an entry's slug or uri.
+
+Unlike utilizing .htaccess to do redirects, Redirect does not add overhead to each request for each redirect you have in place.
+
+Redirect has no impact on your website's performance until a 404 exception happens.
+
 ## License
 
 Redirect requires a license to be used while on a production site.  

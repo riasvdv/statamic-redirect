@@ -11,6 +11,8 @@ use Statamic\Support\Str;
 
 class Redirect extends Record
 {
+    protected static $identifier = 'slug';
+
     /** @var string */
     public $slug;
 

@@ -21,7 +21,9 @@
                   <relative-date :date="collection.latest"></relative-date>
                 </template>
                 <template slot="actions" slot-scope="{ row: collection, index }">
-                  <a v-if="!collection.handled" :href="cp_url('redirect/redirects/create') + '?source=/' + encodeURI(collection.url)" class="text-blue px-2 inline-block"><i class="fa fa-plus"></i></a>
+                  <a v-if="!collection.handled" :href="cp_url('redirect/redirects/create') + '?source=' + encodeURI(collection.url)" class="text-blue inline-block">
+                    <svg class="w-4 h-4 mr-2" aria-hidden="true" focusable="false" data-prefix="far" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M368 224H224V80c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v144H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h144v144c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V288h144c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z"></path></svg>
+                  </a>
                 </template>
             </data-list-table>
         </div>
