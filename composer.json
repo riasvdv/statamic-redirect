@@ -1,0 +1,33 @@
+{
+    "name": "rias/statamic-redirect",
+    "autoload": {
+        "psr-4": {
+            "Rias\\StatamicRedirect\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rias\\StatamicRedirect\\Tests\\": "tests"
+        }
+    },
+    "require": {
+        "ext-json": "*",
+        "php": ">=7.3",
+        "statamic/cms": "^3.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5.0",
+        "phpunit/phpunit": "^9.3"
+    },
+    "extra": {
+        "statamic": {
+            "name": "Statamic Redirect",
+            "description": "Statamic Redirect addon"
+        },
+        "laravel": {
+            "providers": [
+                "Rias\\StatamicRedirect\\RedirectServiceProvider"
+            ]
+        }
+    }
+}
