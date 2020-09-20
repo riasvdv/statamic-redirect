@@ -5,8 +5,6 @@ namespace Rias\StatamicRedirect\Tests;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Rias\StatamicRedirect\Models\Error;
-use Rias\StatamicRedirect\Models\Redirect;
 use Rias\StatamicRedirect\Repositories\FileErrorRepository;
 use Rias\StatamicRedirect\Repositories\FileRedirectRepository;
 use Statamic\Extend\Manifest;

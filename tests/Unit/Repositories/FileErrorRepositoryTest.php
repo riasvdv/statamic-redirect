@@ -2,7 +2,6 @@
 
 namespace Rias\StatamicRedirect\Tests\Unit\Repositories;
 
-use Illuminate\Support\Str;
 use Rias\StatamicRedirect\DataTransferObjects\Error;
 use Rias\StatamicRedirect\Repositories\FileErrorRepository;
 use Rias\StatamicRedirect\Tests\TestCase;

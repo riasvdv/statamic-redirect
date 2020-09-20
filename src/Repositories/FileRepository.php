@@ -10,8 +10,11 @@ use Statamic\Facades\YAML;
 abstract class FileRepository
 {
     abstract public function path($object): string;
+
     abstract public function basePath(): string;
+
     abstract protected function mapToObject(array $data);
+
     abstract protected function mapToCollection(array $data);
 
     public function all()
@@ -28,7 +31,7 @@ abstract class FileRepository
                     $data = YAML::parse(File::get($path));
 
                     /** For backwards compatibility if an entry has no id */
-                    if (!isset($data['id']) || ! $data['id']) {
+                    if (! isset($data['id']) || ! $data['id']) {
                         $data['id'] = $index + 1;
                         File::delete($path, YAML::dump($data));
                         File::put($this->path($this->mapToObject($data)), YAML::dump($data));
