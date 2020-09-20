@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.0.2 (2020-09-20)
+
+### What's fixed
+- The config file had the wrong tag, it can now be published using the `statamic-redirect-config` tag.
+
 ## 1.0.1 (2020-09-20)
 
 ### What's new

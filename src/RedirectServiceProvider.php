@@ -89,7 +89,7 @@ class RedirectServiceProvider extends AddonServiceProvider
 
         $this->publishes([
             __DIR__.'/../config/redirect.php' => config_path('statamic/redirect.php'),
-        ], 'redirect-config');
+        ], 'statamic-redirect-config');
 
         return $this;
     }
