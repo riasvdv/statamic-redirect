@@ -48,7 +48,7 @@ class HandleNotFoundTest extends TestCase
         });
 
         $this->assertCount(1, $this->errorRepository->all());
-        $this->assertEquals('abc', $this->errorRepository->all()[0]->url);
+        $this->assertEquals('/abc', $this->errorRepository->all()[0]->url);
         $this->assertEquals(404, $response->status());
     }
 
@@ -65,7 +65,7 @@ class HandleNotFoundTest extends TestCase
         });
 
         $this->assertCount(1, $this->errorRepository->all());
-        $this->assertEquals('abc', $this->errorRepository->all()[0]->url);
+        $this->assertEquals('/abc', $this->errorRepository->all()[0]->url);
         $this->assertEquals(true, $this->errorRepository->all()[0]->handled);
 
         $this->assertTrue($response->isRedirect(url('/def')));

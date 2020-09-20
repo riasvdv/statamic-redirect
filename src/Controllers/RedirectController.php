@@ -3,6 +3,7 @@
 namespace Rias\StatamicRedirect\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Blueprints\RedirectBlueprint;
 use Rias\StatamicRedirect\DataTransferObjects\Redirect;
 use Rias\StatamicRedirect\Repositories\RedirectRepository;
@@ -75,6 +76,8 @@ class RedirectController
 
         session()->flash('success', 'Redirect created successfully');
 
+        Cache::forget('statamic.redirect.redirects');
+
         return $redirect->id;
     }
 
@@ -97,6 +100,8 @@ class RedirectController
 
         session()->flash('success', 'Redirect updated successfully');
 
+        Cache::forget('statamic.redirect.redirects');
+
         return $redirect->id;
     }
 
@@ -104,5 +109,6 @@ class RedirectController
     {
         $redirect = $this->redirectRepository->find($id);
         $this->redirectRepository->delete($redirect);
+        Cache::forget('statamic.redirect.redirects');
     }
 }
