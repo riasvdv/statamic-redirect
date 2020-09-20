@@ -12,6 +12,8 @@ Unlike utilizing .htaccess to do redirects, Redirect does not add overhead to ea
 
 Redirect has no impact on your website's performance until a 404 exception happens.
 
+Read more in [the documentation](https://statamic.com/addons/rias/redirect/docs)
+
 ## License
 
 Redirect requires a license to be used while on a production site.  
