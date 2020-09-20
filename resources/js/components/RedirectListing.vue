@@ -15,15 +15,15 @@
                     <div v-else class="bg-red block h-3 w-2 mx-auto rounded-full"></div>
                 </template>
                 <template slot="cell-source" slot-scope="{ row: collection }">
-                    <a :href="cp_url('redirect/redirects/' + collection.slug)">{{ collection.source }}</a>
+                    <a :href="cp_url('redirect/redirects/' + collection.id)">{{ collection.source }}</a>
                 </template>
                 <template slot="actions" slot-scope="{ row: collection, index }">
                     <dropdown-list>
-                        <dropdown-item :text="__('Edit')" :redirect="cp_url('redirect/redirects/' + collection.slug)" />
+                        <dropdown-item :text="__('Edit')" :redirect="cp_url('redirect/redirects/' + collection.id)" />
                         <dropdown-item
                             :text="__('Delete')"
                             class="warning"
-                            @click="confirmDeleteRow(collection.slug, index)" />
+                            @click="confirmDeleteRow(collection.id, index)" />
                     </dropdown-list>
 
                     <confirmation-modal

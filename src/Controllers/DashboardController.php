@@ -4,14 +4,16 @@ namespace Rias\StatamicRedirect\Controllers;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
-use Rias\StatamicRedirect\Models\Error;
+use Rias\StatamicRedirect\DataTransferObjects\Error;
+use Rias\StatamicRedirect\DataTransferObjects\ErrorCollection;
+use Rias\StatamicRedirect\Repositories\ErrorRepository;
 use Statamic\CP\Column;
 
 class DashboardController
 {
-    public function __invoke()
+    public function __invoke(ErrorRepository $errorRepository)
     {
-        $errors = Error::all()->toArray();
+        $errors = $errorRepository->all();
 
         $notFoundMonth = Cache::remember('redirect-stats-past-Month', now()->addHour(), function () use ($errors) {
             return $this->getStatsPastMonth($errors);
@@ -23,14 +25,14 @@ class DashboardController
             return $this->getStatsPastDay($errors);
         });
 
-        $errors = collect($errors)->groupBy(function (array $error) {
-            return $error['url'];
+        $errors = collect($errors)->groupBy(function (Error $error) {
+            return $error->url;
         })->map(function ($errors, $url) {
             return [
                 'hits' => $errors->count(),
                 'url' => $url,
-                'latest' => $errors->last()['date'],
-                'handled' => $errors->last()['handled'],
+                'latest' => $errors->last()->date,
+                'handled' => $errors->last()->handled,
             ];
         })->sortByDesc('latest')->values();
 
@@ -48,11 +50,11 @@ class DashboardController
         ]);
     }
 
-    private function getStatsPastMonth(array $errors)
+    private function getStatsPastMonth(ErrorCollection $errors)
     {
         $newerThan = now()->subMonth()->timestamp;
-        $errors = array_filter($errors, function (array $error) use ($newerThan) {
-            return $error['date'] > $newerThan;
+        $errors = array_filter($errors->items(), function (Error $error) use ($newerThan) {
+            return $error->date > $newerThan;
         });
 
         $days = [];
@@ -62,8 +64,8 @@ class DashboardController
 
         $notFoundMonth = [];
         foreach ($days as $day) {
-            $count = count(array_filter($errors, function (array $error) use ($day) {
-                return Date::parse($error['date'])->isSameWeek($day);
+            $count = count(array_filter($errors, function (Error $error) use ($day) {
+                return Date::parse($error->date)->isSameWeek($day);
             }));
             $notFoundMonth[] = [$count, "{$day->startOfWeek()->format('d')}-{$day->endOfWeek()->format('d')}"];
         }
@@ -71,11 +73,11 @@ class DashboardController
         return $notFoundMonth;
     }
 
-    private function getStatsPastWeek(array $errors)
+    private function getStatsPastWeek(ErrorCollection $errors)
     {
         $newerThan = now()->subWeek()->timestamp;
-        $errors = array_filter($errors, function (array $error) use ($newerThan) {
-            return $error['date'] > $newerThan;
+        $errors = array_filter($errors->items(), function (Error $error) use ($newerThan) {
+            return $error->date > $newerThan;
         });
 
         $days = [];
@@ -85,8 +87,8 @@ class DashboardController
 
         $notFoundWeek = [];
         foreach ($days as $day) {
-            $count = count(array_filter($errors, function (array $error) use ($day) {
-                $date = Date::parse($error['date']);
+            $count = count(array_filter($errors, function (Error $error) use ($day) {
+                $date = Date::parse($error->date);
 
                 return $date->isSameYear($day) && $date->isSameMonth($day) && $date->isSameDay($day);
             }));
@@ -96,11 +98,11 @@ class DashboardController
         return $notFoundWeek;
     }
 
-    private function getStatsPastDay(array $errors)
+    private function getStatsPastDay(ErrorCollection $errors)
     {
         $newerThan = now()->subDay()->timestamp;
-        $errors = array_filter($errors, function (array $error) use ($newerThan) {
-            return $error['date'] > $newerThan;
+        $errors = array_filter($errors->items(), function (Error $error) use ($newerThan) {
+            return $error->date > $newerThan;
         });
 
         $hours = [];
@@ -110,8 +112,8 @@ class DashboardController
 
         $notFoundDay = [];
         foreach ($hours as $hour) {
-            $count = count(array_filter($errors, function (array $error) use ($hour) {
-                return Date::parse($error['date'])->isBetween($hour->copy()->subHour(), $hour->copy()->addHours(3));
+            $count = count(array_filter($errors, function (Error $error) use ($hour) {
+                return Date::parse($error->date)->isBetween($hour->copy()->subHour(), $hour->copy()->addHours(3));
             }));
             $notFoundDay[] = [$count, $hour->format('H:00')];
         }

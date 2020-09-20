@@ -6,6 +6,8 @@ use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
 use Rias\StatamicRedirect\Listeners\CacheOldUri;
 use Rias\StatamicRedirect\Listeners\CreateRedirect;
 use Rias\StatamicRedirect\Middleware\HandleNotFound;
+use Rias\StatamicRedirect\Repositories\ErrorRepository;
+use Rias\StatamicRedirect\Repositories\RedirectRepository;
 use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
 use Statamic\Facades\CP\Nav;
@@ -35,6 +37,14 @@ class RedirectServiceProvider extends AddonServiceProvider
         ],
     ];
 
+    public function register()
+    {
+        $this->registerAddonConfig();
+
+        $this->app->singleton(ErrorRepository::class, config('statamic.redirect.error_repository'));
+        $this->app->singleton(RedirectRepository::class, config('statamic.redirect.redirect_repository'));
+    }
+
     public function boot()
     {
         parent::boot();
@@ -47,8 +57,7 @@ class RedirectServiceProvider extends AddonServiceProvider
 
         $this
             ->bootAddonViews()
-            ->bootAddonNav()
-            ->bootAddonConfig();
+            ->bootAddonNav();
     }
 
     protected function bootAddonViews()
@@ -74,7 +83,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         return $this;
     }
 
-    protected function bootAddonConfig()
+    protected function registerAddonConfig()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/redirect.php', 'statamic.redirect');
 

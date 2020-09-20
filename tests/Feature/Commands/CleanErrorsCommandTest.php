@@ -4,23 +4,34 @@ namespace Rias\StatamicRedirect\Tests\Feature\Commands;
 
 use Illuminate\Support\Facades\Artisan;
 use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
-use Rias\StatamicRedirect\Models\Error;
+use Rias\StatamicRedirect\DataTransferObjects\Error;
+use Rias\StatamicRedirect\Repositories\FileErrorRepository;
 use Rias\StatamicRedirect\Tests\TestCase;
 
 class CleanErrorsCommandTest extends TestCase
 {
+    /** @var FileErrorRepository */
+    private $errorRepository;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->errorRepository = app(FileErrorRepository::class);
+    }
+
     /** @test * */
     public function it_cleans_errors_older_than_1_month_by_default()
     {
-        Error::create(['url' => 'bla', 'date' => now()->subMonth()->subDay()]);
-        Error::create(['url' => 'bla', 'date' => now()->subWeek()->subDay()]);
-        Error::create(['url' => 'bla', 'date' => now()]);
+        $this->errorRepository->save(new Error(['url' => 'bla', 'date' => now()->subMonth()->subDay()->timestamp]));
+        $this->errorRepository->save(new Error(['url' => 'bla', 'date' => now()->subWeek()->subDay()->timestamp]));
+        $this->errorRepository->save(new Error(['url' => 'bla', 'date' => now()->timestamp]));
 
-        $this->assertCount(3, Error::all());
+        $this->assertCount(3, $this->errorRepository->all());
 
         Artisan::call(CleanErrorsCommand::class);
 
-        $this->assertCount(2, Error::all());
+        $this->assertCount(2, $this->errorRepository->all());
     }
 
     /** @test * */
@@ -28,15 +39,15 @@ class CleanErrorsCommandTest extends TestCase
     {
         config()->set('statamic.redirect.clean_older_than', '1 week');
 
-        Error::create(['url' => 'bla', 'date' => now()->subMonth()->subDay()]);
-        Error::create(['url' => 'bla', 'date' => now()->subWeek()->subDay()]);
-        Error::create(['url' => 'bla', 'date' => now()]);
+        $this->errorRepository->save(new Error(['url' => 'bla', 'date' => now()->subMonth()->subDay()->timestamp]));
+        $this->errorRepository->save(new Error(['url' => 'bla', 'date' => now()->subWeek()->subDay()->timestamp]));
+        $this->errorRepository->save(new Error(['url' => 'bla', 'date' => now()->timestamp]));
 
-        $this->assertCount(3, Error::all());
+        $this->assertCount(3, $this->errorRepository->all());
 
         Artisan::call(CleanErrorsCommand::class);
 
-        $this->assertCount(1, Error::all());
+        $this->assertCount(1, $this->errorRepository->all());
     }
 
     /** @test * */
@@ -44,14 +55,14 @@ class CleanErrorsCommandTest extends TestCase
     {
         config()->set('statamic.redirect.clean_errors', false);
 
-        Error::create(['url' => 'bla', 'date' => now()->subMonth()->subDay()]);
-        Error::create(['url' => 'bla', 'date' => now()->subWeek()->subDay()]);
-        Error::create(['url' => 'bla', 'date' => now()]);
+        $this->errorRepository->save(new Error(['url' => 'bla', 'date' => now()->subMonth()->subDay()->timestamp]));
+        $this->errorRepository->save(new Error(['url' => 'bla', 'date' => now()->subWeek()->subDay()->timestamp]));
+        $this->errorRepository->save(new Error(['url' => 'bla', 'date' => now()->timestamp]));
 
-        $this->assertCount(3, Error::all());
+        $this->assertCount(3, $this->errorRepository->all());
 
         Artisan::call(CleanErrorsCommand::class);
 
-        $this->assertCount(3, Error::all());
+        $this->assertCount(3, $this->errorRepository->all());
     }
 }

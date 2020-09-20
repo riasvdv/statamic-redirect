@@ -7,6 +7,8 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Rias\StatamicRedirect\Models\Error;
 use Rias\StatamicRedirect\Models\Redirect;
+use Rias\StatamicRedirect\Repositories\FileErrorRepository;
+use Rias\StatamicRedirect\Repositories\FileRedirectRepository;
 use Statamic\Extend\Manifest;
 use Statamic\Facades\Folder;
 use Statamic\Facades\Role;
@@ -26,8 +28,8 @@ class TestCase extends OrchestraTestCase
 
         $this->faker = $this->makeFaker();
 
-        Folder::delete(Error::preparePath());
-        Folder::delete(Redirect::preparePath());
+        Folder::delete(app(FileErrorRepository::class)->basePath());
+        Folder::delete(app(FileRedirectRepository::class)->basePath());
     }
 
     /**

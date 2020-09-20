@@ -12,8 +12,8 @@ export default {
     },
 
     methods: {
-        confirmDeleteRow(slug, index) {
-            this.deletingRow = {slug, index}
+        confirmDeleteRow(id, index) {
+            this.deletingRow = {id, index}
         },
 
         deletingModalTitleFromRowKey(key) {
@@ -21,12 +21,12 @@ export default {
         },
 
         deleteRow(resourceRoute, message) {
-            const slug = this.deletingRow.slug;
+            const id = this.deletingRow.id;
             message = message || __('Deleted');
 
-            this.$axios.delete(cp_url(`${resourceRoute}/${slug}`))
+            this.$axios.delete(cp_url(`${resourceRoute}/${id}`))
                 .then(() => {
-                    let i = _.indexOf(this.rows, _.findWhere(this.rows, { slug }));
+                    let i = _.indexOf(this.rows, _.findWhere(this.rows, { id }));
                     this.rows.splice(i, 1);
                     this.deletingRow = false;
                     this.$toast.success(message);

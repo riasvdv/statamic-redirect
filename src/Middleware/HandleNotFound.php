@@ -4,12 +4,25 @@ namespace Rias\StatamicRedirect\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Rias\StatamicRedirect\Models\Error;
-use Rias\StatamicRedirect\Models\Redirect;
+use Rias\StatamicRedirect\DataTransferObjects\Error;
+use Rias\StatamicRedirect\Repositories\ErrorRepository;
+use Rias\StatamicRedirect\Repositories\RedirectRepository;
 use Statamic\Support\Str;
 
 class HandleNotFound
 {
+    /** @var \Rias\StatamicRedirect\Repositories\ErrorRepository */
+    private $errorRepository;
+
+    /** @var \Rias\StatamicRedirect\Repositories\RedirectRepository */
+    private $redirectRepository;
+
+    public function __construct(ErrorRepository $errorRepository, RedirectRepository $redirectRepository)
+    {
+        $this->errorRepository = $errorRepository;
+        $this->redirectRepository = $redirectRepository;
+    }
+
     public function handle(Request $request, Closure $next)
     {
         /** @var \Illuminate\Http\Response $response */
@@ -20,15 +33,22 @@ class HandleNotFound
         }
 
         try {
-            $error = Error::create(['url' => $request->path()]);
-            $redirect = Redirect::findForUrl(Str::start($request->path(), '/'));
+            $error = new Error([
+                'id' => $this->errorRepository->nextId(),
+                'url' => $request->path(),
+                'date' => now()->timestamp,
+            ]);
+
+            $this->errorRepository->save($error);
+
+            $redirect = $this->redirectRepository->findForUrl(Str::start($request->path(), '/'));
 
             if (! $redirect) {
                 return $response;
             }
 
             $error->handled = true;
-            $error->save();
+            $this->errorRepository->save($error);
 
             return redirect($redirect->destination, $redirect->type);
         } catch (\Exception $e) {

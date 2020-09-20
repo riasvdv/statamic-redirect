@@ -19,4 +19,17 @@ return [
      */
     'clean_older_than' => '1 month',
 
+    /*
+     * Error repository, you can change this to use a different
+     * storage method for the errors. The class must implement
+     * \Rias\StatamicRedirect\Repositories\ErrorRepository
+     */
+    'error_repository' => \Rias\StatamicRedirect\Repositories\FileErrorRepository::class,
+
+    /*
+     * Redirect repository, you can change this to use a different
+     * storage method for the redirect. The class must implement
+     * \Rias\StatamicRedirect\Repositories\RedirectRepository
+     */
+    'redirect_repository' => \Rias\StatamicRedirect\Repositories\FileRedirectRepository::class,
 ];

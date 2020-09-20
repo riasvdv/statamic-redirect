@@ -4,14 +4,23 @@ namespace Rias\StatamicRedirect\Controllers;
 
 use Illuminate\Http\Request;
 use Rias\StatamicRedirect\Blueprints\RedirectBlueprint;
-use Rias\StatamicRedirect\Models\Redirect;
+use Rias\StatamicRedirect\DataTransferObjects\Redirect;
+use Rias\StatamicRedirect\Repositories\RedirectRepository;
 use Statamic\CP\Column;
 
 class RedirectController
 {
+    /** @var \Rias\StatamicRedirect\Repositories\RedirectRepository */
+    private $redirectRepository;
+
+    public function __construct(RedirectRepository $redirectRepository)
+    {
+        $this->redirectRepository = $redirectRepository;
+    }
+
     public function index()
     {
-        $redirects = Redirect::all();
+        $redirects = collect($this->redirectRepository->all()->items());
 
         return view('redirect::redirects.index', [
             'redirects' => $redirects,
@@ -39,14 +48,15 @@ class RedirectController
         ]);
     }
 
-    public function edit($redirect)
+    public function edit(int $id)
     {
-        $redirect = Redirect::find($redirect);
+        $redirect = $this->redirectRepository->find($id);
         $redirectValues = $redirect->toArray();
         $redirectBlueprint = new RedirectBlueprint();
         $redirectFields = $redirectBlueprint()->fields()->addValues($redirectValues)->preProcess();
 
         return view('redirect::redirects.edit', [
+            'redirect' => $redirect,
             'blueprint' => $redirectBlueprint()->toPublishArray(),
             'values' => $redirectFields->values(),
             'meta' => $redirectFields->meta(),
@@ -60,34 +70,39 @@ class RedirectController
         $fields->validate();
         $values = $fields->process()->values();
 
-        $redirect = Redirect::create($values->toArray());
+        $redirect = new Redirect($values->toArray());
+        $this->redirectRepository->save($redirect);
 
         session()->flash('success', 'Redirect created successfully');
 
-        return $redirect->slug;
+        return $redirect->id;
     }
 
-    public function update($redirect, Request $request)
+    public function update($id, Request $request)
     {
         $blueprint = new RedirectBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
 
-        $redirect = Redirect::find($redirect);
-        $redirect->delete();
+        /** @var Redirect $redirect */
+        $redirect = $this->redirectRepository->find($id);
 
-        $values = $fields->process()->values();
+        if (! $redirect) {
+            abort('404');
+        }
 
-        $redirect = Redirect::create($values->toArray());
+        $values = $fields->process()->values()->toArray();
+
+        $this->redirectRepository->update($redirect, $values);
 
         session()->flash('success', 'Redirect updated successfully');
 
-        return $redirect->slug;
+        return $redirect->id;
     }
 
-    public function destroy(string $slug)
+    public function destroy($id)
     {
-        $redirect = Redirect::find($slug);
-        $redirect->delete();
+        $redirect = $this->redirectRepository->find($id);
+        $this->redirectRepository->delete($redirect);
     }
 }
