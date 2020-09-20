@@ -30,7 +30,7 @@ class CreateRedirect
             $this->redirectRepository->delete($existingRedirect);
         }
 
-        if (! $oldUri = Cache::pull('rsedirect-entry-uri-before')) {
+        if (! $oldUri = Cache::pull('redirect-entry-uri-before')) {
             return;
         }
 
@@ -42,13 +42,9 @@ class CreateRedirect
             return;
         }
 
-        $redirect = new Redirect([
+        $this->redirectRepository->save(new Redirect([
             'source' => $oldUri,
             'destination' => $entry->uri(),
-            'enabled' => true,
-            'type' => 301,
-        ]);
-
-        $this->redirectRepository->save($redirect);
+        ]));
     }
 }

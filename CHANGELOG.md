@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.0.3 (2020-09-20)
+
+### What's fixed
+- Automatic redirects weren't working properly
+
 ## 1.0.2 (2020-09-20)
 
 ### What's fixed
