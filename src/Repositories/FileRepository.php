@@ -2,7 +2,6 @@
 
 namespace Rias\StatamicRedirect\Repositories;
 
-use Spatie\DataTransferObject\DataTransferObject;
 use Statamic\Facades\File;
 use Statamic\Facades\Folder;
 use Statamic\Facades\YAML;
@@ -53,7 +52,7 @@ abstract class FileRepository
         return $this->mapToCollection($errors);
     }
 
-    public function save(DataTransferObject $object): void
+    public function save($object): void
     {
         if (! $object->id) {
             $object->id = $this->nextId();
@@ -97,7 +96,7 @@ abstract class FileRepository
         return $last + 1;
     }
 
-    public function delete(DataTransferObject $object): void
+    public function delete($object): void
     {
         File::delete($this->path($object));
     }
