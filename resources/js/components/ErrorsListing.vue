@@ -130,7 +130,7 @@ export default {
 
   data() {
     return {
-      listingKey: 'errors',
+      listingKey: "errors",
       preferencesPrefix: `redirect.errors`,
       requestUrl: cp_url(`redirect/api/errors`),
       columns: this.columns,
@@ -140,7 +140,7 @@ export default {
   methods: {
     relativeDate(time) {
       return moment(time * 1000).fromNow();
-    }
-  }
+    },
+  },
 };
 </script>
