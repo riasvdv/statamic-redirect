@@ -1,32 +1,19 @@
 <?php
 
-namespace Rias\StatamicRedirect\Middleware;
+namespace Rias\StatamicRedirect\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Rias\StatamicRedirect\DataTransferObjects\Error;
-use Rias\StatamicRedirect\DataTransferObjects\Redirect;
-use Rias\StatamicRedirect\Repositories\ErrorRepository;
-use Rias\StatamicRedirect\Repositories\RedirectRepository;
+use Rias\StatamicRedirect\Data\Error;
+use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
+use Rias\StatamicRedirect\Data\Redirect;
 use Statamic\Support\Str;
 
 class HandleNotFound
 {
-    /** @var \Rias\StatamicRedirect\Repositories\ErrorRepository */
-    private $errorRepository;
-
-    /** @var \Rias\StatamicRedirect\Repositories\RedirectRepository */
-    private $redirectRepository;
-
     /** @var array */
     private $cachedRedirects;
-
-    public function __construct(ErrorRepository $errorRepository, RedirectRepository $redirectRepository)
-    {
-        $this->errorRepository = $errorRepository;
-        $this->redirectRepository = $redirectRepository;
-    }
 
     public function handle(Request $request, Closure $next)
     {
@@ -52,14 +39,14 @@ class HandleNotFound
                 );
             }
 
-            if (! $redirect = $this->redirectRepository->findForUrl($url)) {
+            if (! $redirect = \Rias\StatamicRedirect\Facades\Redirect::findByUrl($url)) {
                 return $response;
             }
 
             $this->cacheNewRedirect($redirect, $url);
             $this->markErrorHandled($error);
 
-            return redirect($redirect->destination, $redirect->type);
+            return redirect($redirect->destination(), $redirect->type());
         } catch (\Exception $e) {
             /*
              * If something goes wrong when logging the error
@@ -74,32 +61,33 @@ class HandleNotFound
 
     private function createError(string $url): Error
     {
-        $error = new Error([
-            'id' => $this->errorRepository->nextId(),
-            'url' => $url,
-            'date' => now()->timestamp,
-        ]);
+        $error = ErrorFacade::findByUrl($url);
 
-        $this->errorRepository->save($error);
+        if (! $error) {
+            $error = ErrorFacade::make()->url($url);
+        }
+
+        $error->addHit(now()->timestamp);
+        $error->save();
 
         return $error;
     }
 
     private function markErrorHandled(Error $error): void
     {
-        $error->handled = true;
-        $this->errorRepository->save($error);
+        $error->handled(true);
+        $error->save();
     }
 
     /**
-     * @param \Rias\StatamicRedirect\DataTransferObjects\Redirect $redirect
+     * @param \Rias\StatamicRedirect\Data\Redirect $redirect
      * @param string $url
      */
     private function cacheNewRedirect(Redirect $redirect, string $url): void
     {
         $this->cachedRedirects[$url] = [
-            'destination' => $redirect->destination,
-            'type' => $redirect->type,
+            'destination' => $redirect->destination(),
+            'type' => $redirect->type(),
         ];
 
         Cache::put('statamic.redirect.redirects', $this->cachedRedirects);

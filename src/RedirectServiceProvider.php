@@ -3,15 +3,24 @@
 namespace Rias\StatamicRedirect;
 
 use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
+use Rias\StatamicRedirect\Contracts\RedirectRepository;
+use Rias\StatamicRedirect\Facades\Error;
+use Rias\StatamicRedirect\Http\Filters\ErrorFields;
+use Rias\StatamicRedirect\Http\Filters\ErrorHandled;
 use Rias\StatamicRedirect\Listeners\CacheOldUri;
 use Rias\StatamicRedirect\Listeners\CreateRedirect;
-use Rias\StatamicRedirect\Middleware\HandleNotFound;
-use Rias\StatamicRedirect\Repositories\ErrorRepository;
-use Rias\StatamicRedirect\Repositories\RedirectRepository;
+use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
+use Rias\StatamicRedirect\Contracts\ErrorRepository;
+use Rias\StatamicRedirect\Stache\Errors\ErrorStore;
+use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
 use Statamic\Facades\CP\Nav;
+use Statamic\Facades\File;
+use Statamic\Facades\Folder;
+use Statamic\Facades\YAML;
 use Statamic\Providers\AddonServiceProvider;
+use Statamic\Stache\Stache;
 use Statamic\Statamic;
 
 class RedirectServiceProvider extends AddonServiceProvider
@@ -41,23 +50,37 @@ class RedirectServiceProvider extends AddonServiceProvider
     {
         $this->registerAddonConfig();
 
-        $this->app->singleton(ErrorRepository::class, config('statamic.redirect.error_repository'));
-        $this->app->singleton(RedirectRepository::class, config('statamic.redirect.redirect_repository'));
+        $this->app->singleton(ErrorRepository::class, function () {
+            $class = config('statamic.redirect.error_repository');
+
+            return new $class($this->app['stache']);
+        });
+
+        $this->app->singleton(RedirectRepository::class, function () {
+            $class = config('statamic.redirect.redirect_repository');
+
+            return new $class($this->app['stache']);
+        });
     }
 
     public function boot()
     {
         parent::boot();
 
-        Statamic::booted(function () {
-            /** @var \Illuminate\Routing\Router $router */
-            $router = app('router');
-            $router->prependMiddlewareToGroup('statamic.web', HandleNotFound::class);
-        });
+        /** Remove old format of errors @todo: Remove in future version */
+        Folder::delete(storage_path('redirect/errors/2020'));
 
-        $this
-            ->bootAddonViews()
-            ->bootAddonNav();
+        Statamic::booted(function () {
+            app('router')->prependMiddlewareToGroup('statamic.web', HandleNotFound::class);
+
+            ErrorHandled::register();
+            ErrorFields::register();
+
+            $this
+                ->bootAddonViews()
+                ->bootAddonNav()
+                ->bootStores();
+        });
     }
 
     protected function bootAddonViews()
@@ -79,6 +102,19 @@ class RedirectServiceProvider extends AddonServiceProvider
                     'Redirects' => cp_route('redirect.redirects.index'),
                 ]);
         });
+
+        return $this;
+    }
+
+    protected function bootStores()
+    {
+        $errorStore = new ErrorStore();
+        $errorStore->directory(storage_path('redirect/errors'));
+        app(Stache::class)->registerStore($errorStore);
+
+        $redirectStore = new RedirectStore();
+        $redirectStore->directory(base_path('content/redirects'));
+        app(Stache::class)->registerStore($redirectStore);
 
         return $this;
     }

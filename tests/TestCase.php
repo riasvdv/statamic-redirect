@@ -5,7 +5,9 @@ namespace Rias\StatamicRedirect\Tests;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Rias\StatamicRedirect\Repositories\FileErrorRepository;
+use Rias\StatamicRedirect\Facades\Error;
+use Rias\StatamicRedirect\Facades\Redirect;
+use Rias\StatamicRedirect\Stache\Errors\ErrorRepository;
 use Rias\StatamicRedirect\Repositories\FileRedirectRepository;
 use Statamic\Extend\Manifest;
 use Statamic\Facades\Folder;
@@ -26,8 +28,8 @@ class TestCase extends OrchestraTestCase
 
         $this->faker = $this->makeFaker();
 
-        Folder::delete(app(FileErrorRepository::class)->basePath());
-        Folder::delete(app(FileRedirectRepository::class)->basePath());
+        Error::all()->each->delete();
+        Redirect::all()->each->delete();
     }
 
     /**

@@ -30,11 +30,7 @@
         </div>
     </div>
 
-    <errors-listing
-        :initial-rows="{{ json_encode($errors) }}"
-        :columns="{{ json_encode($columns) }}"
-        :endpoints="{}">
-    ></errors-listing>
+    <errors-listing :filters="{{ $filters->toJson() }}"></errors-listing>
 
     @include('statamic::partials.docs-callout', [
         'topic' => 'Statamic Redirect',

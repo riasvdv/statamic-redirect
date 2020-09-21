@@ -2,61 +2,43 @@
 
 namespace Rias\StatamicRedirect\Controllers;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
-use Rias\StatamicRedirect\DataTransferObjects\Error;
-use Rias\StatamicRedirect\DataTransferObjects\ErrorCollection;
-use Rias\StatamicRedirect\Repositories\ErrorRepository;
-use Statamic\CP\Column;
+use Rias\StatamicRedirect\Data\Error;
+use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
+use Statamic\Facades\Scope;
 
 class DashboardController
 {
-    public function __invoke(ErrorRepository $errorRepository)
+    public function __invoke()
     {
-        $errors = $errorRepository->all();
-
-        $notFoundMonth = Cache::remember('redirect-stats-past-Month', now()->addHour(), function () use ($errors) {
-            return $this->getStatsPastMonth($errors);
-        });
-        $notFoundWeek = Cache::remember('redirect-stats-past-Week', now()->addHour(), function () use ($errors) {
-            return $this->getStatsPastWeek($errors);
-        });
-        $notFoundDay = Cache::remember('redirect-stats-past-Day', now()->addHour(), function () use ($errors) {
-            return $this->getStatsPastDay($errors);
+        $hits = ErrorFacade::all()->flatMap(function (Error $error) {
+            return array_map(function (array $hit) {
+                return $hit['timestamp'];
+            }, $error->hits());
         });
 
-        $errors = collect($errors)->groupBy(function (Error $error) {
-            return $error->url;
-        })->map(function ($errors, $url) {
-            return [
-                'hits' => $errors->count(),
-                'url' => $url,
-                'latest' => $errors->last()->date,
-                'handled' => $errors->last()->handled,
-            ];
-        })->sortByDesc('latest')->values();
+        $notFoundMonth = Cache::remember(self::class . 'getStatsPastMonth', now()->minutes(10), function () use ($hits) {
+            return $this->getStatsPastMonth($hits);
+        });
+        $notFoundWeek = Cache::remember(self::class . 'getStatsPastWeek', now()->minutes(10), function () use ($hits) {
+            return $this->getStatsPastWeek($hits);
+        });
+        $notFoundDay = Cache::remember(self::class . 'getStatsPastDay', now()->minutes(10), function () use ($hits) {
+            return $this->getStatsPastDay($hits);
+        });
 
         return view('redirect::index', [
-            'errors' => $errors,
             'notFoundMonth' => $notFoundMonth,
             'notFoundWeek' => $notFoundWeek,
             'notFoundDay' => $notFoundDay,
-            'columns' => [
-                Column::make('url')->label('Path'),
-                Column::make('hits')->label('Hits'),
-                Column::make('latest')->label('Latest error'),
-                Column::make('handled')->label('Handled'),
-            ],
+            'filters' => Scope::filters('errors'),
         ]);
     }
 
-    private function getStatsPastMonth(ErrorCollection $errors)
+    private function getStatsPastMonth(Collection $hits)
     {
-        $newerThan = now()->subMonth()->timestamp;
-        $errors = array_filter($errors->items(), function (Error $error) use ($newerThan) {
-            return $error->date > $newerThan;
-        });
-
         $days = [];
         for ($day = now()->subWeeks(4); $day < now(); $day->addWeek()) {
             $days[] = $day->copy();
@@ -64,22 +46,17 @@ class DashboardController
 
         $notFoundMonth = [];
         foreach ($days as $day) {
-            $count = count(array_filter($errors, function (Error $error) use ($day) {
-                return Date::parse($error->date)->isSameWeek($day);
-            }));
+            $count = $hits->filter(function (int $timestamp) use ($day) {
+                return Date::parse($timestamp)->isSameWeek($day);
+            })->count();
             $notFoundMonth[] = [$count, "{$day->startOfWeek()->format('d')}-{$day->endOfWeek()->format('d')}"];
         }
 
         return $notFoundMonth;
     }
 
-    private function getStatsPastWeek(ErrorCollection $errors)
+    private function getStatsPastWeek(Collection $hits)
     {
-        $newerThan = now()->subWeek()->timestamp;
-        $errors = array_filter($errors->items(), function (Error $error) use ($newerThan) {
-            return $error->date > $newerThan;
-        });
-
         $days = [];
         for ($day = now()->subWeek(); $day < now(); $day->addDay()) {
             $days[] = $day->copy();
@@ -87,24 +64,19 @@ class DashboardController
 
         $notFoundWeek = [];
         foreach ($days as $day) {
-            $count = count(array_filter($errors, function (Error $error) use ($day) {
-                $date = Date::parse($error->date);
+            $count = $hits->filter(function (int $timestamp) use ($day) {
+                $date = Date::parse($timestamp);
 
                 return $date->isSameYear($day) && $date->isSameMonth($day) && $date->isSameDay($day);
-            }));
+            })->count();
             $notFoundWeek[] = [$count, $day->format('d')];
         }
 
         return $notFoundWeek;
     }
 
-    private function getStatsPastDay(ErrorCollection $errors)
+    private function getStatsPastDay(Collection $hits)
     {
-        $newerThan = now()->subDay()->timestamp;
-        $errors = array_filter($errors->items(), function (Error $error) use ($newerThan) {
-            return $error->date > $newerThan;
-        });
-
         $hours = [];
         for ($hour = now()->subDay(); $hour < now(); $hour->addHours(4)) {
             $hours[] = $hour->copy();
@@ -112,9 +84,9 @@ class DashboardController
 
         $notFoundDay = [];
         foreach ($hours as $hour) {
-            $count = count(array_filter($errors, function (Error $error) use ($hour) {
-                return Date::parse($error->date)->isBetween($hour->copy()->subHour(), $hour->copy()->addHours(3));
-            }));
+            $count = $hits->filter(function (int $timestamp) use ($hour) {
+                return Date::parse($timestamp)->isBetween($hour->copy()->subHour(), $hour->copy()->addHours(3));
+            })->count();
             $notFoundDay[] = [$count, $hour->format('H:00')];
         }
 

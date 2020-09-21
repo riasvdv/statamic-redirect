@@ -22,14 +22,14 @@ return [
     /*
      * Error repository, you can change this to use a different
      * storage method for the errors. The class must implement
-     * \Rias\StatamicRedirect\Repositories\ErrorRepository
+     * \Rias\StatamicRedirect\Contracts\ErrorRepository
      */
-    'error_repository' => \Rias\StatamicRedirect\Repositories\FileErrorRepository::class,
+    'error_repository' => \Rias\StatamicRedirect\Stache\Errors\ErrorRepository::class,
 
     /*
      * Redirect repository, you can change this to use a different
      * storage method for the redirect. The class must implement
-     * \Rias\StatamicRedirect\Repositories\RedirectRepository
+     * \Rias\StatamicRedirect\Contracts\RedirectRepository
      */
-    'redirect_repository' => \Rias\StatamicRedirect\Repositories\FileRedirectRepository::class,
+    'redirect_repository' => \Rias\StatamicRedirect\Stache\Redirects\RedirectRepository::class,
 ];

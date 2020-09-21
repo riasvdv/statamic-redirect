@@ -6,7 +6,7 @@
 @section('content')
     <publish-form-redirect
         title="Update redirect"
-        action="{{ cp_route('redirect.redirects.update', $redirect->id) }}"
+        action="{{ cp_route('redirect.redirects.update', $redirect->id()) }}"
         :blueprint='@json($blueprint)'
         :meta='@json($meta)'
         :values='@json($values)'
@@ -16,6 +16,6 @@
                 text: '< Redirects'
             }
         ]"
-        redirect-to="{{ cp_route('redirect.redirects.edit', $redirect->id) }}"
+        redirect-to="{{ cp_route('redirect.redirects.edit', $redirect->id()) }}"
     ></publish-form-redirect>
 @stop

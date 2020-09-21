@@ -3,20 +3,12 @@
 namespace Rias\StatamicRedirect\Listeners;
 
 use Illuminate\Support\Facades\Cache;
-use Rias\StatamicRedirect\DataTransferObjects\Redirect;
+use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Repositories\RedirectRepository;
 use Statamic\Events\EntrySaved;
 
 class CreateRedirect
 {
-    /** @var \Rias\StatamicRedirect\Repositories\RedirectRepository */
-    private $redirectRepository;
-
-    public function __construct(RedirectRepository $redirectRepository)
-    {
-        $this->redirectRepository = $redirectRepository;
-    }
-
     public function handle(EntrySaved $entrySaved)
     {
         /** @var \Statamic\Entries\Entry $entry */
@@ -26,8 +18,8 @@ class CreateRedirect
          * If we have a redirect with a source of the
          * NEW uri we should remove this redirect.
          */
-        if ($existingRedirect = $this->redirectRepository->findForUrl($entry->uri())) {
-            $this->redirectRepository->delete($existingRedirect);
+        if ($existingRedirect = \Rias\StatamicRedirect\Facades\Redirect::findByUrl($entry->uri())) {
+            $existingRedirect->delete();
         }
 
         if (! $oldUri = Cache::pull('redirect-entry-uri-before')) {
@@ -42,9 +34,9 @@ class CreateRedirect
             return;
         }
 
-        $this->redirectRepository->save(new Redirect([
-            'source' => $oldUri,
-            'destination' => $entry->uri(),
-        ]));
+        \Rias\StatamicRedirect\Facades\Redirect::make()
+            ->source($oldUri)
+            ->destination($entry->uri())
+            ->save();
     }
 }
