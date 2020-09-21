@@ -2,8 +2,8 @@
 
 namespace Rias\StatamicRedirect\Stache\Errors;
 
-use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Contracts\ErrorRepository as RepositoryContract;
+use Rias\StatamicRedirect\Data\Error;
 use Statamic\Data\DataCollection;
 use Statamic\Stache\Stache;
 
@@ -61,5 +61,4 @@ class ErrorRepository implements RepositoryContract
     {
         return new Error();
     }
-
 }

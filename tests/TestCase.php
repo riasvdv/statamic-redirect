@@ -7,10 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Rias\StatamicRedirect\Facades\Error;
 use Rias\StatamicRedirect\Facades\Redirect;
-use Rias\StatamicRedirect\Stache\Errors\ErrorRepository;
-use Rias\StatamicRedirect\Repositories\FileRedirectRepository;
 use Statamic\Extend\Manifest;
-use Statamic\Facades\Folder;
 use Statamic\Facades\Role;
 use Statamic\Statamic;
 

@@ -3,8 +3,6 @@
 namespace Rias\StatamicRedirect\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Statamic\Facades\Action;
-use Statamic\Facades\User;
 
 class ListedRedirect extends JsonResource
 {

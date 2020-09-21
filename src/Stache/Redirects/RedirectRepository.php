@@ -2,8 +2,8 @@
 
 namespace Rias\StatamicRedirect\Stache\Redirects;
 
-use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Contracts\RedirectRepository as RepositoryContract;
+use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Statamic\Data\DataCollection;
 use Statamic\Stache\Stache;
@@ -87,5 +87,4 @@ class RedirectRepository implements RepositoryContract
     {
         return new Redirect();
     }
-
 }

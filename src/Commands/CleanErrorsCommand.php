@@ -36,6 +36,7 @@ class CleanErrorsCommand extends Command
 
                 if (! count($hits)) {
                     $error->delete();
+
                     return;
                 }
 

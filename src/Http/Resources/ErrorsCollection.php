@@ -9,6 +9,7 @@ use Statamic\CP\Columns;
 class ErrorsCollection extends ResourceCollection
 {
     public $collects = ListedError::class;
+
     protected $columnPreferenceKey;
 
     public function columnPreferenceKey($key)

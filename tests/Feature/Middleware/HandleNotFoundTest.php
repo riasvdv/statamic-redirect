@@ -4,11 +4,8 @@ namespace Rias\StatamicRedirect\Tests\Feature\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Facades\Error;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
-use Rias\StatamicRedirect\Stache\Errors\ErrorRepository;
-use Rias\StatamicRedirect\Repositories\FileRedirectRepository;
 use Rias\StatamicRedirect\Tests\TestCase;
 
 class HandleNotFoundTest extends TestCase

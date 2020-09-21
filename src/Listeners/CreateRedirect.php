@@ -4,7 +4,6 @@ namespace Rias\StatamicRedirect\Listeners;
 
 use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Data\Redirect;
-use Rias\StatamicRedirect\Repositories\RedirectRepository;
 use Statamic\Events\EntrySaved;
 
 class CreateRedirect

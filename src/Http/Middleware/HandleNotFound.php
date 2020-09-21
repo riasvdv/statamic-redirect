@@ -6,8 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Data\Error;
-use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
 use Rias\StatamicRedirect\Data\Redirect;
+use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
 use Statamic\Support\Str;
 
 class HandleNotFound

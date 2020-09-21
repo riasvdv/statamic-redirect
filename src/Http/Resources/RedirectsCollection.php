@@ -9,6 +9,7 @@ use Statamic\CP\Columns;
 class RedirectsCollection extends ResourceCollection
 {
     public $collects = ListedRedirect::class;
+
     protected $columnPreferenceKey;
 
     public function columnPreferenceKey($key)

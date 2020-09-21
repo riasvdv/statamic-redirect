@@ -3,22 +3,19 @@
 namespace Rias\StatamicRedirect;
 
 use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
+use Rias\StatamicRedirect\Contracts\ErrorRepository;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
-use Rias\StatamicRedirect\Facades\Error;
 use Rias\StatamicRedirect\Http\Filters\ErrorFields;
 use Rias\StatamicRedirect\Http\Filters\ErrorHandled;
+use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Rias\StatamicRedirect\Listeners\CacheOldUri;
 use Rias\StatamicRedirect\Listeners\CreateRedirect;
-use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
-use Rias\StatamicRedirect\Contracts\ErrorRepository;
 use Rias\StatamicRedirect\Stache\Errors\ErrorStore;
 use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
 use Statamic\Facades\CP\Nav;
-use Statamic\Facades\File;
 use Statamic\Facades\Folder;
-use Statamic\Facades\YAML;
 use Statamic\Providers\AddonServiceProvider;
 use Statamic\Stache\Stache;
 use Statamic\Statamic;
