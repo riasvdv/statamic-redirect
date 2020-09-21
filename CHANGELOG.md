@@ -1,5 +1,13 @@
 # Release Notes
 
+## 1.1.0 (2020-09-21)
+
+### What's new
+- Filters and search for the Error and Redirect listings!
+
+### What's changed
+- Errors and Redirects now use the Stache, which makes loading & querying faster.
+
 ## 1.0.3 (2020-09-20)
 
 ### What's fixed
