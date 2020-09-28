@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.1.1 (2020-09-28)
+
+### What's fixed
+- Fix incorrect typehint in RedirectController
+
 ## 1.1.0 (2020-09-21)
 
 ### What's new

@@ -32,7 +32,7 @@ class RedirectController
         ]);
     }
 
-    public function edit(int $id)
+    public function edit($id)
     {
         $redirect = Redirect::find($id);
         $redirectValues = $redirect->fileData();

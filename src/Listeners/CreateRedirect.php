@@ -17,7 +17,7 @@ class CreateRedirect
          * If we have a redirect with a source of the
          * NEW uri we should remove this redirect.
          */
-        if ($existingRedirect = \Rias\StatamicRedirect\Facades\Redirect::findByUrl($entry->uri())) {
+        if ($entry->uri() && $existingRedirect = \Rias\StatamicRedirect\Facades\Redirect::findByUrl($entry->uri())) {
             $existingRedirect->delete();
         }
 
