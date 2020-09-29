@@ -14,12 +14,6 @@ class RedirectBlueprint extends Blueprint
                 'main' => [
                     'fields' => [
                         [
-                            'handle' => 'slug',
-                            'field' => [
-                                'type' => 'hidden',
-                            ],
-                        ],
-                        [
                             'handle' => 'source',
                             'field' => [
                                 'type' => 'text',

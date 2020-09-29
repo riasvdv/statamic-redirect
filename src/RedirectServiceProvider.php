@@ -16,6 +16,7 @@ use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
 use Statamic\Facades\CP\Nav;
 use Statamic\Facades\Folder;
+use Statamic\Facades\Permission;
 use Statamic\Providers\AddonServiceProvider;
 use Statamic\Stache\Stache;
 use Statamic\Statamic;
@@ -76,7 +77,8 @@ class RedirectServiceProvider extends AddonServiceProvider
             $this
                 ->bootAddonViews()
                 ->bootAddonNav()
-                ->bootStores();
+                ->bootStores()
+                ->bootPermissions();
         });
     }
 
@@ -94,6 +96,7 @@ class RedirectServiceProvider extends AddonServiceProvider
                 ->route('redirect.index')
                 ->icon('git')
                 ->active('redirect')
+                ->can('view redirects')
                 ->children([
                     'Dashboard' => cp_route('redirect.index'),
                     'Redirects' => cp_route('redirect.redirects.index'),
@@ -123,6 +126,22 @@ class RedirectServiceProvider extends AddonServiceProvider
         $this->publishes([
             __DIR__.'/../config/redirect.php' => config_path('statamic/redirect.php'),
         ], 'statamic-redirect-config');
+
+        return $this;
+    }
+
+    protected function bootPermissions()
+    {
+        Permission::group('redirect', 'Redirects', function () {
+            Permission::register('view redirects', function ($permission) {
+                $permission->children([
+                    Permission::make('edit redirects')->children([
+                        Permission::make('create redirects'),
+                        Permission::make('delete redirects')
+                    ])
+                ]);
+            });
+        });
 
         return $this;
     }

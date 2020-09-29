@@ -31,15 +31,26 @@ class HandleNotFoundTest extends TestCase
     }
 
     /** @test * */
-    public function it_creates_an_error_when_the_response_is_404()
+    public function it_creates_an_error_when_the_response_is_404_and_saves_metadata()
     {
-        $response = $this->middleware->handle(Request::create('/abc'), function () {
+        $request = Request::create('/abc');
+        $request->headers->add([
+            'referer' => 'some-referer',
+        ]);
+
+        $response = $this->middleware->handle($request, function () {
             return (new Response('', 404));
         });
 
         $this->assertEquals(1, Error::query()->count());
-        $this->assertEquals('/abc', Error::query()->first()->url());
         $this->assertEquals(404, $response->status());
+        tap(Error::query()->first(), function (\Rias\StatamicRedirect\Data\Error $error) {
+            $this->assertEquals('/abc', $error->url());
+            $this->assertEquals(1, count($error->hits()));
+            $this->assertEquals('Symfony', $error->hits()[0]['data']['userAgent']);
+            $this->assertEquals('127.0.0.1', $error->hits()[0]['data']['ip']);
+            $this->assertEquals('some-referer', $error->hits()[0]['data']['referer']);
+        });
     }
 
     /** @test * */

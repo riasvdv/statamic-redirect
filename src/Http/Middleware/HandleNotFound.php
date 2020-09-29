@@ -26,7 +26,7 @@ class HandleNotFound
 
         try {
             $url = Str::start($request->path(), '/');
-            $error = $this->createError($url);
+            $error = $this->createError($request, $url);
 
             $this->cachedRedirects = Cache::get('statamic.redirect.redirects', []);
 
@@ -59,7 +59,7 @@ class HandleNotFound
         }
     }
 
-    private function createError(string $url): Error
+    private function createError(Request $request, string $url): Error
     {
         $error = ErrorFacade::findByUrl($url);
 
@@ -67,7 +67,11 @@ class HandleNotFound
             $error = ErrorFacade::make()->url($url);
         }
 
-        $error->addHit(now()->timestamp);
+        $error->addHit(now()->timestamp, [
+            'userAgent' => $request->userAgent(),
+            'ip' => $request->ip(),
+            'referer' => $request->header('referer'),
+        ]);
         $error->save();
 
         return $error;

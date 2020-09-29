@@ -3,9 +3,11 @@
 use Rias\StatamicRedirect\Controllers\Api\RedirectController as ApiRedirectController;
 use Rias\StatamicRedirect\Controllers\DashboardController;
 use Rias\StatamicRedirect\Controllers\Api\ErrorController;
+use Rias\StatamicRedirect\Controllers\ExportController;
 use Rias\StatamicRedirect\Controllers\RedirectController;
 
 Route::get('redirect/dashboard', '\\'. DashboardController::class)->name('redirect.index');
+Route::get('redirect/export/{type}', '\\'. ExportController::class)->name('redirect.export');
 
 Route::get('redirect/api/errors', ['\\' . ErrorController::class, 'index'])->name('redirect.api.errors.index');
 Route::get('redirect/api/redirects', ['\\' . ApiRedirectController::class, 'index'])->name('redirect.api.redirects.index');

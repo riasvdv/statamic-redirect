@@ -1,5 +1,12 @@
 # Release Notes
 
+## 1.2.0 (2020-09-29)
+
+### What's new
+- Add permissions for viewing, creating, editing and deleting redirects
+- Add metadata (user agent, referer & ip) when hovering over the error path
+- Add redirects export to JSON or CSV
+
 ## 1.1.1 (2020-09-28)
 
 ### What's fixed

@@ -60,6 +60,13 @@
             :column-preferences-key="preferencesKey('columns')"
             @sorted="sorted"
           >
+            <template slot="cell-url" slot-scope="{ row: error }">
+              <span :title="
+                'User agent: ' + (error.hits[error.hits.length - 1].data.userAgent || 'n/a') + '\n' +
+                'IP: ' + (error.hits[error.hits.length - 1].data.ip || 'n/a') + '\n' +
+                'Referer: ' + (error.hits[error.hits.length - 1].data.referer || 'n/a') + '\n'
+              ">{{ error.url }}</span>
+            </template>
             <template slot="cell-hits" slot-scope="{ row: error }">
               {{ error.hits.length }}
             </template>

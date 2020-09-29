@@ -13,6 +13,8 @@ class DashboardController
 {
     public function __invoke()
     {
+        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('view redirects'), 401);
+
         $hits = ErrorFacade::all()->flatMap(function (Error $error) {
             return array_map(function (array $hit) {
                 return $hit['timestamp'];

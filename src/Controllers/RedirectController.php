@@ -13,6 +13,8 @@ class RedirectController
 {
     public function index()
     {
+        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('view redirects'), 401);
+
         return view('redirect::redirects.index', [
             'filters' => Scope::filters('redirects'),
         ]);
@@ -20,6 +22,8 @@ class RedirectController
 
     public function create()
     {
+        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('create redirects'), 401);
+
         $blueprint = new RedirectBlueprint();
         $fields = $blueprint()->fields()->preProcess();
 
@@ -34,6 +38,8 @@ class RedirectController
 
     public function edit($id)
     {
+        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('edit redirects'), 401);
+
         $redirect = Redirect::find($id);
         $redirectValues = $redirect->fileData();
         $redirectBlueprint = new RedirectBlueprint();
@@ -49,6 +55,8 @@ class RedirectController
 
     public function store(Request $request)
     {
+        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('create redirects'), 401);
+
         $blueprint = new RedirectBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
@@ -71,6 +79,8 @@ class RedirectController
 
     public function update($id, Request $request)
     {
+        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('edit redirects'), 401);
+
         $blueprint = new RedirectBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
@@ -99,6 +109,8 @@ class RedirectController
 
     public function destroy($id)
     {
+        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('delete redirects'), 401);
+
         $redirect = Redirect::find($id);
         $redirect->delete();
 
