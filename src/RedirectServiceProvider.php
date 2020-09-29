@@ -137,8 +137,8 @@ class RedirectServiceProvider extends AddonServiceProvider
                 $permission->children([
                     Permission::make('edit redirects')->children([
                         Permission::make('create redirects'),
-                        Permission::make('delete redirects')
-                    ])
+                        Permission::make('delete redirects'),
+                    ]),
                 ]);
             });
         });

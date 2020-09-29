@@ -2,14 +2,8 @@
 
 namespace Rias\StatamicRedirect\Controllers;
 
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Date;
-use Rias\StatamicRedirect\Data\Error;
-use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
 use Statamic\Exceptions\FatalException;
 use Statamic\Facades\File;
-use Statamic\Facades\Scope;
 use Statamic\Support\Str;
 
 class ExportController

@@ -3,11 +3,9 @@
 namespace Rias\StatamicRedirect\Exporters;
 
 use League\Csv\Writer;
-use Rias\StatamicRedirect\Blueprints\RedirectBlueprint;
 use Rias\StatamicRedirect\Facades\Redirect;
 use SplTempFileObject;
 use Statamic\Forms\Exporters\AbstractExporter;
-use function Symfony\Component\String\s;
 
 class CsvExporter extends AbstractExporter
 {
