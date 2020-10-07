@@ -25,7 +25,12 @@ class HandleNotFound
         }
 
         try {
-            $url = Str::start($request->path(), '/');
+            $url = $request->path();
+
+            if (! preg_match('/.*:\/\/.*/', $request->path()) ) {
+              $url = Str::start($request->path(), '/');
+            }
+            
             $error = $this->createError($request, $url);
 
             $this->cachedRedirects = Cache::get('statamic.redirect.redirects', []);
