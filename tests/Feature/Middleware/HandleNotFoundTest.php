@@ -4,7 +4,9 @@ namespace Rias\StatamicRedirect\Tests\Feature\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Facades\Error;
+use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Rias\StatamicRedirect\Tests\TestCase;
 
@@ -56,7 +58,7 @@ class HandleNotFoundTest extends TestCase
     /** @test * */
     public function it_redirects_and_sets_handled_if_a_redirect_is_found()
     {
-        \Rias\StatamicRedirect\Facades\Redirect::make()
+        Redirect::make()
             ->source('/abc')
             ->destination('/def')
             ->save();
@@ -70,5 +72,21 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(true, Error::query()->first()->handled());
 
         $this->assertTrue($response->isRedirect(url('/def')));
+    }
+
+    /** @test * */
+    public function it_can_redirect_to_external_urls()
+    {
+        Redirect::make()
+            ->source('/abc/(.*)')
+            ->destination('https://google.com?s=$1')
+            ->matchType(MatchTypeEnum::REGEX)
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/abc/a'), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect('https://google.com?s=a'));
     }
 }
