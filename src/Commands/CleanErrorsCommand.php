@@ -2,11 +2,7 @@
 
 namespace Rias\StatamicRedirect\Commands;
 
-use Carbon\CarbonInterval;
 use Illuminate\Console\Command;
-use Illuminate\Support\Carbon;
-use Rias\StatamicRedirect\Data\Error;
-use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
 use Rias\StatamicRedirect\Jobs\CleanErrorsJob;
 use Statamic\Console\RunsInPlease;
 

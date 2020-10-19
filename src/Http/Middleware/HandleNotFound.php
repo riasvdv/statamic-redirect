@@ -5,7 +5,6 @@ namespace Rias\StatamicRedirect\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Queue;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
