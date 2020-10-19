@@ -1,5 +1,11 @@
 # Release Notes
 
+## 1.3.0 (2020-10-16)
+
+### What's new
+- Added better Error cleaning, with 2 new config options: `clean_errors_on_save` and `keep_unique_errors` which will clean errors when a new one is added and only keep a set amount of unique errors, deleting the oldest ones first. If you have configured a queue the cleaning will take place on the queue.
+- The `php please redirect:clean-errors` command now also takes into account the unique errors count.
+
 ## 1.2.0 (2020-09-29)
 
 ### What's new

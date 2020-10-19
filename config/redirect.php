@@ -14,10 +14,21 @@ return [
     'clean_errors' => true,
 
     /**
+     * Should error logs be cleaned when saving a new error?
+     */
+    'clean_errors_on_save' => true,
+
+    /**
      * Error logs older than this will be deleted.
      * @link http://php.net/manual/en/dateinterval.createfromdatestring.php
      */
     'clean_older_than' => '1 month',
+
+    /*
+     * The maximum number of unique errors to keep.
+     * This does not include individual hits.
+     */
+    'keep_unique_errors' => 1000,
 
     /*
      * Error repository, you can change this to use a different

@@ -70,6 +70,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(1, Error::query()->count());
         $this->assertEquals('/abc', Error::query()->first()->url());
         $this->assertEquals(true, Error::query()->first()->handled());
+        $this->assertEquals('/def', Error::query()->first()->handledDestination());
 
         $this->assertTrue($response->isRedirect(url('/def')));
     }
@@ -88,5 +89,25 @@ class HandleNotFoundTest extends TestCase
         });
 
         $this->assertTrue($response->isRedirect('https://google.com?s=a'));
+    }
+
+    /** @test * */
+    public function it_cleans_if_config_is_set_to_clean()
+    {
+        config()->set('statamic.redirect.clean_errors', true);
+        config()->set('statamic.redirect.clean_errors_on_save', true);
+        config()->set('statamic.redirect.keep_unique_errors', 1);
+
+        Error::make()->url('url1')->addHit(now()->timestamp)->save();
+        Error::make()->url('url2')->addHit(now()->timestamp)->save();
+        Error::make()->url('url3')->addHit(now()->timestamp)->save();
+
+        $request = Request::create('/abc');
+
+        $this->middleware->handle($request, function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertEquals(1, Error::all()->count());
     }
 }

@@ -23,6 +23,9 @@ class Error
     /** @var bool */
     protected $handled = false;
 
+    /** @var string|null */
+    protected $handledDestination = null;
+
     public function id($id = null)
     {
         return $this->fluentlyGetOrSet('id')->args(func_get_args());
@@ -67,6 +70,11 @@ class Error
         return $this->fluentlyGetOrSet('handled')->args(func_get_args());
     }
 
+    public function handledDestination($handledDestination = null)
+    {
+        return $this->fluentlyGetOrSet('handledDestination')->args(func_get_args());
+    }
+
     public function path()
     {
         return vsprintf('%s/%s.yaml', [
@@ -98,6 +106,7 @@ class Error
             'hitsCount' => $this->hitsCount(),
             'latest' => $this->latest(),
             'handled' => $this->handled(),
+            'handledDestination' => $this->handledDestination(),
         ];
     }
 

@@ -5,9 +5,11 @@ namespace Rias\StatamicRedirect\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Queue;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
+use Rias\StatamicRedirect\Jobs\CleanErrorsJob;
 use Statamic\Support\Str;
 
 class HandleNotFound
@@ -28,10 +30,12 @@ class HandleNotFound
             $url = Str::start($request->path(), '/');
             $error = $this->createError($request, $url);
 
+            CleanErrorsJob::dispatchIf(config('statamic.redirect.clean_errors_on_save'));
+
             $this->cachedRedirects = Cache::get('statamic.redirect.redirects', []);
 
             if (isset($this->cachedRedirects[$url])) {
-                $this->markErrorHandled($error);
+                $this->markErrorHandled($error, $this->cachedRedirects[$url]['destination']);
 
                 return redirect(
                     $this->cachedRedirects[$url]['destination'],
@@ -44,7 +48,7 @@ class HandleNotFound
             }
 
             $this->cacheNewRedirect($redirect, $url);
-            $this->markErrorHandled($error);
+            $this->markErrorHandled($error, $redirect->destination());
 
             return redirect($redirect->destination(), $redirect->type());
         } catch (\Exception $e) {
@@ -77,9 +81,10 @@ class HandleNotFound
         return $error;
     }
 
-    private function markErrorHandled(Error $error): void
+    private function markErrorHandled(Error $error, string $destination): void
     {
         $error->handled(true);
+        $error->handledDestination($destination);
         $error->save();
     }
 

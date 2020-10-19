@@ -7,9 +7,13 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
+use Rias\StatamicRedirect\Jobs\CleanErrorsJob;
+use Statamic\Console\RunsInPlease;
 
 class CleanErrorsCommand extends Command
 {
+    use RunsInPlease;
+
     protected $signature = 'redirect:clean-errors';
 
     protected $description = 'Clean up old errors';
@@ -24,27 +28,7 @@ class CleanErrorsCommand extends Command
 
         $this->info('Cleaning errors older than ' . config('statamic.redirect.clean_older_than', '1 month'));
 
-        $olderThan = CarbonInterval::createFromDateString(config('statamic.redirect.clean_older_than', '1 month'));
-
-        ErrorFacade::all()
-            ->each(function (Error $error) use ($olderThan) {
-                $originalHits = $error->hits();
-
-                $hits = array_filter($originalHits, function (array $hit) use ($olderThan) {
-                    return Carbon::parse($hit['timestamp']) > now()->sub($olderThan);
-                });
-
-                if (! count($hits)) {
-                    $error->delete();
-
-                    return;
-                }
-
-                if (count($originalHits) !== count($hits)) {
-                    $error->hits($hits);
-                    $error->save();
-                }
-            });
+        CleanErrorsJob::dispatchNow();
 
         $this->info('Done!');
     }

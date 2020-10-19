@@ -26,6 +26,7 @@ class ErrorsCollection extends ResourceCollection
             Column::make('hitsCount')->label('Hits'),
             Column::make('latest')->label('Latest error'),
             Column::make('handled')->label('Handled'),
+            Column::make('handledDestination')->label('Destination'),
         ]);
 
         if ($key = $this->columnPreferenceKey) {

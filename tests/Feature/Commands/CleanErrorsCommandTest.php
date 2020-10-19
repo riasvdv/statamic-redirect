@@ -54,4 +54,20 @@ class CleanErrorsCommandTest extends TestCase
 
         $this->assertEquals(3, Error::query()->count());
     }
+
+    /** @test * */
+    public function it_deletes_errors_when_there_are_too_many()
+    {
+        config()->set('statamic.redirect.clean_errors', true);
+        config()->set('statamic.redirect.keep_unique_errors', 1);
+
+        Error::make()->url('url1')->addHit(now()->subDay()->timestamp)->save();
+        Error::make()->url('url2')->addHit(now()->subHour()->timestamp)->save();
+        Error::make()->url('url3')->addHit(now()->timestamp)->save();
+
+        Artisan::call(CleanErrorsCommand::class);
+
+        $this->assertEquals(1, Error::query()->count());
+        $this->assertEquals('url3', Error::query()->first()->url());
+    }
 }
