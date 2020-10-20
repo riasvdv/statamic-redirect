@@ -43,7 +43,7 @@ class Error
 
     public function latest(): ?int
     {
-        return collect($this->hits())->sortBy('timestamp')->pluck('timestamp')->last();
+        return collect($this->hits() ?? [])->sortBy('timestamp')->pluck('timestamp')->last();
     }
 
     public function addHit(int $timestamp, array $data = [])

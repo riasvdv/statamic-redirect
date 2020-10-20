@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.3.1 (2020-10-20)
+
+## What's fixed
+- Fix exception when an error has no hits
+
 ## 1.3.0 (2020-10-16)
 
 ### What's new

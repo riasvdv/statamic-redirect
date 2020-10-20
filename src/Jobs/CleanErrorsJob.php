@@ -22,7 +22,7 @@ class CleanErrorsJob
 
         ErrorFacade::all()
             ->each(function (Error $error) use ($olderThan) {
-                $originalHits = $error->hits();
+                $originalHits = $error->hits() ?? [];
 
                 $hits = array_filter($originalHits, function (array $hit) use ($olderThan) {
                     return Carbon::parse($hit['timestamp']) > now()->sub($olderThan);
@@ -48,7 +48,7 @@ class CleanErrorsJob
 
         ErrorFacade::all()
             ->sortBy(function (Error $error) {
-                $latestHit = collect($error->hits())->sortByDesc('timestamp')->first();
+                $latestHit = collect($error->hits() ?? [])->sortByDesc('timestamp')->first();
 
                 if (! $latestHit) {
                     return null;

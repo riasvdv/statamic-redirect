@@ -18,7 +18,7 @@ class DashboardController
         $hits = ErrorFacade::all()->flatMap(function (Error $error) {
             return array_map(function (array $hit) {
                 return $hit['timestamp'];
-            }, $error->hits());
+            }, $error->hits() ?? []);
         });
 
         $notFoundMonth = Cache::remember(self::class . 'getStatsPastMonth', now()->minutes(10), function () use ($hits) {
