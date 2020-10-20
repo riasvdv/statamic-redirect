@@ -67,6 +67,7 @@ class TestCase extends OrchestraTestCase
     {
         return [
             \Statamic\Providers\StatamicServiceProvider::class,
+            \Wilderborn\Partyline\ServiceProvider::class,
             \Rias\StatamicRedirect\RedirectServiceProvider::class,
         ];
     }
