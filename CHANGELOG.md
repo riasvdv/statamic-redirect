@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.3.2 (2021-01-21)
+
+## What's fixed
+- Fix composer dependencies
+
 ## 1.3.1 (2020-10-20)
 
 ## What's fixed
