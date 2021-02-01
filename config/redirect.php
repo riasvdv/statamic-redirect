@@ -9,6 +9,11 @@ return [
     'create_entry_redirects' => true,
 
     /**
+     * Controls whether Redirect logs 404 errors
+     */
+    'log_errors' => true,
+
+    /**
      * Should error logs be cleaned? Make sure your schedule is running.
      */
     'clean_errors' => true,

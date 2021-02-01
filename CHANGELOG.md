@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.4.0 (2021-02-01)
+
+## What's new
+- You can now disable logging of errors by setting the `log_errors` config value to `false`
+
 ## 1.3.2 (2021-01-21)
 
 ## What's fixed

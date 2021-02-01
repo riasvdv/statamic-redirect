@@ -92,15 +92,23 @@ class RedirectServiceProvider extends AddonServiceProvider
     protected function bootAddonNav()
     {
         Nav::extend(function ($nav) {
+            $items = [];
+
+            if (config('statamic.redirect.log_errors')) {
+                $items['Dashboard'] = cp_route('redirect.index');
+            }
+
+            $items['Redirects'] = cp_route('redirect.redirects.index');
+
             $nav->tools('Redirect')
-                ->route('redirect.index')
+                ->route(config('statamic.redirect.log_errors')
+                    ? 'redirect.index'
+                    : 'redirect.redirects.index'
+                )
                 ->icon('git')
                 ->active('redirect')
                 ->can('view redirects')
-                ->children([
-                    'Dashboard' => cp_route('redirect.index'),
-                    'Redirects' => cp_route('redirect.redirects.index'),
-                ]);
+                ->children($items);
         });
 
         return $this;

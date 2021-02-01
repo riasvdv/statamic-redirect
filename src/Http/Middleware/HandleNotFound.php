@@ -27,14 +27,20 @@ class HandleNotFound
 
         try {
             $url = Str::start($request->path(), '/');
-            $error = $this->createError($request, $url);
+            $logErrors = config('statamic.redirect.log_errors');
+
+            if ($logErrors) {
+                $error = $this->createError($request, $url);
+            }
 
             CleanErrorsJob::dispatchIf(config('statamic.redirect.clean_errors_on_save'));
 
             $this->cachedRedirects = Cache::get('statamic.redirect.redirects', []);
 
             if (isset($this->cachedRedirects[$url])) {
-                $this->markErrorHandled($error, $this->cachedRedirects[$url]['destination']);
+                if ($logErrors) {
+                    $this->markErrorHandled($error, $this->cachedRedirects[$url]['destination']);
+                }
 
                 return redirect(
                     $this->cachedRedirects[$url]['destination'],
@@ -47,7 +53,10 @@ class HandleNotFound
             }
 
             $this->cacheNewRedirect($redirect, $url);
-            $this->markErrorHandled($error, $redirect->destination());
+
+            if ($logErrors) {
+                $this->markErrorHandled($error, $redirect->destination());
+            }
 
             return redirect($redirect->destination(), $redirect->type());
         } catch (\Exception $e) {
