@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.4.2 (2021-02-17)
+### What's Fixed
+- Fix pagination on redirects listing
+
 ## 1.4.1 (2021-02-17)
 ### What's Fixed
 - Account for trailing slashes in redirects

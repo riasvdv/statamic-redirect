@@ -101,15 +101,15 @@
             </template>
           </data-list-table>
         </div>
+        <data-list-pagination
+          class="mt-3"
+          :resource-meta="meta"
+          :per-page="perPage"
+          @page-selected="selectPage"
+          @per-page-changed="changePerPage"
+        />
       </div>
     </data-list>
-    <data-list-pagination
-      class="mt-3"
-      :resource-meta="meta"
-      :per-page="perPage"
-      @page-selected="selectPage"
-      @per-page-changed="changePerPage"
-    />
   </div>
 </template>
 
