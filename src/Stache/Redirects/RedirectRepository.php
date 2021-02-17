@@ -54,7 +54,9 @@ class RedirectRepository implements RepositoryContract
                     }
                 }
 
-                if (strcasecmp(Str::start($redirect->source(), '/'), Str::start($url, '/')) === 0) {
+                if (strcasecmp(Str::start($redirect->source(), '/'), Str::start($url, '/')) === 0
+                    || strcasecmp(Str::start($redirect->source(), '/'), Str::start($url . '/', '/')) === 0
+                ) {
                     return $redirect;
                 }
 
