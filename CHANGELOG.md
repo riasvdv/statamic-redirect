@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.4.3 (2021-03-10)
+### What's Fixed
+- Fixed an issue where query parameters were ignored
+
 ## 1.4.2 (2021-02-17)
 ### What's Fixed
 - Fix pagination on redirects listing

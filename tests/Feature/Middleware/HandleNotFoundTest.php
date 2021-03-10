@@ -76,6 +76,32 @@ class HandleNotFoundTest extends TestCase
     }
 
     /** @test * */
+    public function it_handles_query_parameters()
+    {
+        Redirect::make()
+            ->source('/abc?lang=nl')
+            ->destination('/nl')
+            ->save();
+
+        Redirect::make()
+            ->source('/abc?lang=fr')
+            ->destination('/fr')
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/abc', 'GET', ['lang' => 'nl']), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect(url('/nl')));
+
+        $response = $this->middleware->handle(Request::create('/abc', 'GET', ['lang' => 'fr']), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect(url('/fr')));
+    }
+
+    /** @test * */
     public function it_can_redirect_to_external_urls()
     {
         Redirect::make()

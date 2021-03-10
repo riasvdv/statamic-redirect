@@ -26,7 +26,7 @@ class HandleNotFound
         }
 
         try {
-            $url = Str::start($request->path(), '/');
+            $url = Str::start($request->getRequestUri(), '/');
             $logErrors = config('statamic.redirect.log_errors');
 
             if ($logErrors) {
