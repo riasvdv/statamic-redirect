@@ -76,6 +76,27 @@ class HandleNotFoundTest extends TestCase
     }
 
     /** @test * */
+    public function it_handles_401_redirects()
+    {
+        Redirect::make()
+            ->source('/abc')
+            ->destination('/def')
+            ->type(410)
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/abc'), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertEquals(1, Error::query()->count());
+        $this->assertEquals('/abc', Error::query()->first()->url());
+        $this->assertEquals(true, Error::query()->first()->handled());
+
+        $this->assertEquals(410, $response->getStatusCode());
+        $this->assertEquals('', $response->content());
+    }
+
+    /** @test * */
     public function it_handles_query_parameters()
     {
         Redirect::make()
@@ -115,6 +136,22 @@ class HandleNotFoundTest extends TestCase
         });
 
         $this->assertTrue($response->isRedirect('https://google.com?s=a'));
+    }
+
+    /** @test * */
+    public function it_can_redirect_the_homepage()
+    {
+        Redirect::make()
+            ->source('/')
+            ->destination('/blog')
+            ->matchType(MatchTypeEnum::EXACT)
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/'), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect(url('/blog')));
     }
 
     /** @test * */

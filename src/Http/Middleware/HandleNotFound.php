@@ -58,6 +58,10 @@ class HandleNotFound
                 $this->markErrorHandled($error, $redirect->destination());
             }
 
+            if ((string) $redirect->type() === (string) 410) {
+                return response()->noContent(410);
+            }
+
             return redirect($redirect->destination(), $redirect->type());
         } catch (\Exception $e) {
             /*
