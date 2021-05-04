@@ -10,6 +10,7 @@ use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
 use Rias\StatamicRedirect\Jobs\CleanErrorsJob;
 use Statamic\Support\Str;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandleNotFound
 {
@@ -59,11 +60,15 @@ class HandleNotFound
             }
 
             if ((string) $redirect->type() === (string) 410) {
-                return response()->noContent(410);
+                abort(410);
             }
 
             return redirect($redirect->destination(), $redirect->type());
         } catch (\Exception $e) {
+            if ($e instanceof HttpException && $e->getStatusCode() === 410) {
+                throw $e;
+            }
+
             /*
              * If something goes wrong when logging the error
              * we don't want to crash the application, so

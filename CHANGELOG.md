@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.4.5 (2021-05-03)
+### What's Fixed
+- Actually fix handling of the 410 Gone status
+
 ## 1.4.4 (2021-05-03)
 ### What's Fixed
 - Fix handling of the 410 Gone status

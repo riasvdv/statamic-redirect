@@ -9,6 +9,7 @@ use Rias\StatamicRedirect\Facades\Error;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Rias\StatamicRedirect\Tests\TestCase;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandleNotFoundTest extends TestCase
 {
@@ -78,22 +79,25 @@ class HandleNotFoundTest extends TestCase
     /** @test * */
     public function it_handles_401_redirects()
     {
+        $this->withExceptionHandling();
+
         Redirect::make()
             ->source('/abc')
             ->destination('/def')
             ->type(410)
             ->save();
 
-        $response = $this->middleware->handle(Request::create('/abc'), function () {
-            return (new Response('', 404));
-        });
+        try {
+            $this->middleware->handle(Request::create('/abc'), function () {
+                return (new Response('', 404));
+            });
+        } catch (HttpException $e) {
+            $this->assertEquals(410, $e->getStatusCode());
+        }
 
         $this->assertEquals(1, Error::query()->count());
         $this->assertEquals('/abc', Error::query()->first()->url());
         $this->assertEquals(true, Error::query()->first()->handled());
-
-        $this->assertEquals(410, $response->getStatusCode());
-        $this->assertEquals('', $response->content());
     }
 
     /** @test * */
