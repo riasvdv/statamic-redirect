@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.4.6 (2021-05-06)
+### What's Fixed
+- Fix 410 status when a redirect is cached
+
 ## 1.4.5 (2021-05-03)
 ### What's Fixed
 - Actually fix handling of the 410 Gone status

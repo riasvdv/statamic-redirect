@@ -43,6 +43,10 @@ class HandleNotFound
                     $this->markErrorHandled($error, $this->cachedRedirects[$url]['destination']);
                 }
 
+                if ((string) $this->cachedRedirects[$url]['type'] === (string) 410) {
+                    abort(410);
+                }
+
                 return redirect(
                     $this->cachedRedirects[$url]['destination'],
                     $this->cachedRedirects[$url]['type'],
