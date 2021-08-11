@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.4.7 (2021-08-11)
+### What's Fixed
+- Fix an issue with deleting redirects
+
 ## 1.4.6 (2021-05-06)
 ### What's Fixed
 - Fix 410 status when a redirect is cached
