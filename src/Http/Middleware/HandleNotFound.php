@@ -28,7 +28,7 @@ class HandleNotFound
 
         try {
             $url = Str::start($request->getRequestUri(), '/');
-            $logErrors = config('statamic.redirect.log_errors');
+            $logErrors = config('statamic.redirect.log_errors', true);
 
             if ($logErrors) {
                 $error = $this->createError($request, $url);
@@ -92,11 +92,14 @@ class HandleNotFound
             $error = ErrorFacade::make()->url($url);
         }
 
-        $error->addHit(now()->timestamp, [
-            'userAgent' => $request->userAgent(),
-            'ip' => $request->ip(),
-            'referer' => $request->header('referer'),
-        ]);
+        if (config('statamic.redirect.log_hits', true)) {
+            $error->addHit(now()->timestamp, [
+                'userAgent' => $request->userAgent(),
+                'ip' => $request->ip(),
+                'referer' => $request->header('referer'),
+            ]);
+        }
+
         $error->save();
 
         return $error;

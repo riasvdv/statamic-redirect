@@ -21,13 +21,21 @@ class ErrorsCollection extends ResourceCollection
 
     private function setColumns()
     {
-        $columns = new Columns([
+        $columns = [
             Column::make('url')->label('Path'),
-            Column::make('hitsCount')->label('Hits'),
+        ];
+
+        if (config('statamic.redirect.log_hits', true)) {
+            $columns[] = Column::make('hitsCount')->label('Hits');
+        }
+
+        $columns = array_merge($columns, [
             Column::make('latest')->label('Latest error'),
             Column::make('handled')->label('Handled'),
             Column::make('handledDestination')->label('Destination'),
         ]);
+
+        $columns = new Columns($columns);
 
         if ($key = $this->columnPreferenceKey) {
             $columns->setPreferred($key);

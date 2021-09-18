@@ -14,6 +14,11 @@ return [
     'log_errors' => true,
 
     /**
+     * Controls whether Redirect logs individual hits
+     */
+    'log_hits' => true,
+
+    /**
      * Should error logs be cleaned? Make sure your schedule is running.
      */
     'clean_errors' => true,

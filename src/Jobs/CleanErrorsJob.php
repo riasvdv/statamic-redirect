@@ -28,7 +28,7 @@ class CleanErrorsJob
                     return Carbon::parse($hit['timestamp']) > now()->sub($olderThan);
                 });
 
-                if (! count($hits)) {
+                if (! count($hits) && config('statamic.redirect.log_hits', true)) {
                     $error->delete();
 
                     return;

@@ -32,6 +32,10 @@ php artisan vendor:publish --tag=statamic-redirect-config
 
 By default, Statamic Redirect will create error logs, you can disable this by setting the `log_errors` config value to `false`.
 
+### Logging individual hits
+
+By default, Statamic Redirect will also keep individual hits for each error, you can disable this by setting the `log_hits` config value to `false`.
+
 ### Create entry redirects
 
 By default, Statamic Redirect will create redirects when the URI of an entry changes. You can disable this by setting the `create_entry_redirects` config value to `false`.

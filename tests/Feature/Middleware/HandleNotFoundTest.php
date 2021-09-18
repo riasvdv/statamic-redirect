@@ -195,4 +195,21 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(0, Error::query()->count());
         $this->assertEquals(404, $response->status());
     }
+
+    /** @test * */
+    public function it_doesnt_log_hits_if_log_hits_is_false()
+    {
+        config()->set('statamic.redirect.log_errors', true);
+        config()->set('statamic.redirect.log_hits', false);
+
+        $request = Request::create('/abc');
+
+        $response = $this->middleware->handle($request, function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertEquals(1, Error::query()->count());
+        $this->assertEquals(0, Error::query()->first()->hitsCount());
+        $this->assertEquals(404, $response->status());
+    }
 }
