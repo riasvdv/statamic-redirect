@@ -53,7 +53,7 @@ class Error
 
     public function latest(): ?int
     {
-        return collect($this->hits() ?? [])->sortBy('timestamp')->pluck('timestamp')->last();
+        return collect($this->hits() ?? [])->sortBy('timestamp')->pluck('timestamp')->last() ?? $this->lastSeenAt();
     }
 
 
