@@ -10,7 +10,9 @@ use Statamic\Support\Traits\FluentlyGetsAndSets;
 
 class Redirect
 {
-    use FluentlyGetsAndSets, ExistsAsFile, TracksQueriedColumns;
+    use FluentlyGetsAndSets;
+    use ExistsAsFile;
+    use TracksQueriedColumns;
 
     /** @var string|int|null */
     protected $id;

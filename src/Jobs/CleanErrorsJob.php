@@ -14,7 +14,10 @@ use Statamic\Facades\Stache;
 
 class CleanErrorsJob
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public function handle()
     {
