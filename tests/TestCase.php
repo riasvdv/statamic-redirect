@@ -8,7 +8,6 @@ use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Rias\StatamicRedirect\Facades\Error;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Statamic\Extend\Manifest;
-use Statamic\Facades\Role;
 use Statamic\Statamic;
 
 class TestCase extends OrchestraTestCase
