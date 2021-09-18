@@ -31,10 +31,6 @@ class RedirectServiceProvider extends AddonServiceProvider
         'cp' => __DIR__.'/../routes/cp.php',
     ];
 
-    protected $commands = [
-        CleanErrorsCommand::class,
-    ];
-
     protected $listen = [
         EntrySaving::class => [
             CacheOldUri::class,
@@ -64,6 +60,10 @@ class RedirectServiceProvider extends AddonServiceProvider
     public function boot()
     {
         parent::boot();
+
+        $this->commands([
+            CleanErrorsCommand::class,
+        ]);
 
         /** Remove old format of errors @todo: Remove in future version */
         Folder::delete(storage_path('redirect/errors/2020'));

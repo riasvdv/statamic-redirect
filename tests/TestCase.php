@@ -30,35 +30,6 @@ class TestCase extends OrchestraTestCase
     }
 
     /**
-     * Sign in a Statamic user
-     * @param array $permissions
-     * @return mixed
-     */
-    protected function asUser($permissions = [])
-    {
-        $role = Role::make()->handle('test')->title('Test')->addPermission($permissions)->save();
-
-        $user = \Statamic\Facades\User::make();
-        $user->id(1)->email('hey@rias.be')->assignRole($role);
-        $this->be($user);
-
-        return $user;
-    }
-
-    /**
-     * Sign in a Statamic user as admin
-     * @return mixed
-     */
-    protected function asAdmin()
-    {
-        $user = \Statamic\Facades\User::make();
-        $user->id(1)->email('hey@rias.be')->makeSuper();
-        $this->be($user);
-
-        return $user;
-    }
-
-    /**
      * Load package service provider
      * @param \Illuminate\Foundation\Application $app
      * @return array
@@ -127,7 +98,7 @@ class TestCase extends OrchestraTestCase
             return require_once realpath(__DIR__ . '/../routes/cp.php');
         });
 
-        // Define butik config settings for all of our tests
+        // Define redirect config settings for all of our tests
         $app['config']->set("statamic.redirect", require(__DIR__ . "/../config/redirect.php"));
     }
 }
