@@ -65,6 +65,8 @@ class CleanErrorsCommandTest extends TestCase
         Error::make()->url('url2')->addHit(now()->subHour()->timestamp)->save();
         Error::make()->url('url3')->addHit(now()->timestamp)->save();
 
+        $this->assertEquals(3, Error::query()->count());
+
         Artisan::call(CleanErrorsCommand::class);
 
         $this->assertEquals(1, Error::query()->count());
