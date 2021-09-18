@@ -100,6 +100,7 @@ class HandleNotFound
             ]);
         }
 
+        $error->lastSeenAt(now()->timestamp);
         $error->save();
 
         return $error;

@@ -2,6 +2,8 @@
 
 namespace Rias\StatamicRedirect\Data;
 
+use Carbon\CarbonInterface;
+use Illuminate\Support\Facades\Date;
 use Statamic\Data\ExistsAsFile;
 use Statamic\Data\TracksQueriedColumns;
 use Statamic\Facades\Stache;
@@ -28,6 +30,9 @@ class Error
     /** @var string|null */
     protected $handledDestination = null;
 
+    /** @var int|null */
+    protected $lastSeenAt = null;
+
     public function id($id = null)
     {
         return $this->fluentlyGetOrSet('id')->args(func_get_args());
@@ -43,13 +48,23 @@ class Error
         return $this->fluentlyGetOrSet('hits')->args(func_get_args());
     }
 
+    public function lastSeenAt(int $lastSeenAt = null)
+    {
+        return $this->fluentlyGetOrSet('lastSeenAt')->args(func_get_args());
+    }
+
     public function latest(): ?int
     {
         return collect($this->hits() ?? [])->sortBy('timestamp')->pluck('timestamp')->last();
     }
 
+
     public function addHit(int $timestamp, array $data = [])
     {
+        if ($this->lastSeenAt() < $timestamp) {
+            $this->lastSeenAt($timestamp);
+        }
+
         $this->hits[] = [
             'timestamp' => $timestamp,
             'data' => $data,
@@ -113,6 +128,7 @@ class Error
             'latest' => $this->latest(),
             'handled' => $this->handled(),
             'handledDestination' => $this->handledDestination(),
+            'lastSeenAt' => $this->lastSeenAt(),
         ];
     }
 

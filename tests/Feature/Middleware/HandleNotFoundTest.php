@@ -4,6 +4,7 @@ namespace Rias\StatamicRedirect\Tests\Feature\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Facades\Error;
 use Rias\StatamicRedirect\Facades\Redirect;
@@ -36,6 +37,8 @@ class HandleNotFoundTest extends TestCase
     /** @test * */
     public function it_creates_an_error_when_the_response_is_404_and_saves_metadata()
     {
+        Carbon::setTestNow(now());
+
         $request = Request::create('/abc');
         $request->headers->add([
             'referer' => 'some-referer',
@@ -50,6 +53,7 @@ class HandleNotFoundTest extends TestCase
         tap(Error::query()->first(), function (\Rias\StatamicRedirect\Data\Error $error) {
             $this->assertEquals('/abc', $error->url());
             $this->assertEquals(1, count($error->hits()));
+            $this->assertEquals(now()->timestamp, $error->lastSeenAt());
             $this->assertEquals('Symfony', $error->hits()[0]['data']['userAgent']);
             $this->assertEquals('127.0.0.1', $error->hits()[0]['data']['ip']);
             $this->assertEquals('some-referer', $error->hits()[0]['data']['referer']);

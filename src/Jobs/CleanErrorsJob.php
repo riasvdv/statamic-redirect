@@ -23,25 +23,27 @@ class CleanErrorsJob
     {
         $olderThan = CarbonInterval::createFromDateString(config('statamic.redirect.clean_older_than', '1 month'));
 
-        ErrorFacade::all()
-            ->each(function (Error $error) use ($olderThan) {
-                $originalHits = $error->hits() ?? [];
+        if (config('statamic.redirect.log_hits', true)) {
+            ErrorFacade::all()
+                ->each(function (Error $error) use ($olderThan) {
+                    $originalHits = $error->hits() ?? [];
 
-                $hits = array_filter($originalHits, function (array $hit) use ($olderThan) {
-                    return Carbon::parse($hit['timestamp']) > now()->sub($olderThan);
+                    $hits = array_filter($originalHits, function (array $hit) use ($olderThan) {
+                        return Carbon::parse($hit['timestamp']) > now()->sub($olderThan);
+                    });
+
+                    if (! count($hits)) {
+                        $error->delete();
+
+                        return;
+                    }
+
+                    if (count($originalHits) !== count($hits)) {
+                        $error->hits($hits);
+                        $error->save();
+                    }
                 });
-
-                if (! count($hits) && config('statamic.redirect.log_hits', true)) {
-                    $error->delete();
-
-                    return;
-                }
-
-                if (count($originalHits) !== count($hits)) {
-                    $error->hits($hits);
-                    $error->save();
-                }
-            });
+        }
 
         if (ErrorFacade::all()->count() <= config('statamic.redirect.keep_unique_errors')) {
             return;
@@ -54,7 +56,7 @@ class CleanErrorsJob
                 $latestHit = collect($error->hits() ?? [])->sortByDesc('timestamp')->first();
 
                 if (! $latestHit) {
-                    return null;
+                    return $error->lastSeenAt();
                 }
 
                 return $latestHit['timestamp'];
@@ -63,7 +65,5 @@ class CleanErrorsJob
             ->each(function (Error $error) {
                 $error->delete();
             });
-
-        Stache::refresh();
     }
 }
