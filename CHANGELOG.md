@@ -1,5 +1,16 @@
 # Release Notes
 
+## 1.5.0 (2021-09-18)
+## What's new
+- Errors are now stored in folders according to their id, similar to how Laravel stores its cache files. This should improve performance.
+- You can now disable logging individual hits on each error.
+
+### What's Fixed
+- The listing now breaks up long urls.
+- Corrupted yaml files won't break the functionality anymore. The dashboard & clean command will keep working.
+- An error's hits can now be 0.
+- Fix the handled destination not being shown in the error listing.
+
 ## 1.4.7 (2021-08-11)
 ### What's Fixed
 - Fix an issue with deleting redirects
