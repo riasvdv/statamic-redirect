@@ -5,3 +5,4 @@ composer.lock
 /vendor
 mix-manifest.json
 .php_cs.cache
+.php-cs-fixer.cache
