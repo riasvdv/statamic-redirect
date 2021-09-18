@@ -29,6 +29,19 @@ class TestCase extends OrchestraTestCase
     }
 
     /**
+     * Sign in a Statamic user as admin
+     * @return mixed
+     */
+    protected function asAdmin()
+    {
+        $user = \Statamic\Facades\User::make();
+        $user->id(1)->email('hey@rias.be')->makeSuper();
+        $this->be($user);
+
+        return $user;
+    }
+
+    /**
      * Load package service provider
      * @param \Illuminate\Foundation\Application $app
      * @return array

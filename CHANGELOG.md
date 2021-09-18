@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.6.0 (2021-09-18)
+## What's new
+- Import functionality! You can now import redirects from a CSV file.
+
 ## 1.5.0 (2021-09-18)
 ## What's new
 - Errors are now stored in folders according to their id, similar to how Laravel stores its cache files. This should improve performance.
