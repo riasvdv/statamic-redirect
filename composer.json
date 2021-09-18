@@ -14,7 +14,7 @@
         "ext-json": "*",
         "php": "^7.3|^7.4|^8.0",
         "statamic/cms": "^3.0",
-        "spatie/simple-excel": "^1.14"
+        "spatie/simple-excel": "^1.9"
     },
     "require-dev": {
         "orchestra/testbench": "^5.0",
