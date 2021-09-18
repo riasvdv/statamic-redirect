@@ -2,6 +2,7 @@
 
 namespace Rias\StatamicRedirect\Stache\Errors;
 
+use Exception;
 use Rias\StatamicRedirect\Facades\Error;
 use Statamic\Facades\YAML;
 use Statamic\Stache\Stores\BasicStore;
@@ -20,7 +21,15 @@ class ErrorStore extends BasicStore
 
     public function makeItemFromFile($path, $contents)
     {
-        $data = YAML::file($path)->parse($contents);
+        try {
+            $data = YAML::file($path)->parse($contents);
+        } catch (Exception $e) {
+            $filename = pathinfo($path, PATHINFO_FILENAME);
+            unlink($path);
+            $this->forgetItem($filename);
+            $this->forgetPath($filename);
+            $data = ['id' => 'error'];
+        }
 
         if (! $id = array_pull($data, 'id')) {
             $idGenerated = true;
