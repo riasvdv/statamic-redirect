@@ -10,7 +10,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
-use Statamic\Facades\Stache;
 
 class CleanErrorsJob
 {

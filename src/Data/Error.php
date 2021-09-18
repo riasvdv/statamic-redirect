@@ -2,8 +2,6 @@
 
 namespace Rias\StatamicRedirect\Data;
 
-use Carbon\CarbonInterface;
-use Illuminate\Support\Facades\Date;
 use Statamic\Data\ExistsAsFile;
 use Statamic\Data\TracksQueriedColumns;
 use Statamic\Facades\Stache;
