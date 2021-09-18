@@ -24,11 +24,11 @@ class ErrorStore extends BasicStore
         try {
             $data = YAML::file($path)->parse($contents);
         } catch (Exception $e) {
-            $filename = pathinfo($path, PATHINFO_FILENAME);
+            $uuid = pathinfo($path, PATHINFO_FILENAME);
             unlink($path);
-            $this->forgetItem($filename);
-            $this->forgetPath($filename);
-            $data = ['id' => 'error'];
+            $this->forgetItem($uuid);
+            $this->forgetPath($uuid);
+            $data = ['id' => $uuid];
         }
 
         if (! $id = array_pull($data, 'id')) {
@@ -40,6 +40,7 @@ class ErrorStore extends BasicStore
             ->id($id)
             ->url(array_pull($data, 'url'))
             ->handled(array_pull($data, 'handled'))
+            ->handledDestination(array_pull($data, 'handledDestination'))
             ->hits(array_pull($data, 'hits'))
             ->initialPath($path);
 

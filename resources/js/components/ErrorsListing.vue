@@ -83,6 +83,9 @@
                 class="bg-red block h-3 w-2 mr-auto rounded-full"
               ></div>
             </template>
+            <template slot="cell-handledDestination" slot-scope="{ row: error }">
+              <span style="word-break: break-all">{{ error.handledDestination }}</span>
+            </template>
             <template slot="actions" slot-scope="{ row: error, index }">
               <a
                 v-if="!error.handled"

@@ -42,8 +42,7 @@ class ErrorsCollection extends ResourceCollection
 
         return [
             'data' => $this->collection->each(function ($error) {
-                $error
-                    ->columns($this->columns);
+                $error->columns($this->columns);
             }),
 
             'meta' => [
