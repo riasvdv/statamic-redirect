@@ -77,8 +77,12 @@ class Error
 
     public function path()
     {
-        return vsprintf('%s/%s.yaml', [
+        $id = $this->id();
+
+        return vsprintf('%s/%s/%s/%s.yaml', [
             rtrim(Stache::store('errors')->directory(), '/'),
+            $id[0] . $id[1],
+            $id[2] . $id[3],
             $this->id(),
         ]);
     }
