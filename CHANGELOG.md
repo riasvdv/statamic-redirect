@@ -3,6 +3,7 @@
 ## 1.6.0 (2021-09-18)
 ## What's new
 - Import functionality! You can now import redirects from a CSV file.
+- We now require at least PHP 7.4.
 
 ## 1.5.0 (2021-09-18)
 ## What's new
