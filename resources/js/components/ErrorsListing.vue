@@ -61,7 +61,7 @@
             @sorted="sorted"
           >
             <template slot="cell-url" slot-scope="{ row: error }">
-              <span :title="
+              <span style="word-break: break-all" :title="
                 'User agent: ' + (error.hits[error.hits.length - 1].data.userAgent || 'n/a') + '\n' +
                 'IP: ' + (error.hits[error.hits.length - 1].data.ip || 'n/a') + '\n' +
                 'Referer: ' + (error.hits[error.hits.length - 1].data.referer || 'n/a') + '\n'
