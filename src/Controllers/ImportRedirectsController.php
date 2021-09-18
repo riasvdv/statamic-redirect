@@ -4,11 +4,8 @@ namespace Rias\StatamicRedirect\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Rias\StatamicRedirect\Blueprints\RedirectBlueprint;
 use Rias\StatamicRedirect\Facades\Redirect;
-use Rias\StatamicRedirect\Http\Resources\ListedRedirect;
 use Spatie\SimpleExcel\SimpleExcelReader;
-use Statamic\Facades\Scope;
 
 class ImportRedirectsController
 {
