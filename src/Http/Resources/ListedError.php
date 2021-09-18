@@ -27,7 +27,7 @@ class ListedError extends JsonResource
             'handledDestination' => $error->handledDestination(),
             'latest' => $error->latest(),
             'hits' => $error->hits(),
-            'hitsCount' => count($error->hits()),
+            'hitsCount' => count($error->hits() ?? []),
         ];
     }
 }
