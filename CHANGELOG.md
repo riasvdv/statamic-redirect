@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.6.1 (2021-09-20)
+## What's fixed
+- Fix route cache issue with duplicate name
+
 ## 1.6.0 (2021-09-18)
 ## What's new
 - Import functionality! You can now import redirects from a CSV file.
