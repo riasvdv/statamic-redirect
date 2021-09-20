@@ -16,7 +16,7 @@ Route::get('redirect/api/redirects', ['\\' . ApiRedirectController::class, 'inde
 Route::prefix('redirect/redirects')->group(function () {
     Route::get('/', ['\\' . RedirectController::class, 'index'])->name('redirect.redirects.index');
     Route::get('/import', ['\\' . ImportRedirectsController::class, 'index'])->name('redirect.redirects.import');
-    Route::post('/import', ['\\' . ImportRedirectsController::class, 'store'])->name('redirect.redirects.import');
+    Route::post('/import', ['\\' . ImportRedirectsController::class, 'store'])->name('redirect.redirects.handleImport');
     Route::get('/create', ['\\' . RedirectController::class, 'create'])->name('redirect.redirects.create');
     Route::get('/{id}', ['\\' . RedirectController::class, 'edit'])->name('redirect.redirects.edit');
     Route::post('/{id}', ['\\' . RedirectController::class, 'update'])->name('redirect.redirects.update');
