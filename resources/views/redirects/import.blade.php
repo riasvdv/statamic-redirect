@@ -4,7 +4,7 @@
 @section('wrapper_class', 'max-w-3xl')
 
 @section('content')
-    <form action="{{ cp_route('redirect.redirects.import') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ cp_route('redirect.redirects.handleImport') }}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
 
         <header class="mb-3">
