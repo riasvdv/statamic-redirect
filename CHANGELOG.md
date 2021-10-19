@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.7.0 (2021-10-19)
+## What's new
+- Allows to customize the store paths (#27)
+
 ## 1.6.1 (2021-09-20)
 ## What's fixed
 - Fix route cache issue with duplicate name
