@@ -53,4 +53,20 @@ return [
      * \Rias\StatamicRedirect\Contracts\RedirectRepository
      */
     'redirect_repository' => \Rias\StatamicRedirect\Stache\Redirects\RedirectRepository::class,
+
+    'paths' => [
+        /*
+         * Customize where on filesystem the redirects is being stored
+         * Useful when using a non-conventional setup where data not
+         * be inside the usual storage/redirect/errors folder
+         */
+        'redirect_store' => storage_path('redirect/errors'),
+
+        /*
+         * Customize where on filesystem the error logs are being persisted
+         * Useful when using a non-conventional setup where data should
+         * not be in the the usual content/redirects folder
+         */
+        'error_store' => base_path('content/redirects'),
+    ]
 ];

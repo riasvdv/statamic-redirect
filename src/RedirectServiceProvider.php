@@ -118,11 +118,11 @@ class RedirectServiceProvider extends AddonServiceProvider
     protected function bootStores()
     {
         $errorStore = new ErrorStore();
-        $errorStore->directory(storage_path('redirect/errors'));
+        $errorStore->directory(config('statamic.redirect.paths.error_store', storage_path('redirect/errors')));
         app(Stache::class)->registerStore($errorStore);
 
         $redirectStore = new RedirectStore();
-        $redirectStore->directory(base_path('content/redirects'));
+        $redirectStore->directory(config('statamic.redirect.paths.redirect_store', base_path('content/redirects')));
         app(Stache::class)->registerStore($redirectStore);
 
         return $this;
