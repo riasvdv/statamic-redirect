@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.7.1 (2021-10-25)
+## What's fixed
+- Fix wrong default paths
+
 ## 1.7.0 (2021-10-19)
 ## What's new
 - Allows to customize the store paths (#27)
