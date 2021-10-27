@@ -12,6 +12,10 @@
 ## What's fixed
 - Fix route cache issue with duplicate name
 
+## 1.6.1 (2021-10-27)
+## What's fixed
+- Fixed an isssue when trying to delete redirects on a paginated listing.
+
 ## 1.6.0 (2021-09-18)
 ## What's new
 - Import functionality! You can now import redirects from a CSV file.

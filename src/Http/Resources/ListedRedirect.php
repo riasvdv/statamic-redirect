@@ -22,11 +22,13 @@ class ListedRedirect extends JsonResource
 
         return [
             'id' => $redirect->id(),
+            'title' => "{$redirect->source()} --> {$redirect->destination()}",
             'enabled' => $redirect->enabled(),
             'source' => $redirect->source(),
             'destination' => $redirect->destination(),
             'type' => $redirect->type(),
             'match_type' => $redirect->matchType(),
+            'delete_url' => cp_route('redirect.redirects.delete', $redirect->id()),
         ];
     }
 }

@@ -82,22 +82,17 @@
                   :redirect="cp_url('redirect/redirects/' + redirect.id)"
                 />
                 <dropdown-item
-                  :text="__('Delete')"
-                  class="warning"
-                  @click="confirmDeleteRow(redirect.id, index)"
-                />
+                    :text="__('Delete')"
+                    class="warning"
+                    @click="$refs[`deleter_${redirect.id}`].confirm()"
+                >
+                  <resource-deleter
+                      :ref="`deleter_${redirect.id}`"
+                      :resource="redirect"
+                      @deleted="removeRow(redirect.id);">
+                  </resource-deleter>
+                </dropdown-item>
               </dropdown-list>
-
-              <confirmation-modal
-                v-if="deletingRow !== false"
-                :title="deletingModalTitle"
-                :bodyText="__('Are you sure you want to delete this redirect?')"
-                :buttonText="__('Delete')"
-                :danger="true"
-                @confirm="deleteRow('/redirect/redirects')"
-                @cancel="cancelDeleteRow"
-              >
-              </confirmation-modal>
             </template>
           </data-list-table>
         </div>
@@ -114,11 +109,10 @@
 </template>
 
 <script>
-import DeletesListingRow from "./DeletesListingRow.js";
 import Listing from "../../../vendor/statamic/cms/resources/js/components/Listing";
 
 export default {
-  mixins: [Listing, DeletesListingRow],
+  mixins: [Listing],
 
   data() {
     return {
@@ -128,5 +122,21 @@ export default {
       columns: this.columns,
     };
   },
+
+  methods: {
+    removeRow(row) {
+      let id = row.id;
+      let i = _.indexOf(this.items, _.findWhere(this.items, { id }));
+      this.items.splice(i, 1);
+      if (this.items.length === 0) location.reload();
+
+      const self = this;
+      Object.keys(this.$refs).forEach(function (key) {
+        if (key.includes('deleter_') && self.$refs[key] !== undefined) {
+          self.$refs[key].cancel();
+        }
+      })
+    },
+  }
 };
 </script>
