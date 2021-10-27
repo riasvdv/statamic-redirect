@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.7.2 (2021-10-27)
+## What's fixed
+- Fixed an isssue when trying to delete redirects on a paginated listing.
+
 ## 1.7.1 (2021-10-25)
 ## What's fixed
 - Fix wrong default paths
@@ -11,10 +15,6 @@
 ## 1.6.1 (2021-09-20)
 ## What's fixed
 - Fix route cache issue with duplicate name
-
-## 1.6.1 (2021-10-27)
-## What's fixed
-- Fixed an isssue when trying to delete redirects on a paginated listing.
 
 ## 1.6.0 (2021-09-18)
 ## What's new
