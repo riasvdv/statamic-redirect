@@ -14,4 +14,7 @@ class Redirect extends Model
     protected $casts = [
         'enabled' => 'boolean',
     ];
+
+    protected $keyType = 'uuid';
+    protected $primaryKey = 'uuid';
 }
