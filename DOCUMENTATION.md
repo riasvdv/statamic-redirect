@@ -55,3 +55,13 @@ If you want to use a different storage method for the Errors or Redirects, you c
 These should implement `\Rias\StatamicRedirect\Repositories\ErrorRepository` and `\Rias\StatamicRedirect\Repositories\RedirectRepository` respectively.
 
 In the future this addon will come with some extra Repositories by default, without a need to code your own.
+
+You can switch the storing & retrieving of Errors & Redirects to the Eloquent repositories provided, this can be useful if you're logging a lot of errors & hits.
+
+```php
+// config/statamic/redirect.php
+
+'error_repository' => \Rias\StatamicRedirect\Eloquent\Errors\EloquentErrorRepository::class,
+
+'redirect_repository' => \Rias\StatamicRedirect\Eloquent\Redirects\EloquentRedirectRepository::class,
+```
