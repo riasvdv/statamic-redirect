@@ -44,7 +44,7 @@ class EloquentErrorRepository implements RepositoryContract
         return Error::fromModel($error);
     }
 
-    /** @var Error $error */
+    /** @var Error */
     public function save($error)
     {
         if (! $error->id()) {
@@ -72,7 +72,7 @@ class EloquentErrorRepository implements RepositoryContract
         }
     }
 
-    /** @var Error $error */
+    /** @var Error */
     public function delete($error)
     {
         $this->query()

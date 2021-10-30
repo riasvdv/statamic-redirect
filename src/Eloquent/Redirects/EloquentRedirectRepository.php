@@ -68,7 +68,7 @@ class EloquentRedirectRepository implements RepositoryContract
         return $redirect;
     }
 
-    /** @var Redirect $redirect */
+    /** @var Redirect */
     public function save($redirect)
     {
         if (! $redirect->id()) {
@@ -87,7 +87,7 @@ class EloquentRedirectRepository implements RepositoryContract
             ]);
     }
 
-    /** @var Redirect $redirect */
+    /** @var Redirect */
     public function delete($redirect)
     {
         RedirectModel::query()

@@ -3,7 +3,6 @@
 namespace Rias\StatamicRedirect\Eloquent\Redirects;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Redirect extends Model
 {

@@ -3,7 +3,6 @@
 namespace Rias\StatamicRedirect\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Rias\StatamicRedirect\Contracts\ErrorRepository;
 
 /**
  * @method static \Rias\StatamicRedirect\Data\Error make()
