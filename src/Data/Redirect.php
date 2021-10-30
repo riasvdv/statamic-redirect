@@ -84,6 +84,19 @@ class Redirect
         return true;
     }
 
+    public static function fromArray(array $data): self
+    {
+        $redirect = new self();
+        $redirect->id($data['uuid']);
+        $redirect->source($data['source']);
+        $redirect->destination($data['destination']);
+        $redirect->enabled($data['enabled']);
+        $redirect->type($data['type']);
+        $redirect->matchType($data['match_type']);
+
+        return $redirect;
+    }
+
     public function fileData()
     {
         return [

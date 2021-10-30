@@ -20,6 +20,6 @@ class Error extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return ErrorRepository::class;
+        return config('statamic.redirect.error_repository');
     }
 }

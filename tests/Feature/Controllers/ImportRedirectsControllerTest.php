@@ -9,9 +9,15 @@ use Rias\StatamicRedirect\Tests\TestCase;
 
 class ImportRedirectsControllerTest extends TestCase
 {
-    /** @test * */
-    public function it_can_import_redirects()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_can_import_redirects($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
+
         $this->asAdmin();
 
         $file = UploadedFile::fake()->createWithContent('redirects.csv', "source,destination,type,match_type\n/foo,/bar,302,exact");
@@ -24,9 +30,10 @@ class ImportRedirectsControllerTest extends TestCase
         ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully');
 
         $this->assertEquals(1, Redirect::query()->count());
-        $this->assertEquals('/foo', Redirect::query()->first()->source());
-        $this->assertEquals('/bar', Redirect::query()->first()->destination());
-        $this->assertEquals('302', Redirect::query()->first()->type());
-        $this->assertEquals('exact', Redirect::query()->first()->matchType());
+        tap(Redirect::findByUrl('/foo'), function (\Rias\StatamicRedirect\Data\Redirect $redirect) {
+            $this->assertEquals('/bar', $redirect->destination());
+            $this->assertEquals('302', $redirect->type());
+            $this->assertEquals('exact', $redirect->matchType());
+        });
     }
 }

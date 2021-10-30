@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.0 (2021-10-30)
+## What's new
+- Statamic Redirect now ships with 2 Eloquent providers for the Errors & Redirects
+
 ## 1.7.2 (2021-10-27)
 ## What's fixed
 - Fixed an isssue when trying to delete redirects on a paginated listing.

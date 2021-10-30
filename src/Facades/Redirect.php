@@ -20,6 +20,6 @@ class Redirect extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return RedirectRepository::class;
+        return config('statamic.redirect.redirect_repository');
     }
 }

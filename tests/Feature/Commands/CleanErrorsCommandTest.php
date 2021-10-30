@@ -9,9 +9,15 @@ use Rias\StatamicRedirect\Tests\TestCase;
 
 class CleanErrorsCommandTest extends TestCase
 {
-    /** @test * */
-    public function it_cleans_errors_older_than_1_month_by_default()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_cleans_errors_older_than_1_month_by_default($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
+
         Error::make()->url('bla1')->addHit(now()->subMonth()->subDay()->timestamp)->save();
         Error::make()->url('bla2')->addHit(now()->subWeek()->subDay()->timestamp)->save();
         Error::make()->url('bla3')->addHit(now()->timestamp)->save();
@@ -23,9 +29,15 @@ class CleanErrorsCommandTest extends TestCase
         $this->assertEquals(2, Error::query()->count());
     }
 
-    /** @test * */
-    public function it_looks_at_the_config_file_for_older_than_date()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_looks_at_the_config_file_for_older_than_date($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
+
         config()->set('statamic.redirect.clean_older_than', '1 week');
 
         Error::make()->url('bla')->addHit(now()->subMonth()->subDay()->timestamp)->save();
@@ -39,9 +51,15 @@ class CleanErrorsCommandTest extends TestCase
         $this->assertEquals(1, Error::query()->count());
     }
 
-    /** @test * */
-    public function it_doesnt_clean_errors_if_config_is_false()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_doesnt_clean_errors_if_config_is_false($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
+
         config()->set('statamic.redirect.clean_errors', false);
 
         Error::make()->url('bla')->addHit(now()->subMonth()->subDay()->timestamp)->save();
@@ -55,9 +73,15 @@ class CleanErrorsCommandTest extends TestCase
         $this->assertEquals(3, Error::query()->count());
     }
 
-    /** @test * */
-    public function it_deletes_errors_when_there_are_too_many()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_deletes_errors_when_there_are_too_many($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
+
         config()->set('statamic.redirect.clean_errors', true);
         config()->set('statamic.redirect.keep_unique_errors', 1);
 
@@ -70,6 +94,6 @@ class CleanErrorsCommandTest extends TestCase
         Artisan::call(CleanErrorsCommand::class);
 
         $this->assertEquals(1, Error::query()->count());
-        $this->assertEquals('url3', Error::query()->first()->url());
+        $this->assertNotNull(Error::findByUrl('url3'));
     }
 }

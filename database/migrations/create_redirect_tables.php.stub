@@ -1,0 +1,44 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateRedirectTables extends Migration
+{
+    public function up()
+    {
+        Schema::create('redirects', function (Blueprint $table): void {
+            $table->uuid('uuid')->primary();
+
+            $table->boolean('enabled')->default(true);
+            $table->string('source')->index();
+            $table->string('destination');
+            $table->string('type');
+            $table->string('match_type');
+
+            $table->timestamps();
+        });
+
+        Schema::create('redirect_errors', function (Blueprint $table): void {
+            $table->uuid('uuid')->primary();
+
+            $table->string('url')->index();
+            $table->boolean('handled')->default(false);
+            $table->string('handled_destination')->nullable();
+            $table->dateTime('last_seen_at')->nullable();
+        });
+
+        Schema::create('redirect_error_hits', function (Blueprint $table): void {
+            $table->uuid('uuid')->primary();
+            $table->uuid('error_uuid');
+            $table->foreign('error_uuid')
+                ->references('uuid')
+                ->on('redirect_errors')
+                ->cascadeOnDelete();
+
+            $table->json('data');
+            $table->timestamp('timestamp');
+        });
+    }
+}

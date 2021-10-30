@@ -2,6 +2,8 @@
 
 namespace Rias\StatamicRedirect\Data;
 
+use Rias\StatamicRedirect\Eloquent\Errors\Error as ErrorModel;
+use Rias\StatamicRedirect\Eloquent\Errors\Hit;
 use Statamic\Data\ExistsAsFile;
 use Statamic\Data\TracksQueriedColumns;
 use Statamic\Facades\Stache;
@@ -114,6 +116,26 @@ class Error
         \Rias\StatamicRedirect\Facades\Error::delete($this);
 
         return true;
+    }
+
+    public static function fromModel(ErrorModel $model): self
+    {
+        $error = new self();
+
+        $error->id($model->uuid);
+        $error->url($model->url);
+        $error->handled($model->handled);
+        $error->handledDestination($model->handled_destination);
+        $error->lastSeenAt($model->last_seen_at);
+
+        $error->hits($model->hits->map(function (Hit $hit) {
+            return [
+                'timestamp' => $hit->timestamp,
+                'data' => $hit->data,
+            ];
+        })->toArray());
+
+        return $error;
     }
 
     public function fileData()

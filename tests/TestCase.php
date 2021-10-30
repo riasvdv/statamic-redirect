@@ -2,17 +2,22 @@
 
 namespace Rias\StatamicRedirect\Tests;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Rias\StatamicRedirect\Eloquent\Errors\EloquentErrorRepository;
+use Rias\StatamicRedirect\Eloquent\Redirects\EloquentRedirectRepository;
 use Rias\StatamicRedirect\Facades\Error;
 use Rias\StatamicRedirect\Facades\Redirect;
+use Rias\StatamicRedirect\Stache\Errors\ErrorRepository;
+use Rias\StatamicRedirect\Stache\Redirects\RedirectRepository;
 use Statamic\Extend\Manifest;
 use Statamic\Statamic;
 
 class TestCase extends OrchestraTestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
     use WithFaker;
 
     /**
@@ -83,6 +88,14 @@ class TestCase extends OrchestraTestCase
         ];
     }
 
+    protected function defineDatabaseMigrations(): void
+    {
+        $this->artisan('migrate', ['--database' => 'testing']);
+
+        include_once __DIR__ . '/../database/migrations/create_redirect_tables.php.stub';
+        (new \CreateRedirectTables())->up();
+    }
+
     /**
      * Resolve the Application Configuration and set the Statamic configuration
      * @param \Illuminate\Foundation\Application $app
@@ -112,5 +125,18 @@ class TestCase extends OrchestraTestCase
 
         // Define redirect config settings for all of our tests
         $app['config']->set("statamic.redirect", require(__DIR__ . "/../config/redirect.php"));
+    }
+
+    public function repositories() {
+        return [
+            [
+                'error_repository' => ErrorRepository::class,
+                'redirect_repository' => RedirectRepository::class,
+            ],
+            [
+                'error_repository' => EloquentErrorRepository::class,
+                'redirect_repository' => EloquentRedirectRepository::class,
+            ]
+        ];
     }
 }

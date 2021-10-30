@@ -35,4 +35,16 @@ Publish the assets:
 php artisan vendor:publish --provider="Rias\StatamicRedirect\RedirectServiceProvider"
 ```
 
+## Using the Eloquent repositories
+
+You can switch the storing & retrieving of Errors & Redirects to the Eloquent repositories provided, this can be useful if you're logging a lot of errors & hits.
+
+```php
+// config/statamic/redirect.php
+
+'error_repository' => \Rias\StatamicRedirect\Eloquent\Errors\EloquentErrorRepository::class,
+
+'redirect_repository' => \Rias\StatamicRedirect\Eloquent\Redirects\EloquentRedirectRepository::class,
+```
+
 Brought to you by [Rias](https://rias.be)

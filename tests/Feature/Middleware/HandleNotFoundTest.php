@@ -24,9 +24,15 @@ class HandleNotFoundTest extends TestCase
         $this->middleware = app(HandleNotFound::class);
     }
 
-    /** @test * */
-    public function it_does_nothing_if_the_response_is_not_a_404()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_does_nothing_if_the_response_is_not_a_404($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
+
         $this->middleware->handle(Request::create('/abc'), function () {
             return (new Response('', 200));
         });
@@ -34,9 +40,14 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(0, Error::query()->count());
     }
 
-    /** @test * */
-    public function it_creates_an_error_when_the_response_is_404_and_saves_metadata()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_creates_an_error_when_the_response_is_404_and_saves_metadata($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         Carbon::setTestNow(now());
 
         $request = Request::create('/abc');
@@ -50,7 +61,7 @@ class HandleNotFoundTest extends TestCase
 
         $this->assertEquals(1, Error::query()->count());
         $this->assertEquals(404, $response->status());
-        tap(Error::query()->first(), function (\Rias\StatamicRedirect\Data\Error $error) {
+        tap(Error::findByUrl('/abc'), function (\Rias\StatamicRedirect\Data\Error $error) {
             $this->assertEquals('/abc', $error->url());
             $this->assertEquals(1, count($error->hits()));
             $this->assertEquals(now()->timestamp, $error->lastSeenAt());
@@ -60,9 +71,15 @@ class HandleNotFoundTest extends TestCase
         });
     }
 
-    /** @test * */
-    public function it_redirects_and_sets_handled_if_a_redirect_is_found()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_redirects_and_sets_handled_if_a_redirect_is_found($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
+
         Redirect::make()
             ->source('/abc')
             ->destination('/def')
@@ -73,16 +90,22 @@ class HandleNotFoundTest extends TestCase
         });
 
         $this->assertEquals(1, Error::query()->count());
-        $this->assertEquals('/abc', Error::query()->first()->url());
-        $this->assertEquals(true, Error::query()->first()->handled());
-        $this->assertEquals('/def', Error::query()->first()->handledDestination());
+        tap(Error::findByUrl('/abc'), function (\Rias\StatamicRedirect\Data\Error $error) {
+            $this->assertEquals(true, $error->handled());
+            $this->assertEquals('/def', $error->handledDestination());
+        });
 
         $this->assertTrue($response->isRedirect(url('/def')));
     }
 
-    /** @test * */
-    public function it_handles_401_redirects()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_handles_401_redirects($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         $this->withExceptionHandling();
 
         Redirect::make()
@@ -100,13 +123,18 @@ class HandleNotFoundTest extends TestCase
         }
 
         $this->assertEquals(1, Error::query()->count());
-        $this->assertEquals('/abc', Error::query()->first()->url());
-        $this->assertEquals(true, Error::query()->first()->handled());
+        $this->assertNotNull(Error::findByUrl('/abc'));
+        $this->assertEquals(true, Error::findByUrl('/abc')->handled());
     }
 
-    /** @test * */
-    public function it_handles_query_parameters()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_handles_query_parameters($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         Redirect::make()
             ->source('/abc?lang=nl')
             ->destination('/nl')
@@ -130,9 +158,15 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url('/fr')));
     }
 
-    /** @test * */
-    public function it_can_redirect_to_external_urls()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_can_redirect_to_external_urls($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
+
         Redirect::make()
             ->source('/abc/(.*)')
             ->destination('https://google.com?s=$1')
@@ -146,9 +180,14 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect('https://google.com?s=a'));
     }
 
-    /** @test * */
-    public function it_can_redirect_the_homepage()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_can_redirect_the_homepage($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         Redirect::make()
             ->source('/')
             ->destination('/blog')
@@ -162,9 +201,15 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url('/blog')));
     }
 
-    /** @test * */
-    public function it_cleans_if_config_is_set_to_clean()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_cleans_if_config_is_set_to_clean($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
+
         config()->set('statamic.redirect.clean_errors', true);
         config()->set('statamic.redirect.clean_errors_on_save', true);
         config()->set('statamic.redirect.keep_unique_errors', 1);
@@ -182,9 +227,14 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(1, Error::all()->count());
     }
 
-    /** @test * */
-    public function it_doesnt_log_errors_if_log_errors_is_false()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_doesnt_log_errors_if_log_errors_is_false($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         config()->set('statamic.redirect.log_errors');
 
         $request = Request::create('/abc');
@@ -200,9 +250,14 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(404, $response->status());
     }
 
-    /** @test * */
-    public function it_doesnt_log_hits_if_log_hits_is_false()
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_doesnt_log_hits_if_log_hits_is_false($errorRepository, $redirectRepository)
     {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         config()->set('statamic.redirect.log_errors', true);
         config()->set('statamic.redirect.log_hits', false);
 
@@ -213,7 +268,7 @@ class HandleNotFoundTest extends TestCase
         });
 
         $this->assertEquals(1, Error::query()->count());
-        $this->assertEquals(0, Error::query()->first()->hitsCount());
+        $this->assertEquals(0, Error::findByUrl('/abc')->hitsCount());
         $this->assertEquals(404, $response->status());
     }
 }
