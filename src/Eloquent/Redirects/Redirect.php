@@ -14,6 +14,6 @@ class Redirect extends Model
         'enabled' => 'boolean',
     ];
 
-    protected $keyType = 'uuid';
+    protected $keyType = 'string';
     protected $primaryKey = 'uuid';
 }

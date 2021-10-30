@@ -17,6 +17,6 @@ class Hit extends Model
         'data' => 'json',
     ];
 
-    protected $keyType = 'uuid';
+    protected $keyType = 'string';
     protected $primaryKey = 'uuid';
 }

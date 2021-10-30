@@ -16,7 +16,7 @@ class Error extends Model
         'last_seen_at' => 'timestamp',
     ];
 
-    protected $keyType = 'uuid';
+    protected $keyType = 'string';
     protected $primaryKey = 'uuid';
     public $timestamps = false;
 
