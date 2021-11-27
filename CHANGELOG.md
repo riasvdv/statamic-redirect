@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.9.0 (2021-11-27)
+## What's new
+- Added a `enable` config value to enable/disable the addon.
+- Turning off `log_hits` will still keep a log of the number of hits. Also fixed a dashboard issue when this config was turned off.
+
 ## 1.8.0 (2021-10-30)
 ## What's new
 - Statamic Redirect now ships with 2 Eloquent providers for the Errors & Redirects
