@@ -148,7 +148,7 @@ export default {
 
   methods: {
     relativeDate(time) {
-      return moment(time * 1000).fromNow();
+      return moment.unix(time).fromNow();
     },
   },
 };

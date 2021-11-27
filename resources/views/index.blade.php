@@ -7,6 +7,12 @@
         <h1>Redirect</h1>
     </header>
 
+    @if(! config('statamic.redirect.enable', true))
+        <div class="card bg-yellow py-2 px-4 leading-loose content mb-2 text-center">
+            Redirect is currently <strong>disabled</strong>. Change the <code>statamic.redirect.enable</code> config value to <code>true</code> to enable redirects & logging.
+        </div>
+    @endif
+
     @if(config('statamic.redirect.log_hits'))
         <div class="card p-2 content mb-2">
             <div class="flex flex-wrap -mx-2 mb-4">

@@ -1,6 +1,10 @@
 <?php
 
 return [
+    /**
+     * Whether Redirect should be enabled
+     */
+    'enable' => true,
 
     /**
      * Controls whether Redirect automatically creates a redirect

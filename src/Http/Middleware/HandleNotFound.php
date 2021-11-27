@@ -22,7 +22,7 @@ class HandleNotFound
         /** @var \Illuminate\Http\Response $response */
         $response = $next($request);
 
-        if ($response->status() !== 404) {
+        if ($response->status() !== 404 || !config('statamic.redirect.enable', true)) {
             return $response;
         }
 

@@ -44,6 +44,28 @@ class HandleNotFoundTest extends TestCase
      * @test
      * @dataProvider repositories
      */
+    public function it_does_nothing_if_redirect_is_not_enabled($errorRepository, $redirectRepository)
+    {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
+        config()->set('statamic.redirect.enable', false);
+
+        $request = Request::create('/abc');
+        $request->headers->add([
+            'referer' => 'some-referer',
+        ]);
+
+        $response = $this->middleware->handle($request, function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertEquals(0, Error::query()->count());
+    }
+
+    /**
+     * @test
+     * @dataProvider repositories
+     */
     public function it_creates_an_error_when_the_response_is_404_and_saves_metadata($errorRepository, $redirectRepository)
     {
         config()->set('statamic.redirect.error_repository', $errorRepository);
