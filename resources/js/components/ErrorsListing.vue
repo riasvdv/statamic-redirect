@@ -62,13 +62,12 @@
           >
             <template slot="cell-url" slot-scope="{ row: error }">
               <span style="word-break: break-all" :title="
-                'User agent: ' + (error.hits[error.hits.length - 1].data.userAgent || 'n/a') + '\n' +
-                'IP: ' + (error.hits[error.hits.length - 1].data.ip || 'n/a') + '\n' +
-                'Referer: ' + (error.hits[error.hits.length - 1].data.referer || 'n/a') + '\n'
+                error.hits ? (
+                  'User agent: ' + (error.hits[error.hits.length - 1].data.userAgent || 'n/a') + '\n' +
+                  'IP: ' + (error.hits[error.hits.length - 1].data.ip || 'n/a') + '\n' +
+                  'Referer: ' + (error.hits[error.hits.length - 1].data.referer || 'n/a') + '\n'
+                ) : ''
               ">{{ error.url }}</span>
-            </template>
-            <template slot="cell-hits" slot-scope="{ row: error }">
-              {{ error.hits.length }}
             </template>
             <template slot="cell-latest" slot-scope="{ row: error }">
               <span v-html="relativeDate(error.latest)"></span>

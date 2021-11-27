@@ -14,6 +14,7 @@ class Error extends Model
     protected $casts = [
         'handled' => 'boolean',
         'last_seen_at' => 'timestamp',
+        'hits_count' => 'int',
     ];
 
     protected $keyType = 'string';

@@ -92,13 +92,11 @@ class HandleNotFound
             $error = ErrorFacade::make()->url($url);
         }
 
-        if (config('statamic.redirect.log_hits', true)) {
-            $error->addHit(now()->timestamp, [
-                'userAgent' => $request->userAgent(),
-                'ip' => $request->ip(),
-                'referer' => $request->header('referer'),
-            ]);
-        }
+        $error->addHit(now()->timestamp, [
+            'userAgent' => $request->userAgent(),
+            'ip' => $request->ip(),
+            'referer' => $request->header('referer'),
+        ]);
 
         $error->lastSeenAt(now()->timestamp);
         $error->save();

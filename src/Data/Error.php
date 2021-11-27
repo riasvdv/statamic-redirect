@@ -24,6 +24,9 @@ class Error
     /** @var array */
     protected $hits = [];
 
+    /** @var int */
+    protected $hitsCount = 0;
+
     /** @var bool */
     protected $handled = false;
 
@@ -48,6 +51,11 @@ class Error
         return $this->fluentlyGetOrSet('hits')->args(func_get_args());
     }
 
+    public function hitsCount(int $hitsCount = null)
+    {
+        return $this->fluentlyGetOrSet('hitsCount')->args(func_get_args());
+    }
+
     public function lastSeenAt(int $lastSeenAt = null)
     {
         return $this->fluentlyGetOrSet('lastSeenAt')->args(func_get_args());
@@ -58,28 +66,22 @@ class Error
         return collect($this->hits() ?? [])->sortBy('timestamp')->pluck('timestamp')->last() ?? $this->lastSeenAt();
     }
 
-
     public function addHit(int $timestamp, array $data = [])
     {
         if ($this->lastSeenAt() < $timestamp) {
             $this->lastSeenAt($timestamp);
         }
 
-        $this->hits[] = [
-            'timestamp' => $timestamp,
-            'data' => $data,
-        ];
-
-        return $this;
-    }
-
-    public function hitsCount(): int
-    {
-        if (! $this->hits()) {
-            return 0;
+        if (config('statamic.redirect.log_hits', true)) {
+            $this->hits[] = [
+                'timestamp' => $timestamp,
+                'data' => $data,
+            ];
         }
 
-        return count($this->hits());
+        $this->hitsCount++;
+
+        return $this;
     }
 
     public function handled($handled = null)
@@ -134,6 +136,7 @@ class Error
                 'data' => $hit->data,
             ];
         })->toArray());
+        $error->hitsCount = $model->hits_count;
 
         return $error;
     }

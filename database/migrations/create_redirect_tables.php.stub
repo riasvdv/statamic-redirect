@@ -27,6 +27,7 @@ class CreateRedirectTables extends Migration
             $table->boolean('handled')->default(false);
             $table->string('handled_destination')->nullable();
             $table->dateTime('last_seen_at')->nullable();
+            $table->integer('hits_count')->nullable();
         });
 
         Schema::create('redirect_error_hits', function (Blueprint $table): void {

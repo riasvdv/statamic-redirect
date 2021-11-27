@@ -268,7 +268,8 @@ class HandleNotFoundTest extends TestCase
         });
 
         $this->assertEquals(1, Error::query()->count());
-        $this->assertEquals(0, Error::findByUrl('/abc')->hitsCount());
+        $this->assertEquals(0, count(Error::findByUrl('/abc')->hits() ?? []));
+        $this->assertEquals(1, Error::findByUrl('/abc')->hitsCount()); // Still add count
         $this->assertEquals(404, $response->status());
     }
 }

@@ -42,6 +42,7 @@ class ErrorStore extends BasicStore
             ->handled(array_pull($data, 'handled'))
             ->handledDestination(array_pull($data, 'handledDestination'))
             ->hits(array_pull($data, 'hits'))
+            ->hitsCount(array_pull($data, 'hitsCount'))
             ->initialPath($path);
 
         if (isset($idGenerated)) {

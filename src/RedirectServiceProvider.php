@@ -12,6 +12,7 @@ use Rias\StatamicRedirect\Listeners\CacheOldUri;
 use Rias\StatamicRedirect\Listeners\CreateRedirect;
 use Rias\StatamicRedirect\Stache\Errors\ErrorStore;
 use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
+use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
 use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
 use Statamic\Facades\CP\Nav;
@@ -23,6 +24,10 @@ use Statamic\Statamic;
 
 class RedirectServiceProvider extends AddonServiceProvider
 {
+    protected $updateScripts = [
+        AddHitsCount::class,
+    ];
+
     protected $scripts = [
         __DIR__.'/../resources/dist/js/cp.js',
     ];

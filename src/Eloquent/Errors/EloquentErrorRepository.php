@@ -59,6 +59,7 @@ class EloquentErrorRepository implements RepositoryContract
                 'handled' => $error->handled(),
                 'handled_destination' => $error->handledDestination(),
                 'last_seen_at' => $error->lastSeenAt(),
+                'hits_count' => $error->hitsCount(),
             ]);
 
         foreach ($error->hits() as $hit) {

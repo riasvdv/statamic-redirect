@@ -23,17 +23,11 @@ class ErrorsCollection extends ResourceCollection
     {
         $columns = [
             Column::make('url')->label('Path'),
-        ];
-
-        if (config('statamic.redirect.log_hits', true)) {
-            $columns[] = Column::make('hitsCount')->label('Hits');
-        }
-
-        $columns = array_merge($columns, [
+            Column::make('hitsCount')->label('Hits'),
             Column::make('latest')->label('Latest error'),
             Column::make('handled')->label('Handled'),
             Column::make('handledDestination')->label('Destination'),
-        ]);
+        ];
 
         $columns = new Columns($columns);
 
