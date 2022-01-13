@@ -1,5 +1,19 @@
 # Release Notes
 
+## 1.10.0 (2022-01-13)
+
+**Updating to this version will clear your errors**
+
+## What's new
+- Added a warning when the cleanup command hasn't run for more than a day (it should be running every day)
+- Restructured how hits are stored, this should improve performance.
+- Added a detail view for an error that displays the hits
+- Added a "Clear all" button for errors
+- Added a "Delete error" button on the detail view of an error
+
+## What's fixed
+- Fixed the import failing sometimes with a file not found exception
+
 ## 1.9.0 (2021-11-27)
 ## What's new
 - Added a `enable` config value to enable/disable the addon.

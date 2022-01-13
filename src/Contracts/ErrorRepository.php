@@ -18,4 +18,8 @@ interface ErrorRepository
     public function save($error);
 
     public function delete($error);
+
+    public function hits($error);
+
+    public function setHits($error, array $newHits);
 }

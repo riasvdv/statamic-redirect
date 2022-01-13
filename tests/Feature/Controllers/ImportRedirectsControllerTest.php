@@ -3,6 +3,7 @@
 namespace Rias\StatamicRedirect\Tests\Feature\Controllers;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Rias\StatamicRedirect\Controllers\ImportRedirectsController;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Tests\TestCase;

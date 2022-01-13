@@ -16,31 +16,36 @@
     >
       <div slot-scope="{ hasSelections }">
         <div class="card p-0 relative">
-          <data-list-filter-presets
-            ref="presets"
-            :active-preset="activePreset"
-            :preferences-prefix="preferencesPrefix"
-            @selected="selectPreset"
-            @reset="filtersReset"
-          />
-          <div class="data-list-header">
-            <data-list-filters
-              :filters="filters"
-              :active-preset="activePreset"
-              :active-preset-payload="activePresetPayload"
-              :active-filters="activeFilters"
-              :active-filter-badges="activeFilterBadges"
-              :active-count="activeFilterCount"
-              :search-query="searchQuery"
-              :saves-presets="true"
-              :preferences-prefix="preferencesPrefix"
-              @filter-changed="filterChanged"
-              @search-changed="searchChanged"
-              @saved="$refs.presets.setPreset($event)"
-              @deleted="$refs.presets.refreshPresets()"
-              @restore-preset="$refs.presets.viewPreset($event)"
-              @reset="filtersReset"
-            />
+          <div class="flex items-center">
+            <div class="flex-grow">
+              <data-list-filter-presets
+                ref="presets"
+                :active-preset="activePreset"
+                :preferences-prefix="preferencesPrefix"
+                @selected="selectPreset"
+                @reset="filtersReset"
+              />
+              <div class="data-list-header">
+                <data-list-filters
+                  :filters="filters"
+                  :active-preset="activePreset"
+                  :active-preset-payload="activePresetPayload"
+                  :active-filters="activeFilters"
+                  :active-filter-badges="activeFilterBadges"
+                  :active-count="activeFilterCount"
+                  :search-query="searchQuery"
+                  :saves-presets="true"
+                  :preferences-prefix="preferencesPrefix"
+                  @filter-changed="filterChanged"
+                  @search-changed="searchChanged"
+                  @saved="$refs.presets.setPreset($event)"
+                  @deleted="$refs.presets.refreshPresets()"
+                  @restore-preset="$refs.presets.viewPreset($event)"
+                  @reset="filtersReset"
+                />
+              </div>
+            </div>
+            <a :href="cp_url('redirect/errors/clear')" class="mr-2 mt-1 btn flex items-center">Clear all</a>
           </div>
 
           <div
@@ -61,13 +66,7 @@
             @sorted="sorted"
           >
             <template slot="cell-url" slot-scope="{ row: error }">
-              <span style="word-break: break-all" :title="
-                error.hits ? (
-                  'User agent: ' + (error.hits[error.hits.length - 1].data.userAgent || 'n/a') + '\n' +
-                  'IP: ' + (error.hits[error.hits.length - 1].data.ip || 'n/a') + '\n' +
-                  'Referer: ' + (error.hits[error.hits.length - 1].data.referer || 'n/a') + '\n'
-                ) : ''
-              ">{{ error.url }}</span>
+              <a class="text-blue hover:text-blue-dark" :href="cp_url('redirect/errors/' + error.id)" style="word-break: break-all">{{ error.url }}</a>
             </template>
             <template slot="cell-latest" slot-scope="{ row: error }">
               <span v-html="relativeDate(error.latest)"></span>

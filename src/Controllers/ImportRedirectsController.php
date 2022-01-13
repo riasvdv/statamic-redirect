@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Spatie\SimpleExcel\SimpleExcelReader;
+use Spatie\TemporaryDirectory\TemporaryDirectory;
 
 class ImportRedirectsController
 {
@@ -27,11 +28,9 @@ class ImportRedirectsController
 
         /** @var \Illuminate\Http\UploadedFile $file */
         $file = $request->file('file');
-        $path = $file->storeAs('data-import', 'data-import.csv');
-        $path = storage_path('app/' . $path);
         $delimiter = request('delimiter', ',');
 
-        $reader = SimpleExcelReader::create($path)
+        $reader = SimpleExcelReader::create($file->getRealPath(), $file->extension())
             ->useDelimiter($delimiter);
 
         $reader->getRows()->each(function (array $data) {

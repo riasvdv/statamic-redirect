@@ -2,9 +2,11 @@
 
 namespace Rias\StatamicRedirect\Controllers;
 
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\File;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
 use Statamic\Facades\Scope;
@@ -15,27 +17,37 @@ class DashboardController
     {
         abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('view redirects'), 401);
 
-        $hits = ErrorFacade::all()->flatMap(function (Error $error) {
-            return array_map(function (array $hit) {
-                return $hit['timestamp'];
-            }, $error->hits() ?? []);
+        $hits = cache()->remember('dashboard-hits', now()->addMinutes(10), function () {
+            return ErrorFacade::all()->flatMap(function (Error $error) {
+                return array_map(function (array $hit) {
+                    return $hit['timestamp'];
+                }, $error->hits() ?? []);
+            });
         });
 
-        $notFoundMonth = Cache::remember(self::class . 'getStatsPastMonth', now()->minutes(10), function () use ($hits) {
+        $notFoundMonth = cache()->remember('dashboard-getStatsPastMonth', now()->addMinutes(10), function () use ($hits) {
             return $this->getStatsPastMonth($hits);
         });
-        $notFoundWeek = Cache::remember(self::class . 'getStatsPastWeek', now()->minutes(10), function () use ($hits) {
+        $notFoundWeek = cache()->remember('dashboard-getStatsPastWeek', now()->addMinutes(10), function () use ($hits) {
             return $this->getStatsPastWeek($hits);
         });
-        $notFoundDay = Cache::remember(self::class . 'getStatsPastDay', now()->minutes(10), function () use ($hits) {
+        $notFoundDay = cache()->remember('dashboard-getStatsPastDay', now()->addMinutes(10), function () use ($hits) {
             return $this->getStatsPastDay($hits);
         });
+
+        $cleanupLastRanAt = null;
+        try {
+            $cleanupLastRanAt = File::get(storage_path('redirect/clean_last_ran_at.txt'));
+        } catch (Exception $e) {
+            // Do nothing
+        }
 
         return view('redirect::index', [
             'notFoundMonth' => $notFoundMonth,
             'notFoundWeek' => $notFoundWeek,
             'notFoundDay' => $notFoundDay,
             'filters' => Scope::filters('errors'),
+            'cleanupLastRanAt' => $cleanupLastRanAt,
         ]);
     }
 

@@ -2,9 +2,11 @@
 
 namespace Rias\StatamicRedirect\Stache\Errors;
 
+use Statamic\Facades\File;
 use Rias\StatamicRedirect\Contracts\ErrorRepository as RepositoryContract;
 use Rias\StatamicRedirect\Data\Error;
 use Statamic\Data\DataCollection;
+use Statamic\Facades\YAML;
 use Statamic\Stache\Stache;
 
 class ErrorRepository implements RepositoryContract
@@ -47,9 +49,22 @@ class ErrorRepository implements RepositoryContract
         $this->store->save($error);
     }
 
-    public function delete($entry)
+    public function delete($error)
     {
-        $this->store->delete($entry);
+        File::delete($error->hitsPath());
+        $this->store->delete($error);
+    }
+
+    public function hits($error)
+    {
+        return YAML::file($error->hitsPath())->parse() ?? [];
+    }
+
+    public function setHits($error, array $newHits)
+    {
+        $path = $error->hitsPath();
+
+        File::put($path, YAML::file($path)->dump($newHits));
     }
 
     public function query()

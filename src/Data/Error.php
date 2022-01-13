@@ -2,8 +2,8 @@
 
 namespace Rias\StatamicRedirect\Data;
 
+use Rias\StatamicRedirect\Contracts\ErrorRepository;
 use Rias\StatamicRedirect\Eloquent\Errors\Error as ErrorModel;
-use Rias\StatamicRedirect\Eloquent\Errors\Hit;
 use Statamic\Data\ExistsAsFile;
 use Statamic\Data\TracksQueriedColumns;
 use Statamic\Facades\Stache;
@@ -20,9 +20,6 @@ class Error
 
     /** @var string */
     protected $url;
-
-    /** @var array */
-    protected $hits = [];
 
     /** @var int */
     protected $hitsCount = 0;
@@ -46,9 +43,11 @@ class Error
         return $this->fluentlyGetOrSet('url')->args(func_get_args());
     }
 
-    public function hits(array $hits = null)
+    public function hits(): array
     {
-        return $this->fluentlyGetOrSet('hits')->args(func_get_args());
+        $repository = resolve(ErrorRepository::class);
+
+        return $repository->hits($this);
     }
 
     public function hitsCount(int $hitsCount = null)
@@ -63,25 +62,41 @@ class Error
 
     public function latest(): ?int
     {
-        return collect($this->hits() ?? [])->sortBy('timestamp')->pluck('timestamp')->last() ?? $this->lastSeenAt();
+        return $this->lastSeenAt() ?? collect($this->hits() ?? [])->sortBy('timestamp')->pluck('timestamp')->last();
     }
 
     public function addHit(int $timestamp, array $data = [])
     {
+        if (! $this->id()) {
+            $this->id(Stache::generateId());
+        }
+
         if ($this->lastSeenAt() < $timestamp) {
             $this->lastSeenAt($timestamp);
         }
 
         if (config('statamic.redirect.log_hits', true)) {
-            $this->hits[] = [
-                'timestamp' => $timestamp,
-                'data' => $data,
-            ];
+            $hits = collect($this->hits())
+                ->push([
+                    'timestamp' => $timestamp,
+                    'data' => $data,
+                ])
+                ->sortBy('timestamp')
+                ->toArray();
+
+            $this->setHits($hits);
         }
 
-        $this->hitsCount++;
+        $this->hitsCount($this->hitsCount + 1);
 
         return $this;
+    }
+
+    public function setHits(array $newHits)
+    {
+        $repository = resolve(ErrorRepository::class);
+
+        return $repository->setHits($this, $newHits);
     }
 
     public function handled($handled = null)
@@ -92,6 +107,22 @@ class Error
     public function handledDestination($handledDestination = null)
     {
         return $this->fluentlyGetOrSet('handledDestination')->args(func_get_args());
+    }
+
+    public function hitsPath()
+    {
+        $id = $this->id();
+
+        if (! $id) {
+            $this->id($id = Stache::generateId());
+        }
+
+        return vsprintf('%s/%s/%s/%s_hits.yaml', [
+            rtrim(Stache::store('errors')->directory(), '/'),
+            $id[0] . $id[1],
+            $id[2] . $id[3],
+            $this->id(),
+        ]);
     }
 
     public function path()
@@ -129,14 +160,7 @@ class Error
         $error->handled($model->handled);
         $error->handledDestination($model->handled_destination);
         $error->lastSeenAt($model->last_seen_at);
-
-        $error->hits($model->hits->map(function (Hit $hit) {
-            return [
-                'timestamp' => $hit->timestamp,
-                'data' => $hit->data,
-            ];
-        })->toArray());
-        $error->hitsCount = $model->hits_count;
+        $error->hitsCount($model->hits_count);
 
         return $error;
     }
@@ -146,7 +170,6 @@ class Error
         return [
             'id' => $this->id(),
             'url' => $this->url(),
-            'hits' => $this->hits(),
             'hitsCount' => $this->hitsCount(),
             'latest' => $this->latest(),
             'handled' => $this->handled(),

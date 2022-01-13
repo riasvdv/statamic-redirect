@@ -8,6 +8,7 @@ use Rias\StatamicRedirect\Contracts\ErrorRepository as RepositoryContract;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Eloquent\Errors\Error as ErrorModel;
 use Statamic\Data\DataCollection;
+use Statamic\Facades\YAML;
 
 class EloquentErrorRepository implements RepositoryContract
 {
@@ -61,24 +62,43 @@ class EloquentErrorRepository implements RepositoryContract
                 'last_seen_at' => $error->lastSeenAt(),
                 'hits_count' => $error->hitsCount(),
             ]);
-
-        foreach ($error->hits() as $hit) {
-            Hit::updateOrCreate([
-                'error_uuid' => $error->id(),
-                'timestamp' => $hit['timestamp'],
-            ], [
-                'uuid' => Str::uuid()->toString(),
-                'data' => $hit['data'],
-            ]);
-        }
     }
 
     /** @var Error */
     public function delete($error)
     {
+        Hit::where('error_uuid', $error->id())->delete();
+
         $this->query()
             ->where('uuid', $error->id())
             ->delete();
+    }
+
+    public function hits($error)
+    {
+        return Hit::where('error_uuid', $error->id())->get()->map(function (Hit $hit) {
+            return [
+                'timestamp' => $hit->timestamp,
+                'data' => $hit->data,
+            ];
+        })->toArray();
+    }
+
+    public function setHits($error, array $newHits)
+    {
+        $error->save();
+
+        Hit::where('error_uuid', $error->id())->delete();
+
+        $newHits = array_map(function ($newHit) use ($error) {
+            $newHit['uuid'] = $newHit['uuid'] ?? Str::uuid();
+            $newHit['data'] = json_encode($newHit['data']);
+            $newHit['error_uuid'] = $error->id();
+
+            return $newHit;
+        }, $newHits);
+
+        Hit::insert($newHits);
     }
 
     public function query()

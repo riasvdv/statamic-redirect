@@ -13,6 +13,13 @@
         </div>
     @endif
 
+    @if(! $cleanupLastRanAt || \Illuminate\Support\Carbon::createFromTimestamp($cleanupLastRanAt) < now()->subDays(2))
+        <div class="card bg-yellow py-2 px-4 leading-loose content mb-2 text-center">
+            Error cleanup has not ran for <strong>{{ $cleanupLastRanAt ? \Illuminate\Support\Carbon::createFromTimestamp($cleanupLastRanAt)->diffForHumans() : '2 days' }}</strong>.<br>It should be running every day, make sure you run your
+            <a class="text-blue" href="https://laravel.com/docs/8.x/scheduling#running-the-scheduler" target="_blank">Laravel schedule</a>.
+        </div>
+    @endif
+
     @if(config('statamic.redirect.log_hits'))
         <div class="card p-2 content mb-2">
             <div class="flex flex-wrap -mx-2 mb-4">
