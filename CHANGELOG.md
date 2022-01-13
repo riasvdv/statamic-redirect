@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.10.1 (2022-01-13)
+## What's fixed
+- Fixed a visual bug when having really long urls on the redirects page
+
 ## 1.10.0 (2022-01-13)
 
 **Updating to this version will clear your errors**

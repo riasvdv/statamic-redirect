@@ -71,7 +71,7 @@
               ></div>
             </template>
             <template slot="cell-source" slot-scope="{ row: redirect }">
-              <a :href="cp_url('redirect/redirects/' + redirect.id)">{{
+              <a style="word-break: break-all" :href="cp_url('redirect/redirects/' + redirect.id)">{{
                 redirect.source
               }}</a>
             </template>
