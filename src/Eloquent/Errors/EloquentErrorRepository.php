@@ -8,7 +8,6 @@ use Rias\StatamicRedirect\Contracts\ErrorRepository as RepositoryContract;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Eloquent\Errors\Error as ErrorModel;
 use Statamic\Data\DataCollection;
-use Statamic\Facades\YAML;
 
 class EloquentErrorRepository implements RepositoryContract
 {

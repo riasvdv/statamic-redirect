@@ -3,16 +3,11 @@
 namespace Rias\StatamicRedirect\Stache\Errors;
 
 use Exception;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Rias\StatamicRedirect\Facades\Error;
-use Statamic\Facades\File;
 use Statamic\Facades\Path;
-use Statamic\Facades\Stache;
 use Statamic\Facades\YAML;
-use Statamic\Stache\Exceptions\DuplicateKeyException;
 use Statamic\Stache\Stores\BasicStore;
-use Statamic\Stache\Traverser;
 use Symfony\Component\Finder\SplFileInfo;
 
 class ErrorStore extends BasicStore
@@ -30,7 +25,7 @@ class ErrorStore extends BasicStore
     {
         $filename = str_after(Path::tidy($file->getPathName()), $this->directory);
 
-        return !Str::contains($filename, '_hits') && $file->getExtension() === 'yaml';
+        return ! Str::contains($filename, '_hits') && $file->getExtension() === 'yaml';
     }
 
     public function makeItemFromFile($path, $contents)

@@ -2,10 +2,10 @@
 
 namespace Rias\StatamicRedirect\Stache\Errors;
 
-use Statamic\Facades\File;
 use Rias\StatamicRedirect\Contracts\ErrorRepository as RepositoryContract;
 use Rias\StatamicRedirect\Data\Error;
 use Statamic\Data\DataCollection;
+use Statamic\Facades\File;
 use Statamic\Facades\YAML;
 use Statamic\Stache\Stache;
 

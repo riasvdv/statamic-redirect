@@ -5,7 +5,6 @@ namespace Rias\StatamicRedirect\Controllers;
 use Illuminate\Support\Facades\File;
 use Rias\StatamicRedirect\Eloquent\Errors\EloquentErrorRepository;
 use Rias\StatamicRedirect\Eloquent\Errors\Error as EloquentError;
-use Rias\StatamicRedirect\Eloquent\Errors\Hit;
 use Rias\StatamicRedirect\Facades\Error;
 use Rias\StatamicRedirect\Stache\Errors\ErrorRepository as StacheErrorRepository;
 use Statamic\Facades\Stache;

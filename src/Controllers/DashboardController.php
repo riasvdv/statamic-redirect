@@ -4,7 +4,6 @@ namespace Rias\StatamicRedirect\Controllers;
 
 use Exception;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\File;
 use Rias\StatamicRedirect\Data\Error;
@@ -36,6 +35,7 @@ class DashboardController
         });
 
         $cleanupLastRanAt = null;
+
         try {
             $cleanupLastRanAt = File::get(storage_path('redirect/clean_last_ran_at.txt'));
         } catch (Exception $e) {

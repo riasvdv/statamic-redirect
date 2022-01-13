@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Spatie\SimpleExcel\SimpleExcelReader;
-use Spatie\TemporaryDirectory\TemporaryDirectory;
 
 class ImportRedirectsController
 {

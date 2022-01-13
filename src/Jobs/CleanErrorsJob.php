@@ -53,6 +53,7 @@ class CleanErrorsJob
         $errorCount = $allErrors->count();
         if ($errorCount <= config('statamic.redirect.keep_unique_errors')) {
             Stache::store('redirects')->clear();
+
             return;
         }
 
