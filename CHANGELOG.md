@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.10.2 (2022-01-13)
+## What's fixed
+- Fix the update script
+- Handle trailing slashes correctly
+
 ## 1.10.1 (2022-01-13)
 ## What's fixed
 - Fixed a visual bug when having really long urls on the redirects page
