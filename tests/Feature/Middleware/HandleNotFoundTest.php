@@ -227,6 +227,50 @@ class HandleNotFoundTest extends TestCase
      * @test
      * @dataProvider repositories
      */
+    public function it_handles_trailing_slashes($errorRepository, $redirectRepository)
+    {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
+
+        Redirect::make()
+            ->source('/foo')
+            ->destination('/bar')
+            ->matchType(MatchTypeEnum::EXACT)
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/foo/'), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect(url('/bar')));
+    }
+
+    /**
+     * @test
+     * @dataProvider repositories
+     */
+    public function it_handles_if_the_source_has_a_trailing_slash($errorRepository, $redirectRepository)
+    {
+        config()->set('statamic.redirect.error_repository', $errorRepository);
+        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
+
+        Redirect::make()
+            ->source('/foo/')
+            ->destination('/bar')
+            ->matchType(MatchTypeEnum::EXACT)
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/foo'), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect(url('/bar')));
+    }
+
+    /**
+     * @test
+     * @dataProvider repositories
+     */
     public function it_cleans_if_config_is_set_to_clean($errorRepository, $redirectRepository)
     {
         config()->set('statamic.redirect.error_repository', $errorRepository);

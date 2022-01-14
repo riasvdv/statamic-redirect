@@ -27,7 +27,11 @@ class HandleNotFound
         }
 
         try {
+            // Make sure it starts with '/'
             $url = Str::start($request->getRequestUri(), '/');
+            // Make sure we remove any trailing slash
+            $url = Str::substr(Str::finish($url, '/'), 0, -1);
+
             $logErrors = config('statamic.redirect.log_errors', true);
 
             if ($logErrors) {
