@@ -2,7 +2,7 @@
 
 namespace Rias\StatamicRedirect\UpdateScripts;
 
-use Statamic\Facades\File;
+use Illuminate\Support\Facades\File;
 use Statamic\Facades\Stache;
 use Statamic\UpdateScripts\UpdateScript;
 
