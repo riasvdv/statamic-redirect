@@ -46,4 +46,11 @@ class RedirectQueryBuilder extends Builder
             return [$orderBy->sort => $items];
         });
     }
+
+    protected function getWhereColumnKeyValuesByIndex($column)
+    {
+        return app('stache')
+            ->store('redirects')
+            ->index($column)->items();
+    }
 }

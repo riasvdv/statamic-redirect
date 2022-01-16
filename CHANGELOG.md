@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.10.3 (2022-01-16)
+## What's fixed
+- Fix an issue caused by Statamic 3.2.31
+
 ## 1.10.2 (2022-01-13)
 ## What's fixed
 - Fix the update script
