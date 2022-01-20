@@ -56,7 +56,7 @@ class HandleNotFound
                 );
             }
 
-            if (! $redirect = \Rias\StatamicRedirect\Facades\Redirect::findByUrl($url)) {
+            if (! $redirect = Redirect::findByUrl($url)) {
                 return $response;
             }
 

@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
-use Rias\StatamicRedirect\Facades\Redirect;
+use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Rias\StatamicRedirect\Tests\TestCase;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -26,12 +26,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_does_nothing_if_the_response_is_not_a_404($redirectRepository)
+    public function it_does_nothing_if_the_response_is_not_a_404()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
-
         $this->middleware->handle(Request::create('/abc'), function () {
             return (new Response('', 200));
         });
@@ -41,11 +38,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_does_nothing_if_redirect_is_not_enabled($redirectRepository)
+    public function it_does_nothing_if_redirect_is_not_enabled()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         config()->set('statamic.redirect.enable', false);
 
         $request = Request::create('/abc');
@@ -62,11 +57,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_creates_an_error_when_the_response_is_404_and_saves_metadata($redirectRepository)
+    public function it_creates_an_error_when_the_response_is_404_and_saves_metadata()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         Carbon::setTestNow(now());
 
         $request = Request::create('/abc');
@@ -92,12 +85,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_redirects_and_sets_handled_if_a_redirect_is_found($redirectRepository)
+    public function it_redirects_and_sets_handled_if_a_redirect_is_found()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
-
         Redirect::make()
             ->source('/abc')
             ->destination('/def')
@@ -118,11 +108,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_handles_401_redirects($redirectRepository)
+    public function it_handles_401_redirects()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         $this->withExceptionHandling();
 
         Redirect::make()
@@ -146,11 +134,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_handles_query_parameters($redirectRepository)
+    public function it_handles_query_parameters()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         Redirect::make()
             ->source('/abc?lang=nl')
             ->destination('/nl')
@@ -176,12 +162,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_can_redirect_to_external_urls($redirectRepository)
+    public function it_can_redirect_to_external_urls()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
-
         Redirect::make()
             ->source('/abc/(.*)')
             ->destination('https://google.com?s=$1')
@@ -197,11 +180,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_can_redirect_the_homepage($redirectRepository)
+    public function it_can_redirect_the_homepage()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         Redirect::make()
             ->source('/')
             ->destination('/blog')
@@ -217,12 +198,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_handles_trailing_slashes($redirectRepository)
+    public function it_handles_trailing_slashes()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
-
         Redirect::make()
             ->source('/foo')
             ->destination('/bar')
@@ -238,12 +216,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_handles_if_the_source_has_a_trailing_slash($redirectRepository)
+    public function it_handles_if_the_source_has_a_trailing_slash()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
-
         Redirect::make()
             ->source('/foo/')
             ->destination('/bar')
@@ -259,12 +234,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_cleans_if_config_is_set_to_clean($redirectRepository)
+    public function it_cleans_if_config_is_set_to_clean()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
-
         config()->set('statamic.redirect.clean_errors', true);
         config()->set('statamic.redirect.clean_errors_on_save', true);
         config()->set('statamic.redirect.keep_unique_errors', 1);
@@ -284,11 +256,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_doesnt_log_errors_if_log_errors_is_false($redirectRepository)
+    public function it_doesnt_log_errors_if_log_errors_is_false()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         config()->set('statamic.redirect.log_errors');
 
         $request = Request::create('/abc');
@@ -306,11 +276,9 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_doesnt_log_hits_if_log_hits_is_false($redirectRepository)
+    public function it_doesnt_log_hits_if_log_hits_is_false()
     {
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
         config()->set('statamic.redirect.log_errors', true);
         config()->set('statamic.redirect.log_hits', false);
 

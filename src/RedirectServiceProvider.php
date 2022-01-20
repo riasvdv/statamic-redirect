@@ -126,7 +126,7 @@ class RedirectServiceProvider extends AddonServiceProvider
     protected function bootStores()
     {
         $redirectStore = new RedirectStore();
-        $redirectStore->directory(config('statamic.redirect.paths.redirect_store', base_path('content/redirects')));
+        $redirectStore->directory(config('statamic.redirect.redirect_store', base_path('content/redirects')));
         app(Stache::class)->registerStore($redirectStore);
 
         return $this;

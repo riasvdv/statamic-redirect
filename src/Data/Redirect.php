@@ -2,7 +2,10 @@
 
 namespace Rias\StatamicRedirect\Data;
 
+use Illuminate\Support\Str;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
+use Rias\StatamicRedirect\Stache\Redirects\RedirectQueryBuilder;
+use Statamic\Data\DataCollection;
 use Statamic\Data\ExistsAsFile;
 use Statamic\Data\TracksQueriedColumns;
 use Statamic\Facades\Stache;
@@ -31,6 +34,59 @@ class Redirect
 
     /** @var string */
     protected $match_type = MatchTypeEnum::EXACT;
+
+    public static function make()
+    {
+        return new self();
+    }
+
+    public static function query(): RedirectQueryBuilder
+    {
+        return new RedirectQueryBuilder(Stache::store('redirects'));
+    }
+
+    public static function all(): DataCollection
+    {
+        return self::query()->get();
+    }
+
+    public static function find($id): ?self
+    {
+        return self::query()->where('id', $id)->first();
+    }
+
+    public static function findByUrl(string $url): ?Redirect
+    {
+        return self::query()
+            ->where('enabled', true)
+            ->get()
+            ->map(function (Redirect $redirect) use ($url) {
+                if ($redirect->matchType() === MatchTypeEnum::REGEX) {
+                    $source = str_replace('/', "\/", $redirect->source());
+                    $matchRegEx = '`'.$source.'`i';
+
+                    if (preg_match($matchRegEx, $url) === 1) {
+                        $redirect->destination(preg_replace(
+                            $matchRegEx,
+                            $redirect->destination(),
+                            $url
+                        ));
+
+                        return $redirect;
+                    }
+                }
+
+                if (strcasecmp(Str::start($redirect->source(), '/'), Str::start($url, '/')) === 0
+                    || strcasecmp(Str::start($redirect->source(), '/'), Str::start($url . '/', '/')) === 0
+                ) {
+                    return $redirect;
+                }
+
+                return null;
+            })
+            ->filter()
+            ->first();
+    }
 
     public function id($id = null)
     {
@@ -72,14 +128,18 @@ class Redirect
 
     public function save()
     {
-        \Rias\StatamicRedirect\Facades\Redirect::save($this);
+        if (! $this->id()) {
+            $this->id(Stache::generateId());
+        }
+
+        Stache::store('redirects')->save($this);
 
         return true;
     }
 
     public function delete()
     {
-        \Rias\StatamicRedirect\Facades\Redirect::delete($this);
+        Stache::store('redirects')->delete($this);
 
         return true;
     }

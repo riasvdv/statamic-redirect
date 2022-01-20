@@ -4,15 +4,10 @@ namespace Rias\StatamicRedirect\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Data\Hit;
-use Rias\StatamicRedirect\Eloquent\Redirects\EloquentRedirectRepository;
-use Rias\StatamicRedirect\Facades\Redirect;
-use Rias\StatamicRedirect\Stache\Redirects\RedirectRepository;
+use Rias\StatamicRedirect\Data\Redirect;
 use Statamic\Extend\Manifest;
 use Statamic\Facades\User;
 use Statamic\Statamic;
@@ -128,17 +123,5 @@ class TestCase extends OrchestraTestCase
 
         // Define redirect config settings for all of our tests
         $app['config']->set("statamic.redirect", require(__DIR__ . "/../config/redirect.php"));
-    }
-
-    public function repositories()
-    {
-        return [
-            [
-                'redirect_repository' => RedirectRepository::class,
-            ],
-            [
-                'redirect_repository' => EloquentRedirectRepository::class,
-            ],
-        ];
     }
 }

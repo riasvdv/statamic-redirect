@@ -9,19 +9,7 @@ class CreateRedirectTables extends Migration
 {
     public function up()
     {
-        Schema::create('redirects', function (Blueprint $table): void {
-            $table->uuid('uuid')->primary();
-
-            $table->boolean('enabled')->default(true);
-            $table->string('source')->index();
-            $table->string('destination');
-            $table->string('type');
-            $table->string('matchType');
-
-            $table->timestamps();
-        });
-
-        Schema::create('redirect_errors', function (Blueprint $table): void {
+        Schema::create('errors', function (Blueprint $table): void {
             $table->id();
             $table->string('url')->index();
             $table->boolean('handled')->default(false);
@@ -30,12 +18,12 @@ class CreateRedirectTables extends Migration
             $table->integer('hitsCount')->nullable();
         });
 
-        Schema::create('redirect_error_hits', function (Blueprint $table): void {
+        Schema::create('hits', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(Error::class)->index();
             $table->foreign('error_id')
                 ->references('id')
-                ->on('redirect_errors')
+                ->on('errors')
                 ->cascadeOnDelete();
 
             $table->json('data');

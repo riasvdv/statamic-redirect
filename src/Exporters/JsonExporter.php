@@ -2,7 +2,7 @@
 
 namespace Rias\StatamicRedirect\Exporters;
 
-use Rias\StatamicRedirect\Facades\Redirect;
+use Rias\StatamicRedirect\Data\Redirect;
 use Statamic\Forms\Exporters\AbstractExporter;
 
 class JsonExporter extends AbstractExporter
@@ -14,7 +14,7 @@ class JsonExporter extends AbstractExporter
      */
     public function export()
     {
-        $submissions = Redirect::all()->map(function (\Rias\StatamicRedirect\Data\Redirect $redirect) {
+        $submissions = Redirect::all()->map(function (Redirect $redirect) {
             return $redirect->fileData();
         })->toArray();
 
