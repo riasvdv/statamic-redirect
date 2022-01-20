@@ -4,7 +4,7 @@ namespace Rias\StatamicRedirect\Controllers;
 
 use Exception;
 use Illuminate\Support\Facades\File;
-use Rias\StatamicRedirect\Eloquent\Errors\Hit;
+use Rias\StatamicRedirect\Data\Hit;
 use Statamic\Facades\Scope;
 
 class DashboardController

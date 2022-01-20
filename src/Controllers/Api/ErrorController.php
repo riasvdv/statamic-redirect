@@ -2,7 +2,7 @@
 
 namespace Rias\StatamicRedirect\Controllers\Api;
 
-use Rias\StatamicRedirect\Eloquent\Errors\Error;
+use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Http\Resources\ErrorsCollection;
 use Statamic\Http\Requests\FilteredRequest;
 use Statamic\Query\Scopes\Filters\Concerns\QueriesFilters;

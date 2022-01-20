@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Data\Redirect;
-use Rias\StatamicRedirect\Eloquent\Errors\Error;
+use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Jobs\CleanErrorsJob;
 use Statamic\Support\Str;
 use Symfony\Component\HttpKernel\Exception\HttpException;

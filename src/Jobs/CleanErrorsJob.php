@@ -8,8 +8,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
-use Rias\StatamicRedirect\Eloquent\Errors\Error;
-use Rias\StatamicRedirect\Eloquent\Errors\Hit;
+use Rias\StatamicRedirect\Data\Error;
+use Rias\StatamicRedirect\Data\Hit;
 
 class CleanErrorsJob
 {

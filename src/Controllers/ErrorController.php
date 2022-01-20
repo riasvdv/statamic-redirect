@@ -2,7 +2,7 @@
 
 namespace Rias\StatamicRedirect\Controllers;
 
-use Rias\StatamicRedirect\Eloquent\Errors\Error;
+use Rias\StatamicRedirect\Data\Error;
 
 class ErrorController
 {

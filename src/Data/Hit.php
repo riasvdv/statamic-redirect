@@ -1,6 +1,6 @@
 <?php
 
-namespace Rias\StatamicRedirect\Eloquent\Errors;
+namespace Rias\StatamicRedirect\Data;
 
 use Illuminate\Database\Eloquent\Model;
 

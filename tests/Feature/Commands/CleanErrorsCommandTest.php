@@ -4,7 +4,7 @@ namespace Rias\StatamicRedirect\Tests\Feature\Commands;
 
 use Illuminate\Support\Facades\Artisan;
 use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
-use Rias\StatamicRedirect\Eloquent\Errors\Error;
+use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Tests\TestCase;
 
 class CleanErrorsCommandTest extends TestCase
