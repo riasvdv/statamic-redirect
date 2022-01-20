@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
-use Rias\StatamicRedirect\Contracts\ErrorRepository;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
 use Rias\StatamicRedirect\Http\Filters\ErrorFields;
 use Rias\StatamicRedirect\Http\Filters\ErrorHandled;
