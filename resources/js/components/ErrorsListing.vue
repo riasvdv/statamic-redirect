@@ -68,8 +68,8 @@
             <template slot="cell-url" slot-scope="{ row: error }">
               <a class="text-blue hover:text-blue-dark" :href="cp_url('redirect/errors/' + error.id)" style="word-break: break-all">{{ error.url }}</a>
             </template>
-            <template slot="cell-latest" slot-scope="{ row: error }">
-              <span v-html="relativeDate(error.latest)"></span>
+            <template slot="cell-lastSeenAt" slot-scope="{ row: error }">
+              <span v-html="relativeDate(error.lastSeenAt)"></span>
             </template>
             <template slot="cell-handled" slot-scope="{ row: error }">
               <div

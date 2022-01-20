@@ -13,9 +13,8 @@ class ImportRedirectsControllerTest extends TestCase
      * @test
      * @dataProvider repositories
      */
-    public function it_can_import_redirects($errorRepository, $redirectRepository)
+    public function it_can_import_redirects($redirectRepository)
     {
-        config()->set('statamic.redirect.error_repository', $errorRepository);
         config()->set('statamic.redirect.redirect_repository', $redirectRepository);
 
         $this->asAdmin();

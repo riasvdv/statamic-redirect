@@ -13,18 +13,19 @@ class Error extends Model
 
     protected $casts = [
         'handled' => 'boolean',
-        'last_seen_at' => 'timestamp',
-        'hits_count' => 'int',
+        'lastSeenAt' => 'timestamp',
+        'hitsCount' => 'int',
     ];
 
-    protected $keyType = 'string';
-    protected $primaryKey = 'uuid';
     public $timestamps = false;
 
-    protected static function boot()
+    public function getConnectionName()
     {
-        parent::boot();
+        return config('statamic.redirect.connection', 'redirect');
+    }
 
+    protected static function booted()
+    {
         self::deleting(function () {
             $this->hits()->delete();
         });
@@ -32,6 +33,28 @@ class Error extends Model
 
     public function hits(): HasMany
     {
-        return $this->hasMany(Hit::class, 'error_uuid');
+        return $this->hasMany(Hit::class, 'error_id');
+    }
+
+    public function addHit(int $timestamp, array $data = []): ?Hit
+    {
+        $this->update([
+            'lastSeenAt' => $timestamp,
+            'hitsCount' => $this->hitsCount + 1,
+        ]);
+
+        if (config('statamic.redirect.log_hits')) {
+            return $this->hits()->create([
+                'timestamp' => $timestamp,
+                'data' => $data,
+            ]);
+        }
+
+        return null;
+    }
+
+    public static function findByUrl(string $url): ?self
+    {
+        return self::where('url', $url)->first();
     }
 }

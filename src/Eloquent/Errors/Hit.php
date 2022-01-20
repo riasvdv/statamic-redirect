@@ -17,6 +17,8 @@ class Hit extends Model
         'data' => 'json',
     ];
 
-    protected $keyType = 'string';
-    protected $primaryKey = 'uuid';
+    public function getConnectionName()
+    {
+        return config('statamic.redirect.connection', 'redirect');
+    }
 }

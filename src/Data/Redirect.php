@@ -92,7 +92,7 @@ class Redirect
         $redirect->destination($data['destination']);
         $redirect->enabled($data['enabled']);
         $redirect->type($data['type']);
-        $redirect->matchType($data['match_type']);
+        $redirect->matchType($data['matchType']);
 
         return $redirect;
     }

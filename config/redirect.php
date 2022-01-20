@@ -45,11 +45,11 @@ return [
     'keep_unique_errors' => 1000,
 
     /*
-     * Error repository, you can change this to use a different
-     * storage method for the errors. The class must implement
-     * \Rias\StatamicRedirect\Contracts\ErrorRepository
+     * The database connection redirect should use
+     * by default this is the included 'redirect'
+     * connection that uses an sqlite database.
      */
-    'error_repository' => \Rias\StatamicRedirect\Stache\Errors\ErrorRepository::class,
+    'connection' => 'redirect',
 
     /*
      * Redirect repository, you can change this to use a different

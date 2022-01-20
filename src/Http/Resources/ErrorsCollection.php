@@ -24,7 +24,7 @@ class ErrorsCollection extends ResourceCollection
         $columns = [
             Column::make('url')->label('Path'),
             Column::make('hitsCount')->label('Hits'),
-            Column::make('latest')->label('Latest error'),
+            Column::make('lastSeenAt')->label('Latest error'),
             Column::make('handled')->label('Handled'),
             Column::make('handledDestination')->label('Destination'),
         ];

@@ -83,7 +83,7 @@ class EloquentRedirectRepository implements RepositoryContract
                 'source' => $redirect->source(),
                 'destination' => $redirect->destination(),
                 'type' => $redirect->type(),
-                'match_type' => $redirect->matchType(),
+                'matchType' => $redirect->matchType(),
             ]);
     }
 
