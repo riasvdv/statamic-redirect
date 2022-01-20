@@ -33,7 +33,7 @@ class Redirect
     protected $type = '301';
 
     /** @var string */
-    protected $match_type = MatchTypeEnum::EXACT;
+    protected $matchType = MatchTypeEnum::EXACT;
 
     public static function make()
     {
@@ -115,7 +115,7 @@ class Redirect
 
     public function matchType($matchType = null)
     {
-        return $this->fluentlyGetOrSet('match_type')->args(func_get_args());
+        return $this->fluentlyGetOrSet('matchType')->args(func_get_args());
     }
 
     public function path()
@@ -142,19 +142,6 @@ class Redirect
         Stache::store('redirects')->delete($this);
 
         return true;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        $redirect = new self();
-        $redirect->id($data['uuid']);
-        $redirect->source($data['source']);
-        $redirect->destination($data['destination']);
-        $redirect->enabled($data['enabled']);
-        $redirect->type($data['type']);
-        $redirect->matchType($data['matchType']);
-
-        return $redirect;
     }
 
     public function fileData()

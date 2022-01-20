@@ -8,8 +8,6 @@ class Hit extends Model
 {
     protected $guarded = [];
 
-    protected $table = 'redirect_error_hits';
-
     public $timestamps = false;
 
     protected $casts = [

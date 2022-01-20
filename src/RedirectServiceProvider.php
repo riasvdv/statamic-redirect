@@ -149,7 +149,7 @@ class RedirectServiceProvider extends AddonServiceProvider
             'database' => $sqlitePath,
         ]);
 
-        if (! Schema::connection(config('statamic.redirect.connection', 'redirect'))->hasTable('redirect_errors')) {
+        if (! Schema::connection(config('statamic.redirect.connection', 'redirect'))->hasTable('errors')) {
             $defaultConnection = DB::getDefaultConnection();
 
             DB::setDefaultConnection(config('statamic.redirect.connection', 'redirect'));

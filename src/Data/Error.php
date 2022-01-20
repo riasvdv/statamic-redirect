@@ -9,8 +9,6 @@ class Error extends Model
 {
     protected $guarded = [];
 
-    protected $table = 'redirect_errors';
-
     protected $casts = [
         'handled' => 'boolean',
         'lastSeenAt' => 'timestamp',
