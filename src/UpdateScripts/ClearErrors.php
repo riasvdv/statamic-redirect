@@ -10,7 +10,7 @@ class ClearErrors extends UpdateScript
 {
     public function shouldUpdate($newVersion, $oldVersion)
     {
-        return $this->isUpdatingTo('1.10.0');
+        return $this->isUpdatingTo('1.10.0') || $this->isUpdatingTo('2.0.0');
     }
 
     public function update()
