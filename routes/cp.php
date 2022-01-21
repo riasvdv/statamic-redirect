@@ -16,8 +16,8 @@ Route::get('redirect/api/redirects', ['\\' . ApiRedirectController::class, 'inde
 
 Route::prefix('redirect/errors')->group(function () {
     Route::get('clear', ['\\' . ErrorController::class, 'clearAll'])->name('redirect.api.errors.clear');
-    Route::get('/{id}', ['\\' . ErrorController::class, 'show'])->name('redirect.errors.show');
-    Route::get('/{id}/delete', ['\\' . ErrorController::class, 'delete'])->name('redirect.errors.delete');
+    Route::get('/{error}', ['\\' . ErrorController::class, 'show'])->name('redirect.errors.show');
+    Route::get('/{error}/delete', ['\\' . ErrorController::class, 'delete'])->name('redirect.errors.delete');
 });
 
 Route::prefix('redirect/redirects')->group(function () {

@@ -26,9 +26,8 @@ class ErrorController
 
     public function show(Error $error)
     {
-        $hits = $error->hits;
         $title = "Error details - {$error->id}";
 
-        return view('redirect::errors.show', compact('title', 'error', 'hits'));
+        return view('redirect::errors.show', compact('title', 'error'));
     }
 }

@@ -24,8 +24,8 @@ class Error extends Model
 
     protected static function booted()
     {
-        self::deleting(function () {
-            $this->hits()->delete();
+        self::deleting(function ($error) {
+            $error->hits()->delete();
         });
     }
 
