@@ -7,11 +7,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Rias\StatamicRedirect\Data\Error;
-use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
-use Statamic\Facades\Stache;
+use Rias\StatamicRedirect\Data\Hit;
 
 class CleanErrorsJob
 {
@@ -22,52 +20,27 @@ class CleanErrorsJob
 
     public function handle()
     {
+        File::ensureDirectoryExists(storage_path('redirect'));
+
         File::put(storage_path('redirect/clean_last_ran_at.txt'), now()->timestamp);
 
         $olderThan = CarbonInterval::createFromDateString(config('statamic.redirect.clean_older_than', '1 month'));
 
         if (config('statamic.redirect.log_hits', true)) {
-            ErrorFacade::all()
-                ->each(function (Error $error) use ($olderThan) {
-                    $originalHits = $error->hits() ?? [];
-
-                    $hits = array_filter($originalHits, function (array $hit) use ($olderThan) {
-                        return Carbon::parse($hit['timestamp']) > now()->sub($olderThan);
-                    });
-
-                    if (! count($hits)) {
-                        $error->delete();
-                        Stache::store('redirects')->clear();
-
-                        return;
-                    }
-
-                    if (count($originalHits) !== count($hits)) {
-                        $error->setHits($hits);
-                        $error->save();
-                    }
-                });
+            Hit::query()->where('timestamp', '<', now()->sub($olderThan)->timestamp)->delete();
+            Error::query()->whereDoesntHave('hits')->delete();
         }
 
-        $allErrors = ErrorFacade::all();
-        $errorCount = $allErrors->count();
+        $errorCount = Error::count();
         if ($errorCount <= config('statamic.redirect.keep_unique_errors')) {
-            Stache::store('redirects')->clear();
-
             return;
         }
 
         $errorsToDelete = $errorCount - config('statamic.redirect.keep_unique_errors');
 
-        $allErrors
-            ->sortBy(function (Error $error) {
-                return $error->latest();
-            })
-            ->take($errorsToDelete)
-            ->each(function (Error $error) {
-                $error->delete();
-            });
-
-        Stache::store('redirects')->clear();
+        Error::query()
+            ->orderBy('lastSeenAt')
+            ->limit($errorsToDelete)
+            ->delete();
     }
 }

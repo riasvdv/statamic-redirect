@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    @if(! $cleanupLastRanAt || \Illuminate\Support\Carbon::createFromTimestamp($cleanupLastRanAt) < now()->subDays(2))
+    @if((! $cleanupLastRanAt || \Illuminate\Support\Carbon::createFromTimestamp($cleanupLastRanAt) < now()->subDays(2)) && app()->environment() !== 'local')
         <div class="card bg-yellow py-2 px-4 leading-loose content mb-2 text-center">
             Error cleanup has not ran for <strong>{{ $cleanupLastRanAt ? \Illuminate\Support\Carbon::createFromTimestamp($cleanupLastRanAt)->diffForHumans() : '2 days' }}</strong>.<br>It should be running every day, make sure you run your
             <a class="text-blue" href="https://laravel.com/docs/8.x/scheduling#running-the-scheduler" target="_blank">Laravel schedule</a>.
@@ -24,19 +24,19 @@
         <div class="card p-2 content mb-2">
             <div class="flex flex-wrap -mx-2 mb-4">
                 <div class="w-1/3 px-2">
-                    <p class="mb-4">errors in the last month</p>
+                    <p class="mb-4">Last month</p>
                     <div class="px-1">
                         @include('redirect::components.lineChart', ['data' => $notFoundMonth])
                     </div>
                 </div>
                 <div class="w-1/3 px-2">
-                    <p class="mb-4">errors in the last week</p>
+                    <p class="mb-4">Last week</p>
                     <div class="px-1">
                         @include('redirect::components.lineChart', ['data' => $notFoundWeek])
                     </div>
                 </div>
                 <div class="w-1/3 px-2">
-                    <p class="mb-4">errors in the last day</p>
+                    <p class="mb-4">Last day</p>
                     <div class="px-1">
                         @include('redirect::components.lineChart', ['data' => $notFoundDay])
                     </div>

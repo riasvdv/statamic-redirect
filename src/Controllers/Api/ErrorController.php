@@ -2,9 +2,8 @@
 
 namespace Rias\StatamicRedirect\Controllers\Api;
 
-use Rias\StatamicRedirect\Facades\Error;
+use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Http\Resources\ErrorsCollection;
-use Rias\StatamicRedirect\Stache\Errors\ErrorQueryBuilder;
 use Statamic\Http\Requests\FilteredRequest;
 use Statamic\Query\Scopes\Filters\Concerns\QueriesFilters;
 
@@ -21,7 +20,7 @@ class ErrorController
         $sortDirection = request('order', 'asc');
 
         if (! $sortField && ! request('search')) {
-            $sortField = 'latest';
+            $sortField = 'lastSeenAt';
             $sortDirection = 'desc';
         }
 
@@ -29,6 +28,7 @@ class ErrorController
             $query->orderBy($sortField, $sortDirection);
         }
 
+        /** @var \Illuminate\Pagination\LengthAwarePaginator $errors */
         $errors = $query->paginate(request('perPage'));
 
         return (new ErrorsCollection($errors))
@@ -38,7 +38,7 @@ class ErrorController
             ]]);
     }
 
-    protected function indexQuery(): ErrorQueryBuilder
+    protected function indexQuery()
     {
         $query = Error::query();
 

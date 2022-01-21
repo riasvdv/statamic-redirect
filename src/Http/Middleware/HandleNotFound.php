@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Data\Redirect;
-use Rias\StatamicRedirect\Facades\Error as ErrorFacade;
 use Rias\StatamicRedirect\Jobs\CleanErrorsJob;
 use Statamic\Support\Str;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -57,7 +56,7 @@ class HandleNotFound
                 );
             }
 
-            if (! $redirect = \Rias\StatamicRedirect\Facades\Redirect::findByUrl($url)) {
+            if (! $redirect = Redirect::findByUrl($url)) {
                 return $response;
             }
 
@@ -90,11 +89,15 @@ class HandleNotFound
 
     private function createError(Request $request, string $url): Error
     {
-        $error = ErrorFacade::findByUrl($url);
+        $error = Error::findByUrl($url);
 
         if (! $error) {
-            $error = ErrorFacade::make()->url($url);
+            $error = new Error(['url' => $url]);
         }
+
+        $error->lastSeenAt = now()->timestamp;
+        $error->save();
+
 
         $error->addHit(now()->timestamp, [
             'userAgent' => $request->userAgent(),
@@ -102,16 +105,13 @@ class HandleNotFound
             'referer' => $request->header('referer'),
         ]);
 
-        $error->lastSeenAt(now()->timestamp);
-        $error->save();
-
         return $error;
     }
 
     private function markErrorHandled(Error $error, string $destination): void
     {
-        $error->handled(true);
-        $error->handledDestination($destination);
+        $error->handled = true;
+        $error->handledDestination = $destination;
         $error->save();
     }
 

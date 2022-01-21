@@ -2,7 +2,7 @@
 
 namespace Rias\StatamicRedirect\Controllers\Api;
 
-use Rias\StatamicRedirect\Facades\Redirect;
+use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Http\Resources\RedirectsCollection;
 use Rias\StatamicRedirect\Stache\Redirects\RedirectQueryBuilder;
 use Statamic\Http\Requests\FilteredRequest;

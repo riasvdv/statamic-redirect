@@ -1,14 +1,12 @@
 <?php
 
-namespace Rias\StatamicRedirect\Eloquent\Errors;
+namespace Rias\StatamicRedirect\Data;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Hit extends Model
 {
     protected $guarded = [];
-
-    protected $table = 'redirect_error_hits';
 
     public $timestamps = false;
 
@@ -17,6 +15,8 @@ class Hit extends Model
         'data' => 'json',
     ];
 
-    protected $keyType = 'string';
-    protected $primaryKey = 'uuid';
+    public function getConnectionName()
+    {
+        return config('statamic.redirect.connection', 'redirect');
+    }
 }

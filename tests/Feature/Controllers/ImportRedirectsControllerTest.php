@@ -4,20 +4,16 @@ namespace Rias\StatamicRedirect\Tests\Feature\Controllers;
 
 use Illuminate\Http\UploadedFile;
 use Rias\StatamicRedirect\Controllers\ImportRedirectsController;
-use Rias\StatamicRedirect\Facades\Redirect;
+use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Tests\TestCase;
 
 class ImportRedirectsControllerTest extends TestCase
 {
     /**
      * @test
-     * @dataProvider repositories
      */
-    public function it_can_import_redirects($errorRepository, $redirectRepository)
+    public function it_can_import_redirects()
     {
-        config()->set('statamic.redirect.error_repository', $errorRepository);
-        config()->set('statamic.redirect.redirect_repository', $redirectRepository);
-
         $this->asAdmin();
 
         $file = UploadedFile::fake()->createWithContent('redirects.csv', "source,destination,type,match_type\n/foo,/bar,302,exact");
@@ -30,7 +26,7 @@ class ImportRedirectsControllerTest extends TestCase
         ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully');
 
         $this->assertEquals(1, Redirect::query()->count());
-        tap(Redirect::findByUrl('/foo'), function (\Rias\StatamicRedirect\Data\Redirect $redirect) {
+        tap(Redirect::findByUrl('/foo'), function (Redirect $redirect) {
             $this->assertEquals('/bar', $redirect->destination());
             $this->assertEquals('302', $redirect->type());
             $this->assertEquals('exact', $redirect->matchType());

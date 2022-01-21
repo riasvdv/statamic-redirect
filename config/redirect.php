@@ -4,33 +4,33 @@ return [
     /**
      * Whether Redirect should be enabled
      */
-    'enable' => true,
+    'enable' => env('REDIRECT_ENABLED', true),
 
     /**
      * Controls whether Redirect automatically creates a redirect
      * when an entry's URI changes.
      */
-    'create_entry_redirects' => true,
+    'create_entry_redirects' => env('REDIRECT_AUTO_CREATE', true),
 
     /**
      * Controls whether Redirect logs 404 errors
      */
-    'log_errors' => true,
+    'log_errors' => env('REDIRECT_LOG_ERRORS', true),
 
     /**
      * Controls whether Redirect logs individual hits
      */
-    'log_hits' => true,
+    'log_hits' => env('REDIRECT_LOG_HITS', true),
 
     /**
      * Should error logs be cleaned? Make sure your schedule is running.
      */
-    'clean_errors' => true,
+    'clean_errors' => env('REDIRECT_CLEAN_ERRORS', true),
 
     /**
      * Should error logs be cleaned when saving a new error?
      */
-    'clean_errors_on_save' => true,
+    'clean_errors_on_save' => env('REDIRECT_CLEAN_ON_SAVE', true),
 
     /**
      * Error logs older than this will be deleted.
@@ -45,32 +45,16 @@ return [
     'keep_unique_errors' => 1000,
 
     /*
-     * Error repository, you can change this to use a different
-     * storage method for the errors. The class must implement
-     * \Rias\StatamicRedirect\Contracts\ErrorRepository
+     * The database connection redirect should use to store errors
+     * by default this is the included 'redirect' connection
+     * that uses an sqlite database in storage.
      */
-    'error_repository' => \Rias\StatamicRedirect\Stache\Errors\ErrorRepository::class,
+    'connection' => 'redirect',
 
     /*
-     * Redirect repository, you can change this to use a different
-     * storage method for the redirect. The class must implement
-     * \Rias\StatamicRedirect\Contracts\RedirectRepository
+     * Customize where on filesystem the redirects are being stored
+     * Useful when using a non-conventional setup where data should
+     * not be inside the usual content/redirects folder
      */
-    'redirect_repository' => \Rias\StatamicRedirect\Stache\Redirects\RedirectRepository::class,
-
-    'paths' => [
-        /*
-         * Customize where on filesystem the redirects is being stored
-         * Useful when using a non-conventional setup where data not
-         * be inside the usual storage/redirect/errors folder
-         */
-        'redirect_store' => base_path('content/redirects'),
-
-        /*
-         * Customize where on filesystem the error logs are being persisted
-         * Useful when using a non-conventional setup where data should
-         * not be in the the usual content/redirects folder
-         */
-        'error_store' => storage_path('redirect/errors'),
-    ]
+    'redirect_store' => base_path('content/redirects'),
 ];

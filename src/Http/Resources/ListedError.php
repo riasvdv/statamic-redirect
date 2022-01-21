@@ -17,16 +17,13 @@ class ListedError extends JsonResource
 
     public function toArray($request)
     {
-        /** @var \Rias\StatamicRedirect\Data\Error $error */
-        $error = $this->resource;
-
         return [
-            'id' => $error->id(),
-            'url' => $error->url(),
-            'handled' => $error->handled(),
-            'handledDestination' => $error->handledDestination(),
-            'latest' => $error->latest(),
-            'hitsCount' => $error->hitsCount(),
+            'id' => $this->id,
+            'url' => $this->url,
+            'handled' => $this->handled,
+            'handledDestination' => $this->handledDestination,
+            'lastSeenAt' => $this->lastSeenAt,
+            'hitsCount' => $this->hitsCount,
         ];
     }
 }

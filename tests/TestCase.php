@@ -5,13 +5,11 @@ namespace Rias\StatamicRedirect\Tests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Rias\StatamicRedirect\Eloquent\Errors\EloquentErrorRepository;
-use Rias\StatamicRedirect\Eloquent\Redirects\EloquentRedirectRepository;
-use Rias\StatamicRedirect\Facades\Error;
-use Rias\StatamicRedirect\Facades\Redirect;
-use Rias\StatamicRedirect\Stache\Errors\ErrorRepository;
-use Rias\StatamicRedirect\Stache\Redirects\RedirectRepository;
+use Rias\StatamicRedirect\Data\Error;
+use Rias\StatamicRedirect\Data\Hit;
+use Rias\StatamicRedirect\Data\Redirect;
 use Statamic\Extend\Manifest;
+use Statamic\Facades\User;
 use Statamic\Statamic;
 
 class TestCase extends OrchestraTestCase
@@ -28,7 +26,8 @@ class TestCase extends OrchestraTestCase
 
         $this->faker = $this->makeFaker();
 
-        Error::all()->each->delete();
+        Error::truncate();
+        Hit::truncate();
         Redirect::all()->each->delete();
     }
 
@@ -38,7 +37,7 @@ class TestCase extends OrchestraTestCase
      */
     protected function asAdmin()
     {
-        $user = \Statamic\Facades\User::make();
+        $user = User::make();
         $user->id(1)->email('hey@rias.be')->makeSuper();
         $this->be($user);
 
@@ -124,19 +123,5 @@ class TestCase extends OrchestraTestCase
 
         // Define redirect config settings for all of our tests
         $app['config']->set("statamic.redirect", require(__DIR__ . "/../config/redirect.php"));
-    }
-
-    public function repositories()
-    {
-        return [
-            [
-                'error_repository' => ErrorRepository::class,
-                'redirect_repository' => RedirectRepository::class,
-            ],
-            [
-                'error_repository' => EloquentErrorRepository::class,
-                'redirect_repository' => EloquentRedirectRepository::class,
-            ],
-        ];
     }
 }

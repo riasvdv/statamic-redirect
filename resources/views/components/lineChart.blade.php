@@ -3,7 +3,7 @@
     @php($points = collect($data)->map(function ($point, $index) use ($maxValue) { return "L {$index} ". ($maxValue - $point[0]); })->join(' '))
     @foreach ($data as $index => [$value, $label])
         <div class="bg-gray-200 bottom-0 absolute top-0 w-px" style="left: {{ ($index / ((count($data) - 1) ?: 1)) * 100 }}%">
-            <div class="absolute" style="bottom: -20px; left: 50%; transform: translateX(-50%)">{{ $label }}</div>
+            <div class="absolute text-center" style="bottom: -20px; left: 50%; transform: translateX(-50%); min-width: 35px;">{{ $label }}</div>
             <div class="bg-blue-500 rounded-sm text-white font-bold absolute text-center z-10 text-4xs" style="left: 50%; padding: 0 3px; bottom: {{ ($value / ($maxValue ?: 1)) * 100 }}%; transform: translateX(-50%) translateY(6px)">
                 {{ $value }}
             </div>

@@ -24,7 +24,7 @@ class CleanErrorsCommand extends Command
 
         $this->info('Cleaning errors older than ' . config('statamic.redirect.clean_older_than', '1 month'));
 
-        CleanErrorsJob::dispatchNow();
+        (new CleanErrorsJob())->handle();
 
         $this->info('Done!');
     }
