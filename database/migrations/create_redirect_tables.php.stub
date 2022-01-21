@@ -14,13 +14,13 @@ class CreateRedirectTables extends Migration
             $table->string('url')->index();
             $table->boolean('handled')->default(false);
             $table->string('handledDestination')->nullable();
-            $table->dateTime('lastSeenAt')->nullable();
+            $table->dateTime('lastSeenAt')->nullable()->index();
             $table->integer('hitsCount')->nullable();
         });
 
         Schema::create('hits', function (Blueprint $table): void {
             $table->id();
-            $table->foreignIdFor(Error::class)->index();
+            $table->unsignedBigInteger('error_id')->index();
             $table->foreign('error_id')
                 ->references('id')
                 ->on('errors')
