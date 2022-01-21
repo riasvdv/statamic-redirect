@@ -1,5 +1,21 @@
 # Release Notes
 
+## 2.0.0 (2022-01-21)
+## BREAKING
+- The config file has been restructured make sure to publish it again using:
+
+```shell
+php artisan vendor:publish --tag=statamic-redirect-config --force
+```
+
+- You can no longer choose between Eloquent and Stache for storing Redirects, these are considered content so are currently always Stache.
+- You can no longer choose to store errors & hits inside the Stache, there's just no way to keep this performant.
+
+## What's new
+- Errors & hits are now stored inside a local sqlite database which improves performance and allows thousands of errors & hits to be stored without any performance issues.
+- We only show the warning that the schedule hasn't run on non-local environments
+- The stats graphs have been improved a bit
+
 ## 1.10.3 (2022-01-16)
 ## What's fixed
 - Fix an issue caused by Statamic 3.2.31
