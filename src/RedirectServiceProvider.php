@@ -137,7 +137,9 @@ class RedirectServiceProvider extends AddonServiceProvider
             return $this;
         }
 
-        $sqlitePath = storage_path("redirect/errors.sqlite");
+        File::ensureDirectoryExists(storage_path('redirect'));
+
+        $sqlitePath = storage_path('redirect/errors.sqlite');
 
         if (! file_exists($sqlitePath)) {
             File::put($sqlitePath, '');

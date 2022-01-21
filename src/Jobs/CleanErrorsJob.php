@@ -20,6 +20,8 @@ class CleanErrorsJob
 
     public function handle()
     {
+        File::ensureDirectoryExists(storage_path('redirect'));
+
         File::put(storage_path('redirect/clean_last_ran_at.txt'), now()->timestamp);
 
         $olderThan = CarbonInterval::createFromDateString(config('statamic.redirect.clean_older_than', '1 month'));
