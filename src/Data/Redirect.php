@@ -8,6 +8,7 @@ use Rias\StatamicRedirect\Stache\Redirects\RedirectQueryBuilder;
 use Statamic\Data\DataCollection;
 use Statamic\Data\ExistsAsFile;
 use Statamic\Data\TracksQueriedColumns;
+use Statamic\Data\TracksQueriedRelations;
 use Statamic\Facades\Stache;
 use Statamic\Support\Traits\FluentlyGetsAndSets;
 
@@ -16,6 +17,7 @@ class Redirect
     use FluentlyGetsAndSets;
     use ExistsAsFile;
     use TracksQueriedColumns;
+    use TracksQueriedRelations;
 
     /** @var string|int|null */
     protected $id;
