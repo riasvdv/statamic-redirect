@@ -11,11 +11,6 @@ jobs:
       matrix:
         php: [7.4, 8.0, 8.1]
         statamic: [3.2, 3.3]
-        include:
-          - statamic: 3.2
-            testbench: 6.*
-          - statamic: 3.3
-            testbench: 7.*
         exclude:
           - statamic: 3.3
             php: 7.4
@@ -35,7 +30,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          composer require "statamic/cms:${{ matrix.statamic }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer require "statamic/cms:${{ matrix.statamic }}" "orchestra/testbench" --no-interaction --no-update
           composer update --prefer-stable --prefer-dist --no-interaction --no-suggest
       
       - name: Execute tests
