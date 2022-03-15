@@ -9,15 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [7.4, 8.0]
-        laravel: [7.*, 8.*]
+        php: [7.4, 8.0, 8.1]
+        statamic: [3.1, 3.2, 3.3]
         include:
-          - laravel: 7.*
-            testbench: 5.*
-          - laravel: 8.*
+          - statamic: 3.1
             testbench: 6.*
+          - statamic: 3.2
+            testbench: 6.*
+          - statamic: 3.3
+            testbench: 7.*
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }}
+    name: P${{ matrix.php }} - L${{ matrix.statamic }}
     
     steps:
       - name: Checkout code
@@ -32,7 +34,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer require "statamic/cms:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --prefer-stable --prefer-dist --no-interaction --no-suggest
       
       - name: Execute tests
