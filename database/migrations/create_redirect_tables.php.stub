@@ -14,7 +14,7 @@ class CreateRedirectTables extends Migration
             $table->string('url')->index();
             $table->boolean('handled')->default(false);
             $table->string('handledDestination')->nullable();
-            $table->dateTime('lastSeenAt')->nullable()->index();
+            $table->integer('lastSeenAt')->nullable()->index();
             $table->integer('hitsCount')->nullable();
         });
 
@@ -27,7 +27,7 @@ class CreateRedirectTables extends Migration
                 ->cascadeOnDelete();
 
             $table->json('data');
-            $table->timestamp('timestamp');
+            $table->integer('timestamp');
         });
     }
 }
