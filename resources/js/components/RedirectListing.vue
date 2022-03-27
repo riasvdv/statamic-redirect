@@ -89,6 +89,7 @@
                   <resource-deleter
                       :ref="`deleter_${redirect.id}`"
                       :resource="redirect"
+                      :reload="true"
                       @deleted="removeRow(redirect.id);">
                   </resource-deleter>
                 </dropdown-item>
