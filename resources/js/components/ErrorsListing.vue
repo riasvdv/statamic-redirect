@@ -25,7 +25,7 @@
                 @selected="selectPreset"
                 @reset="filtersReset"
               />
-              <div class="data-list-header">
+              <div class="data-list-header flex-no-wrap items-center">
                 <data-list-filters
                   :filters="filters"
                   :active-preset="activePreset"
@@ -43,9 +43,9 @@
                   @restore-preset="$refs.presets.viewPreset($event)"
                   @reset="filtersReset"
                 />
+                <a :href="cp_url('redirect/errors/clear')" class="ml-2 btn flex items-center">Clear all</a>
               </div>
             </div>
-            <a :href="cp_url('redirect/errors/clear')" class="mr-2 mt-1 btn flex items-center">Clear all</a>
           </div>
 
           <div
