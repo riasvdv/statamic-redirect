@@ -32,4 +32,28 @@ class ImportRedirectsControllerTest extends TestCase
             $this->assertEquals('exact', $redirect->matchType());
         });
     }
+
+    /**
+     * @test
+     */
+    public function it_can_import_redirects_with_a_txt_file()
+    {
+        $this->asAdmin();
+
+        $file = UploadedFile::fake()->createWithContent('redirects.txt', "source,destination,type,match_type\n/foo,/bar,302,exact");
+
+        $this->assertEquals(0, Redirect::query()->count());
+
+        $this->post(action([ImportRedirectsController::class, 'store']), [
+            'file' => $file,
+            'delimiter' => ',',
+        ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully');
+
+        $this->assertEquals(1, Redirect::query()->count());
+        tap(Redirect::findByUrl('/foo'), function (Redirect $redirect) {
+            $this->assertEquals('/bar', $redirect->destination());
+            $this->assertEquals('302', $redirect->type());
+            $this->assertEquals('exact', $redirect->matchType());
+        });
+    }
 }
