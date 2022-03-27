@@ -6,12 +6,15 @@ use Exception;
 use Illuminate\Support\Facades\File;
 use Rias\StatamicRedirect\Data\Hit;
 use Statamic\Facades\Scope;
+use Statamic\Facades\User;
 
 class DashboardController
 {
     public function __invoke()
     {
-        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('view redirects'), 401);
+        $user = User::fromUser(auth()->user());
+
+        abort_unless($user->isSuper() || $user->hasPermission('view redirects'), 401);
 
         $notFoundMonth = $this->getStatsPastMonth();
         $notFoundWeek = $this->getStatsPastWeek();

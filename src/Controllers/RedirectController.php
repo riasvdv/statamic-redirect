@@ -8,12 +8,15 @@ use Rias\StatamicRedirect\Blueprints\RedirectBlueprint;
 use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Http\Resources\ListedRedirect;
 use Statamic\Facades\Scope;
+use Statamic\Facades\User;
 
 class RedirectController
 {
     public function index()
     {
-        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('view redirects'), 401);
+        $user = User::fromUser(auth()->user());
+
+        abort_unless($user->isSuper() || $user->hasPermission('view redirects'), 401);
 
         return view('redirect::redirects.index', [
             'filters' => Scope::filters('redirects'),
@@ -22,7 +25,9 @@ class RedirectController
 
     public function create()
     {
-        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('create redirects'), 401);
+        $user = User::fromUser(auth()->user());
+
+        abort_unless($user->isSuper() || $user->hasPermission('create redirects'), 401);
 
         $blueprint = new RedirectBlueprint();
         $fields = $blueprint()->fields()->preProcess();
@@ -38,7 +43,9 @@ class RedirectController
 
     public function edit($id)
     {
-        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('edit redirects'), 401);
+        $user = User::fromUser(auth()->user());
+
+        abort_unless($user->isSuper() || $user->hasPermission('edit redirects'), 401);
 
         $redirect = Redirect::find($id);
         $redirectValues = $redirect->fileData();
@@ -55,7 +62,9 @@ class RedirectController
 
     public function store(Request $request)
     {
-        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('create redirects'), 401);
+        $user = User::fromUser(auth()->user());
+
+        abort_unless($user->isSuper() || $user->hasPermission('create redirects'), 401);
 
         $blueprint = new RedirectBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
@@ -79,7 +88,9 @@ class RedirectController
 
     public function update($id, Request $request)
     {
-        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('edit redirects'), 401);
+        $user = User::fromUser(auth()->user());
+
+        abort_unless($user->isSuper() || $user->hasPermission('edit redirects'), 401);
 
         $blueprint = new RedirectBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
@@ -109,7 +120,9 @@ class RedirectController
 
     public function destroy($id)
     {
-        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('delete redirects'), 401);
+        $user = User::fromUser(auth()->user());
+
+        abort_unless($user->isSuper() || $user->hasPermission('delete redirects'), 401);
 
         $redirect = Redirect::find($id);
         $redirect->delete();

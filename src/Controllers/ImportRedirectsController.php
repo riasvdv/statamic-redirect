@@ -6,19 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Data\Redirect;
 use Spatie\SimpleExcel\SimpleExcelReader;
+use Statamic\Facades\User;
 
 class ImportRedirectsController
 {
     public function index()
     {
-        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('create redirects'), 401);
+        $user = User::fromUser(auth()->user());
+
+        abort_unless($user->isSuper() || $user->hasPermission('create redirects'), 401);
 
         return view('redirect::redirects.import');
     }
 
     public function store(Request $request)
     {
-        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('create redirects'), 401);
+        $user = User::fromUser(auth()->user());
+
+        abort_unless($user->isSuper() || $user->hasPermission('create redirects'), 401);
 
         $request->validate([
             'file' => ['required', 'file'],

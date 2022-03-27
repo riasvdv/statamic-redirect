@@ -4,13 +4,16 @@ namespace Rias\StatamicRedirect\Controllers;
 
 use Statamic\Exceptions\FatalException;
 use Statamic\Facades\File;
+use Statamic\Facades\User;
 use Statamic\Support\Str;
 
 class ExportController
 {
     public function __invoke($type)
     {
-        abort_unless(auth()->user()->isSuper() || auth()->user()->hasPermission('view redirects'), 401);
+        $user = User::fromUser(auth()->user());
+
+        abort_unless($user->isSuper() || $user->hasPermission('view redirects'), 401);
 
         $exporter = 'Rias\StatamicRedirect\Exporters\\'.Str::studly($type).'Exporter';
 
