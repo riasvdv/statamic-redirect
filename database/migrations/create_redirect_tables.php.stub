@@ -30,4 +30,10 @@ class CreateRedirectTables extends Migration
             $table->integer('timestamp');
         });
     }
+
+    public function down()
+    {
+        Schema::dropIfExists('hits');
+        Schema::dropIfExists('errors');
+    }
 }
