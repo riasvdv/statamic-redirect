@@ -1,8 +1,11 @@
-.DS_Store
-node_modules
+.DS_*
 .env
-composer.lock
+/.idea
+/.php_cs.cache
+/.php-cs-fixer.cache
+/.phpunit.result.cache
+/composer.lock
+/tests/_reports
 /vendor
 mix-manifest.json
-.php_cs.cache
-.php-cs-fixer.cache
+node_modules

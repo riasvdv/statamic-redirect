@@ -1,5 +1,16 @@
 {
     "name": "rias/statamic-redirect",
+    "require": {
+        "ext-json": "*",
+        "php": "^7.4|^8.0",
+        "spatie/simple-excel": "^1.13",
+        "statamic/cms": "^3.2"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.8",
+        "orchestra/testbench": "^5.0|^6.0|^7.0",
+        "phpunit/phpunit": "^9.3"
+    },
     "autoload": {
         "psr-4": {
             "Rias\\StatamicRedirect\\": "src"
@@ -10,15 +21,11 @@
             "Rias\\StatamicRedirect\\Tests\\": "tests"
         }
     },
-    "require": {
-        "ext-json": "*",
-        "php": "^8.0",
-        "statamic/cms": "^3.3",
-        "spatie/simple-excel": "^1.9"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^5.0|^6.0",
-        "phpunit/phpunit": "^9.3"
+    "scripts": {
+        "lint": "php-cs-fixer fix --verbose --dry-run --diff",
+        "lint:fix": "php-cs-fixer fix --verbose --diff",
+        "test": "phpunit",
+        "test:coverage": "phpdbg -qrr vendor/bin/phpunit --color --coverage-html tests/_reports"
     },
     "extra": {
         "statamic": {
