@@ -1,5 +1,9 @@
 # Release Notes
 
+## 2.2.0 (2022-05-09)
+
+- Adds support for Statamic 3.2 again
+
 ## 2.0.0 (2022-01-21)
 ## BREAKING
 - The config file has been restructured make sure to publish it again using:
