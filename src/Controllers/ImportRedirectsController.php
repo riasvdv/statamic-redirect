@@ -32,11 +32,9 @@ class ImportRedirectsController
 
         /** @var \Illuminate\Http\UploadedFile $file */
         $file = $request->file('file');
-        $delimiter = request('delimiter', ',');
+        $delimiter = $request->input('delimiter', ',');
 
-        $extension = in_array($file->extension(), ['csv', 'txt'])
-            ? 'csv'
-            : $file->extension();
+        $extension = with($file->extension(), fn ($ext) => $ext === 'txt' ? 'csv' : $ext);
 
         $reader = SimpleExcelReader::create($file->getRealPath(), $extension)
             ->useDelimiter($delimiter);
