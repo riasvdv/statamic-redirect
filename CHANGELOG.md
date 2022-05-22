@@ -1,5 +1,9 @@
 # Release Notes
 
+## 2.3.0 (2022-05-22)
+
+- Add multisite support
+
 ## 2.2.0 (2022-05-09)
 
 - Adds support for Statamic 3.2 again
