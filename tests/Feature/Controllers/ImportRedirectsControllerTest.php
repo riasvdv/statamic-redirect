@@ -71,7 +71,7 @@ class ImportRedirectsControllerTest extends TestCase
         $this->post(action([ImportRedirectsController::class, 'store']), [
             'file' => $file,
             'delimiter' => ',',
-        ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully');
+        ])->assertRedirect()->assertSessionHas('success', "Redirects imported successfully. 4 rows skipped due to invalid data.");
 
         $this->assertEquals(1, Redirect::query()->count());
         tap(Redirect::findByUrl('/foo'), function (Redirect $redirect) {

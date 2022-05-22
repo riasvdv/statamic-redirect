@@ -39,8 +39,10 @@ class ImportRedirectsController
         $reader = SimpleExcelReader::create($file->getRealPath(), $extension)
             ->useDelimiter($delimiter);
 
-        $reader->getRows()->each(function (array $data) {
+        $skipped = 0;
+        $reader->getRows()->each(function (array $data) use (&$skipped) {
             if (! $data['source'] || ! $data['destination'] || ! $data['type'] || ! $data['match_type']) {
+                $skipped++;
                 return;
             }
 
@@ -54,7 +56,13 @@ class ImportRedirectsController
             $redirect->save();
         });
 
-        session()->flash('success', 'Redirects imported successfully');
+        $message = 'Redirects imported successfully.';
+
+        if ($skipped > 0) {
+            $message .= " {$skipped} rows skipped due to invalid data.";
+        }
+
+        session()->flash('success', $message);
 
         Cache::forget('statamic.redirect.redirects');
 
