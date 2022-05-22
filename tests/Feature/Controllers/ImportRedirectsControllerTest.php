@@ -56,4 +56,28 @@ class ImportRedirectsControllerTest extends TestCase
             $this->assertEquals('exact', $redirect->matchType());
         });
     }
+
+    /**
+     * @test
+     */
+    public function it_will_ignore_invalid_redirects()
+    {
+        $this->asAdmin();
+
+        $file = UploadedFile::fake()->createWithContent('redirects.csv', "source,destination,type,match_type\n/foo,/bar,302,exact\n,/bar,302,exact\n/foo,,302,exact\n/foo,/bar,,exact\n/foo,/bar,302,");
+
+        $this->assertEquals(0, Redirect::query()->count());
+
+        $this->post(action([ImportRedirectsController::class, 'store']), [
+            'file' => $file,
+            'delimiter' => ',',
+        ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully');
+
+        $this->assertEquals(1, Redirect::query()->count());
+        tap(Redirect::findByUrl('/foo'), function (Redirect $redirect) {
+            $this->assertEquals('/bar', $redirect->destination());
+            $this->assertEquals('302', $redirect->type());
+            $this->assertEquals('exact', $redirect->matchType());
+        });
+    }
 }

@@ -40,6 +40,10 @@ class ImportRedirectsController
             ->useDelimiter($delimiter);
 
         $reader->getRows()->each(function (array $data) {
+            if (! $data['source'] || ! $data['destination'] || ! $data['type'] || ! $data['match_type']) {
+                return;
+            }
+
             $redirect = Redirect::make()
                 ->source($data['source'])
                 ->destination($data['destination'])
