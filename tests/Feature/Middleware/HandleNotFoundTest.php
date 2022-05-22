@@ -10,7 +10,6 @@ use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Rias\StatamicRedirect\Tests\TestCase;
-use Statamic\Sites\Site;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandleNotFoundTest extends TestCase
