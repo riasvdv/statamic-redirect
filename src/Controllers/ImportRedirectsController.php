@@ -43,6 +43,7 @@ class ImportRedirectsController
         $reader->getRows()->each(function (array $data) use (&$skipped) {
             if (! $data['source'] || ! $data['destination'] || ! $data['type'] || ! $data['match_type']) {
                 $skipped++;
+
                 return;
             }
 
