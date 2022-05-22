@@ -6,13 +6,15 @@ use Illuminate\Support\Str;
 use Rias\StatamicRedirect\Data\Concerns\TracksQueriedRelations;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Stache\Redirects\RedirectQueryBuilder;
+use Statamic\Contracts\Data\Localization;
 use Statamic\Data\DataCollection;
 use Statamic\Data\ExistsAsFile;
 use Statamic\Data\TracksQueriedColumns;
+use Statamic\Facades\Site;
 use Statamic\Facades\Stache;
 use Statamic\Support\Traits\FluentlyGetsAndSets;
 
-class Redirect
+class Redirect implements Localization
 {
     use FluentlyGetsAndSets;
     use ExistsAsFile;
@@ -33,6 +35,9 @@ class Redirect
 
     /** @var string */
     protected $type = '301';
+
+    /** @var string */
+    protected $locale;
 
     /** @var string */
     protected $matchType = MatchTypeEnum::EXACT;
@@ -57,10 +62,11 @@ class Redirect
         return self::query()->where('id', $id)->first();
     }
 
-    public static function findByUrl(string $url): ?Redirect
+    public static function findByUrl(string $siteHandle, string $url): ?Redirect
     {
         return self::query()
             ->where('enabled', true)
+            ->where('locale', $siteHandle)
             ->get()
             ->map(function (Redirect $redirect) use ($url) {
                 if ($redirect->matchType() === MatchTypeEnum::REGEX) {
@@ -120,10 +126,29 @@ class Redirect
         return $this->fluentlyGetOrSet('matchType')->args(func_get_args());
     }
 
+    public function locale($locale = null)
+    {
+        return $this
+            ->fluentlyGetOrSet('locale')
+            ->setter(function ($locale) {
+                return $locale instanceof \Statamic\Sites\Site ? $locale->handle() : $locale;
+            })
+            ->getter(function ($locale) {
+                return $locale ?? Site::default()->handle();
+            })
+            ->args(func_get_args());
+    }
+
+    public function site()
+    {
+        return Site::get($this->locale());
+    }
+
     public function path()
     {
-        return vsprintf('%s/%s.yaml', [
+        return vsprintf('%s/%s/%s.yaml', [
             rtrim(Stache::store('redirects')->directory(), '/'),
+            $this->locale(),
             $this->id(),
         ]);
     }

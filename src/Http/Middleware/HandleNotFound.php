@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Jobs\CleanErrorsJob;
+use Statamic\Facades\Site;
 use Statamic\Support\Str;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -26,6 +27,8 @@ class HandleNotFound
         }
 
         try {
+            $site = Site::findByUrl($request->url());
+
             // Make sure it starts with '/'
             $url = Str::start($request->getRequestUri(), '/');
             // Make sure we remove any trailing slash
@@ -41,32 +44,32 @@ class HandleNotFound
 
             $this->cachedRedirects = Cache::get('statamic.redirect.redirects', []);
 
-            if (isset($this->cachedRedirects[$url])) {
+            if (isset($this->cachedRedirects[$site->handle()][$url])) {
                 if ($logErrors) {
-                    $this->markErrorHandled($error, $this->cachedRedirects[$url]['destination']);
+                    $this->markErrorHandled($error, $this->cachedRedirects[$site->handle()][$url]['destination']);
                 }
 
-                if ((string) $this->cachedRedirects[$url]['type'] === (string) 410) {
+                if ((string) $this->cachedRedirects[$site->handle()][$url]['type'] === (string) 410) {
                     abort(410);
                 }
 
                 return redirect(
-                    $this->cachedRedirects[$url]['destination'],
-                    $this->cachedRedirects[$url]['type'],
+                    $this->cachedRedirects[$site->handle()][$url]['destination'],
+                    $this->cachedRedirects[$site->handle()][$url]['type'],
                 );
             }
 
-            if (! $redirect = Redirect::findByUrl($url)) {
+            if (! $redirect = Redirect::findByUrl($site->handle(), $url)) {
                 return $response;
             }
 
-            $this->cacheNewRedirect($redirect, $url);
+            $this->cacheNewRedirect($site, $redirect, $url);
 
             if ($logErrors) {
                 $this->markErrorHandled($error, $redirect->destination());
             }
 
-            if ((string) $redirect->type() === (string) 410) {
+            if ((string) $redirect->type() === "410") {
                 abort(410);
             }
 
@@ -116,12 +119,13 @@ class HandleNotFound
     }
 
     /**
+     * @param \Statamic\Sites\Site $site
      * @param \Rias\StatamicRedirect\Data\Redirect $redirect
      * @param string $url
      */
-    private function cacheNewRedirect(Redirect $redirect, string $url): void
+    private function cacheNewRedirect(\Statamic\Sites\Site $site, Redirect $redirect, string $url): void
     {
-        $this->cachedRedirects[$url] = [
+        $this->cachedRedirects[$site->handle()][$url] = [
             'destination' => $redirect->destination(),
             'type' => $redirect->type(),
         ];

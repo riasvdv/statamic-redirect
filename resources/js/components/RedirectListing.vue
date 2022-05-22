@@ -120,11 +120,35 @@ export default {
       listingKey: "redirects",
       preferencesPrefix: `redirect.redirects`,
       requestUrl: cp_url(`redirect/api/redirects`),
+      currentSite: this.site,
+      initialSite: this.site,
       columns: this.columns,
     };
   },
 
+  watch: {
+    activeFilters: {
+      deep: true,
+      handler(filters) {
+        this.currentSite = filters.site ? filters.site.site : null;
+      }
+    },
+
+    site(site) {
+      this.currentSite = site;
+    },
+
+    currentSite(site) {
+      this.setSiteFilter(site);
+      this.$emit('site-changed', site);
+    }
+  },
+
   methods: {
+    setSiteFilter(site) {
+      this.filterChanged({ handle: 'site', values: { site }});
+    },
+
     removeRow(row) {
       let id = row.id;
       let i = _.indexOf(this.items, _.findWhere(this.items, { id }));

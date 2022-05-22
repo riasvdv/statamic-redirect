@@ -10,6 +10,7 @@ use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Rias\StatamicRedirect\Tests\TestCase;
+use Statamic\Sites\Site;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandleNotFoundTest extends TestCase
@@ -292,5 +293,22 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(0, count(Error::findByUrl('/abc')->hits ?? []));
         $this->assertEquals(1, Error::findByUrl('/abc')->hitsCount); // Still add count
         $this->assertEquals(404, $response->status());
+    }
+
+    /** @test * */
+    public function it_will_not_find_redirects_from_different_sites()
+    {
+        Redirect::make()
+            ->locale('some-different-site')
+            ->source('/abc')
+            ->destination('/def')
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/abc'), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isNotFound());
+        $this->assertEquals(1, Error::query()->count());
     }
 }

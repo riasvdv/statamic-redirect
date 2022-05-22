@@ -9,6 +9,9 @@ use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
 use Rias\StatamicRedirect\Http\Filters\ErrorFields;
 use Rias\StatamicRedirect\Http\Filters\ErrorHandled;
+use Rias\StatamicRedirect\Http\Filters\MatchType;
+use Rias\StatamicRedirect\Http\Filters\Site;
+use Rias\StatamicRedirect\Http\Filters\Type;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Rias\StatamicRedirect\Listeners\CacheOldUri;
 use Rias\StatamicRedirect\Listeners\CreateRedirect;
@@ -79,6 +82,9 @@ class RedirectServiceProvider extends AddonServiceProvider
 
             ErrorHandled::register();
             ErrorFields::register();
+            MatchType::register();
+            Type::register();
+            Site::register();
 
             $this
                 ->bootAddonViews()

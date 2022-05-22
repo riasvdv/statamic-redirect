@@ -20,5 +20,5 @@
         @endif
     </div>
 
-    <redirect-listing :filters="{{ $filters->toJson() }}"></redirect-listing>
+    <redirect-listing :columns="{{ $columns->toJson() }}" :filters="{{ $filters->toJson() }}"></redirect-listing>
 @endsection

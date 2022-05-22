@@ -23,10 +23,10 @@ class ImportRedirectsControllerTest extends TestCase
         $this->post(action([ImportRedirectsController::class, 'store']), [
             'file' => $file,
             'delimiter' => ',',
-        ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully');
+        ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully.');
 
         $this->assertEquals(1, Redirect::query()->count());
-        tap(Redirect::findByUrl('/foo'), function (Redirect $redirect) {
+        tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (Redirect $redirect) {
             $this->assertEquals('/bar', $redirect->destination());
             $this->assertEquals('302', $redirect->type());
             $this->assertEquals('exact', $redirect->matchType());
@@ -47,10 +47,10 @@ class ImportRedirectsControllerTest extends TestCase
         $this->post(action([ImportRedirectsController::class, 'store']), [
             'file' => $file,
             'delimiter' => ',',
-        ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully');
+        ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully.');
 
         $this->assertEquals(1, Redirect::query()->count());
-        tap(Redirect::findByUrl('/foo'), function (Redirect $redirect) {
+        tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (Redirect $redirect) {
             $this->assertEquals('/bar', $redirect->destination());
             $this->assertEquals('302', $redirect->type());
             $this->assertEquals('exact', $redirect->matchType());
@@ -74,7 +74,7 @@ class ImportRedirectsControllerTest extends TestCase
         ])->assertRedirect()->assertSessionHas('success', "Redirects imported successfully. 4 rows skipped due to invalid data.");
 
         $this->assertEquals(1, Redirect::query()->count());
-        tap(Redirect::findByUrl('/foo'), function (Redirect $redirect) {
+        tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (Redirect $redirect) {
             $this->assertEquals('/bar', $redirect->destination());
             $this->assertEquals('302', $redirect->type());
             $this->assertEquals('exact', $redirect->matchType());

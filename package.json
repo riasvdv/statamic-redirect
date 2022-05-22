@@ -11,7 +11,6 @@
     "format": "prettier 'resources/**/*.{css,js,json,css,ts,tsx,vue}' '*.{js,css}' --write"
   },
   "dependencies": {
-    "cross-env": "7.0.2",
     "laravel-mix": "6.0.31",
     "vue": "2.6.12",
     "vue-template-compiler": "2.6.12"

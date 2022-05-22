@@ -7,19 +7,38 @@ use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Blueprints\RedirectBlueprint;
 use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Http\Resources\ListedRedirect;
+use Statamic\Exceptions\SiteNotFoundException;
 use Statamic\Facades\Scope;
+use Statamic\Facades\Site;
 use Statamic\Facades\User;
 
 class RedirectController
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = User::fromUser(auth()->user());
 
         abort_unless($user->isSuper() || $user->hasPermission('view redirects'), 401);
 
+        $site = $request->site ? Site::get($request->site) : Site::selected();
+
+        $blueprint = new RedirectBlueprint();
+        $columns = $blueprint()
+            ->columns()
+            ->setPreferred("redirect.columns")
+            ->rejectUnlisted()
+            ->values();
+
         return view('redirect::redirects.index', [
+            'site' => $site->handle(),
             'filters' => Scope::filters('redirects'),
+            'columns' => $columns,
+            'sites' => Site::all()->map(function (\Statamic\Sites\Site $site) {
+                return [
+                    'handle' => $site->handle(),
+                    'name' => $site->name(),
+                ];
+            })->values()->all(),
         ]);
     }
 
