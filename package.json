@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "laravel-mix": "6.0.31",
-    "vue": "2.6.12",
-    "vue-template-compiler": "2.6.12"
+    "vue": "2.6.14",
+    "vue-template-compiler": "2.6.14"
   },
   "devDependencies": {
     "prettier": "2.1.2",
