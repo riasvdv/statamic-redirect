@@ -4,7 +4,9 @@ namespace Rias\StatamicRedirect\Listeners;
 
 use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Data\Redirect;
+use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Statamic\Events\EntrySaved;
+use Statamic\Facades\Entry;
 
 class CreateRedirect
 {
@@ -34,8 +36,9 @@ class CreateRedirect
         }
 
         Redirect::make()
-            ->source($oldUri)
-            ->destination($entry->uri())
+            ->source($oldUri . '(.*)')
+            ->destination($entry->uri() . '$1')
+            ->matchType(MatchTypeEnum::REGEX)
             ->save();
     }
 }
