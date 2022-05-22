@@ -3,7 +3,6 @@
 namespace Rias\StatamicRedirect\UpdateScripts;
 
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Statamic\Facades\Site;
 use Statamic\Facades\Stache;
 use Statamic\UpdateScripts\UpdateScript;

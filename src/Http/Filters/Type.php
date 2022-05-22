@@ -2,7 +2,6 @@
 
 namespace Rias\StatamicRedirect\Http\Filters;
 
-use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Statamic\Query\Scopes\Filter;
 
 class Type extends Filter

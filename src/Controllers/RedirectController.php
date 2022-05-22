@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Blueprints\RedirectBlueprint;
 use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Http\Resources\ListedRedirect;
-use Statamic\Exceptions\SiteNotFoundException;
 use Statamic\Facades\Scope;
 use Statamic\Facades\Site;
 use Statamic\Facades\User;
