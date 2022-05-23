@@ -88,7 +88,10 @@ class RedirectController
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
 
+        $selectedSite = $request->session()->get('statamic.cp.selected-site', Site::current()->handle());
+
         $redirect = Redirect::make()
+            ->locale($selectedSite)
             ->source($request->get('source'))
             ->destination($request->get('destination'))
             ->enabled($request->get('enabled'))
@@ -116,11 +119,14 @@ class RedirectController
 
         $redirect = Redirect::find($id);
 
+        $selectedSite = $request->session()->get('statamic.cp.selected-site', Site::current()->handle());
+
         if (! $redirect) {
             abort('404');
         }
 
         $redirect
+            ->locale($selectedSite)
             ->source($request->get('source'))
             ->destination($request->get('destination'))
             ->enabled($request->get('enabled'))

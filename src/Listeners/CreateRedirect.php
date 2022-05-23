@@ -19,7 +19,7 @@ class CreateRedirect
          * If we have a redirect with a source of the
          * NEW uri we should remove this redirect.
          */
-        if ($entry->uri() && $existingRedirect = Redirect::findByUrl(Site::current()->handle(), $entry->uri())) {
+        if ($entry->uri() && $existingRedirect = Redirect::findByUrl($entry->locale(), $entry->uri())) {
             $existingRedirect->delete();
         }
 
@@ -36,6 +36,7 @@ class CreateRedirect
         }
 
         Redirect::make()
+            ->locale($entry->locale())
             ->source($oldUri . '(.*)')
             ->destination($entry->uri() . '$1')
             ->matchType(MatchTypeEnum::REGEX)

@@ -1,5 +1,10 @@
 # Release Notes
 
+## 2.3.2 (2022-05-23)
+
+- Fix selected site not saving correctly to redirect
+- A Redirect's site can be switched by switching the site at the top of the page when updating a Redirect
+
 ## 2.3.1 (2022-05-23)
 
 - Fix exception on entry saved
