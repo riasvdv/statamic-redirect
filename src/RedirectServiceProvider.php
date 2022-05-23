@@ -152,7 +152,7 @@ class RedirectServiceProvider extends AddonServiceProvider
 
             $gitIgnorePath = storage_path('redirect/.gitignore');
             if (! file_exists($gitIgnorePath)) {
-                File::put($gitIgnorePath, '*');
+                File::put($gitIgnorePath, "*\n!.gitignore");
             }
         }
 
