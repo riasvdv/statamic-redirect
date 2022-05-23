@@ -1,5 +1,9 @@
 # Release Notes
 
+## 2.3.1 (2022-05-23)
+
+- Fix exception on entry saved
+
 ## 2.3.0 (2022-05-22)
 
 - Add multisite support

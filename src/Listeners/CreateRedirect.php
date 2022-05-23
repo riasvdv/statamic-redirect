@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Statamic\Events\EntrySaved;
+use Statamic\Facades\Site;
 
 class CreateRedirect
 {
@@ -18,7 +19,7 @@ class CreateRedirect
          * If we have a redirect with a source of the
          * NEW uri we should remove this redirect.
          */
-        if ($entry->uri() && $existingRedirect = Redirect::findByUrl($entry->uri())) {
+        if ($entry->uri() && $existingRedirect = Redirect::findByUrl(Site::current()->handle(), $entry->uri())) {
             $existingRedirect->delete();
         }
 
