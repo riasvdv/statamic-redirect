@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Statamic\Events\EntrySaved;
-use Statamic\Facades\Site;
 
 class CreateRedirect
 {
