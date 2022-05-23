@@ -16,7 +16,7 @@
     "vue-template-compiler": "2.6.14"
   },
   "devDependencies": {
-    "prettier": "2.1.2",
+    "prettier": "2.6.2",
     "vue-loader": "15.9.8"
   }
 }
