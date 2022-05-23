@@ -1,5 +1,9 @@
 # Release Notes
 
+## 2.3.3 (2022-05-23)
+
+- Automatically add a .gitignore in the storage/redirect folder the first time we create the database
+
 ## 2.3.2 (2022-05-23)
 
 - Fix selected site not saving correctly to redirect

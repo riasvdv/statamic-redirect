@@ -149,6 +149,11 @@ class RedirectServiceProvider extends AddonServiceProvider
 
         if (! file_exists($sqlitePath)) {
             File::put($sqlitePath, '');
+
+            $gitIgnorePath = storage_path('redirect/.gitignore');
+            if (! file_exists($gitIgnorePath)) {
+                File::put($gitIgnorePath, '');
+            }
         }
 
         app('config')->set('database.connections.redirect', [
