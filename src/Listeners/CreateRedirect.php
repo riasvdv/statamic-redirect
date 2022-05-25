@@ -18,7 +18,7 @@ class CreateRedirect
          * If we have a redirect with a source of the
          * NEW uri we should remove this redirect.
          */
-        if ($entry->uri() && $existingRedirect = Redirect::findByUrl($entry->locale(), $entry->uri())) {
+        if ($entry->uri() && $entry->published() && $existingRedirect = Redirect::findByUrl($entry->locale(), $entry->uri())) {
             $existingRedirect->delete();
         }
 
