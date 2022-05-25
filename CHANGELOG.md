@@ -1,5 +1,16 @@
 # Release Notes
 
+## 2.3.4 (2022-05-25)
+
+## What's Changed
+* Update dependency prettier to v2.6.2 by @renovate in https://github.com/riasvdv/statamic-redirect/pull/70
+* FIX The redirect is automatically deleted for Drafts by @OleksiiBrylin in https://github.com/riasvdv/statamic-redirect/pull/74
+
+## New Contributors
+* @OleksiiBrylin made their first contribution in https://github.com/riasvdv/statamic-redirect/pull/74
+
+**Full Changelog**: https://github.com/riasvdv/statamic-redirect/compare/2.3.3...2.3.4
+
 ## 2.3.3 (2022-05-23)
 
 - Automatically add a .gitignore in the storage/redirect folder the first time we create the database
