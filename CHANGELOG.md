@@ -1,5 +1,11 @@
 # Release Notes
 
+## 2.3.5 (2022-06-04)
+
+## What's changed
+* Fix #77 - Use default site if no site is found
+* Fix #75 - Redirect site filter was overriding default site filter
+
 ## 2.3.4 (2022-05-25)
 
 ## What's Changed
