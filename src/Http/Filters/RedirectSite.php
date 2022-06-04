@@ -2,7 +2,7 @@
 
 namespace Rias\StatamicRedirect\Http\Filters;
 
-class Site extends \Statamic\Query\Scopes\Filters\Site
+class RedirectSite extends \Statamic\Query\Scopes\Filters\Site
 {
     public function visibleTo($key)
     {
