@@ -27,7 +27,7 @@ class HandleNotFound
         }
 
         try {
-            $site = Site::findByUrl($request->url());
+            $site = Site::findByUrl($request->url()) ?? Site::default();
 
             // Make sure it starts with '/'
             $url = Str::start($request->getRequestUri(), '/');
