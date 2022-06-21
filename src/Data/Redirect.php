@@ -139,6 +139,14 @@ class Redirect implements Localization
             ->args(func_get_args());
     }
 
+    public function setLocaleFromFilePath($path)
+    {
+        $explodedPath = explode('/', $path);
+        $locale = $explodedPath[count($explodedPath) - 2]; // locale is 2nd last path segment
+
+        return $this->locale($locale);
+    }
+
     public function site()
     {
         return Site::get($this->locale());
