@@ -18,6 +18,7 @@ use Rias\StatamicRedirect\Listeners\CreateRedirect;
 use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
 use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
+use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
 use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
 use Statamic\Facades\CP\Nav;
@@ -31,6 +32,7 @@ class RedirectServiceProvider extends AddonServiceProvider
     protected $updateScripts = [
         AddHitsCount::class,
         ClearErrors::class,
+        MoveRedirectsToDefaultSite::class,
     ];
 
     protected $scripts = [
