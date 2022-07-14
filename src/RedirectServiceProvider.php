@@ -18,6 +18,7 @@ use Rias\StatamicRedirect\Listeners\CreateRedirect;
 use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
 use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
+use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
 use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
 use Statamic\Facades\CP\Nav;
@@ -31,14 +32,15 @@ class RedirectServiceProvider extends AddonServiceProvider
     protected $updateScripts = [
         AddHitsCount::class,
         ClearErrors::class,
+        MoveRedirectsToDefaultSite::class,
     ];
 
     protected $scripts = [
-        __DIR__.'/../resources/dist/js/cp.js',
+        __DIR__ . '/../resources/dist/js/cp.js',
     ];
 
     protected $routes = [
-        'cp' => __DIR__.'/../routes/cp.php',
+        'cp' => __DIR__ . '/../routes/cp.php',
     ];
 
     protected $listen = [
@@ -97,7 +99,7 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected function bootAddonViews()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'redirect');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'redirect');
 
         return $this;
     }
@@ -166,7 +168,7 @@ class RedirectServiceProvider extends AddonServiceProvider
 
             DB::setDefaultConnection(config('statamic.redirect.connection', 'redirect'));
 
-            require_once(__DIR__ . '/../database/migrations/create_redirect_tables.php.stub');
+            require_once __DIR__ . '/../database/migrations/create_redirect_tables.php.stub';
 
             (new \CreateRedirectTables())->up();
 
@@ -178,10 +180,10 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected function registerAddonConfig()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/redirect.php', 'statamic.redirect');
+        $this->mergeConfigFrom(__DIR__ . '/../config/redirect.php', 'statamic.redirect');
 
         $this->publishes([
-            __DIR__.'/../config/redirect.php' => config_path('statamic/redirect.php'),
+            __DIR__ . '/../config/redirect.php' => config_path('statamic/redirect.php'),
         ], 'statamic-redirect-config');
 
         return $this;
