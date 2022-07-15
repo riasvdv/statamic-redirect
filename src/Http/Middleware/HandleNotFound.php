@@ -83,7 +83,7 @@ class HandleNotFound
              * we don't want to crash the application, so
              * we just log the exception that occured.
              */
-            logger($e);
+            report($e);
 
             return $response;
         }
