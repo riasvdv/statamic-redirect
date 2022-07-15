@@ -38,9 +38,8 @@ class HandleNotFound
 
             if ($logErrors) {
                 $error = $this->createError($request, $url);
+                CleanErrorsJob::dispatchIf(config('statamic.redirect.clean_errors_on_save'));
             }
-
-            CleanErrorsJob::dispatchIf(config('statamic.redirect.clean_errors_on_save'));
 
             $this->cachedRedirects = Cache::get('statamic.redirect.redirects', []);
 
