@@ -11,6 +11,10 @@ class CreateRedirect
 {
     public function handle(EntrySaved $entrySaved)
     {
+        if (! config('statamic.redirect.enable', true)) {
+            return;
+        }
+
         /** @var \Statamic\Entries\Entry $entry */
         $entry = $entrySaved->entry;
 

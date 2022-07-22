@@ -10,6 +10,10 @@ class CacheOldUri
 {
     public function handle(EntrySaving $entrySaving)
     {
+        if (! config('statamic.redirect.enable', true)) {
+            return;
+        }
+        
         $entry = Entry::find($entrySaving->entry->id());
 
         if (! $entry || ! $uri = $entry->uri()) {
