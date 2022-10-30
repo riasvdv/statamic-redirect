@@ -15,7 +15,12 @@ class JsonExporter extends AbstractExporter
     public function export()
     {
         $submissions = Redirect::all()->map(function (Redirect $redirect) {
-            return $redirect->fileData();
+            $redirectData = $redirect->fileData();
+            $redirectData['site'] = $redirect->site()->handle;
+
+            unset($redirectData['id']);
+
+            return $redirectData;
         })->toArray();
 
         return json_encode($submissions);

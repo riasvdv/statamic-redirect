@@ -54,11 +54,12 @@ class CsvExporter extends AbstractExporter
     private function insertData()
     {
         $data = Redirect::all()->map(function (\Rias\StatamicRedirect\Data\Redirect $redirect) {
-            $redirect = $redirect->fileData();
+            $redirectData = $redirect->fileData();
+            $redirectData['site'] = $redirect->site()->handle;
 
-            unset($redirect['id']);
+            unset($redirectData['id']);
 
-            return $redirect;
+            return $redirectData;
         })->all();
 
         $this->writer->insertAll($data);
