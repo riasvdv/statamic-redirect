@@ -1,6 +1,6 @@
 # Release Notes
 
-## 2.4.0 (2022-10-30)
+## 2.5.0 (2022-10-30)
 
 ## What's new
 * You can now add `site` as a column for imports
