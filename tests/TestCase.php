@@ -5,14 +5,12 @@ namespace Rias\StatamicRedirect\Tests;
 use Facades\Statamic\Console\Processes\Composer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Routing\Router;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Data\Hit;
 use Rias\StatamicRedirect\Data\Redirect;
 use Statamic\Extend\Manifest;
 use Statamic\Facades\User;
-use Statamic\Http\Middleware\CP\ContactOutpost;
 use Statamic\Statamic;
 
 class TestCase extends OrchestraTestCase
