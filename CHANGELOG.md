@@ -1,5 +1,12 @@
 # Release Notes
 
+## 2.4.0 (2022-10-30)
+
+## What's new
+* You can now add `site` as a column for imports
+* `site` is added to the CSV and JSON exports
+* Allow v2.0 for spatie/simple-excel
+
 ## 2.3.5 (2022-06-04)
 
 ## What's changed
