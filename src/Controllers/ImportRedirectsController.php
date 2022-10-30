@@ -47,12 +47,17 @@ class ImportRedirectsController
                 return;
             }
 
+            /** @var Redirect $redirect */
             $redirect = Redirect::make()
                 ->source($data['source'])
                 ->destination($data['destination'])
                 ->enabled(true)
                 ->type($data['type'])
                 ->matchType($data['match_type']);
+
+            if (isset($data['site'])) {
+                $redirect->locale($data['site']);
+            }
 
             $redirect->save();
         });

@@ -36,6 +36,30 @@ class ImportRedirectsControllerTest extends TestCase
     /**
      * @test
      */
+    public function it_can_set_the_site()
+    {
+        $this->asAdmin();
+
+        $file = UploadedFile::fake()->createWithContent('redirects.csv', "source,destination,type,match_type,site\n/foo,/bar,302,exact,en");
+
+        $this->assertEquals(0, Redirect::query()->count());
+
+        $this->post(action([ImportRedirectsController::class, 'store']), [
+            'file' => $file,
+            'delimiter' => ',',
+        ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully.');
+
+        $this->assertEquals(1, Redirect::query()->count());
+        tap(Redirect::findByUrl('en', '/foo'), function (Redirect $redirect) {
+            $this->assertEquals('/bar', $redirect->destination());
+            $this->assertEquals('302', $redirect->type());
+            $this->assertEquals('exact', $redirect->matchType());
+        });
+    }
+
+    /**
+     * @test
+     */
     public function it_can_import_redirects_with_a_txt_file()
     {
         $this->asAdmin();

@@ -17,7 +17,7 @@
         <div class="card rounded p-3 lg:px-7 lg:py-5 shadow bg-white">
             <header class="text-center mb-6">
                 <h1 class="mb-3">Start import</h1>
-                <p class="text-grey">Import redirects by providing a CSV file with <code>source</code>, <code>destination</code>, <code>type</code> and <code>match_type</code> columns. </p>
+                <p class="text-grey">Import redirects by providing a CSV file with <code>source</code>, <code>destination</code>, <code>type</code> and <code>match_type</code> columns. <br>Optionally you can add a <code>site</code> column as well.</p>
             </header>
             <div class="mb-5">
                 <label for="file" class="font-bold text-base mb-sm">File</label>
