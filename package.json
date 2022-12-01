@@ -17,6 +17,6 @@
   },
   "devDependencies": {
     "prettier": "2.7.1",
-    "vue-loader": "15.10.0"
+    "vue-loader": "15.10.1"
   }
 }
