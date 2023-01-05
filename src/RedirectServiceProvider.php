@@ -193,12 +193,16 @@ class RedirectServiceProvider extends AddonServiceProvider
     {
         Permission::group('redirect', 'Redirects', function () {
             Permission::register('view redirects', function ($permission) {
-                $permission->children([
-                    Permission::make('edit redirects')->children([
-                        Permission::make('create redirects'),
-                        Permission::make('delete redirects'),
-                    ]),
-                ]);
+                $permission
+                    ->label('View Redirects')
+                    ->children([
+                        Permission::make('edit redirects')
+                            ->label('Edit Redirects')
+                            ->children([
+                                Permission::make('create redirects')->label('Create Redirects'),
+                                Permission::make('delete redirects')->label('Delete Redirects'),
+                            ]),
+                    ]);
             });
         });
 
