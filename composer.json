@@ -9,7 +9,7 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "3.12.0",
         "orchestra/testbench": "^5.0|^6.0|^7.0",
-        "phpunit/phpunit": "9.5.25"
+        "phpunit/phpunit": "9.5.28"
     },
     "autoload": {
         "psr-4": {
