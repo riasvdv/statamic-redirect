@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
+use Rias\StatamicRedirect\Events\RedirectSaved;
 use Rias\StatamicRedirect\Http\Filters\ErrorFields;
 use Rias\StatamicRedirect\Http\Filters\ErrorHandled;
 use Rias\StatamicRedirect\Http\Filters\MatchType;
@@ -22,6 +23,7 @@ use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
 use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
 use Statamic\Facades\CP\Nav;
+use Statamic\Facades\Git;
 use Statamic\Facades\Permission;
 use Statamic\Providers\AddonServiceProvider;
 use Statamic\Stache\Stache;
@@ -87,6 +89,10 @@ class RedirectServiceProvider extends AddonServiceProvider
             MatchType::register();
             Type::register();
             RedirectSite::register();
+
+            if (config('statamic.git.enabled')) {
+                Git::listen(RedirectSaved::class);
+            }
 
             $this
                 ->bootAddonViews()

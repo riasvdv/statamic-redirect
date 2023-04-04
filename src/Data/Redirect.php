@@ -5,6 +5,7 @@ namespace Rias\StatamicRedirect\Data;
 use Illuminate\Support\Str;
 use Rias\StatamicRedirect\Data\Concerns\TracksQueriedRelations;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
+use Rias\StatamicRedirect\Events\RedirectSaved;
 use Rias\StatamicRedirect\Stache\Redirects\RedirectQueryBuilder;
 use Statamic\Contracts\Data\Localization;
 use Statamic\Data\DataCollection;
@@ -168,6 +169,8 @@ class Redirect implements Localization
         }
 
         Stache::store('redirects')->save($this);
+
+        event(new RedirectSaved($this));
 
         return true;
     }
