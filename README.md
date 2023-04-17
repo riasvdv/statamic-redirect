@@ -2,6 +2,9 @@
 
 Redirect allows you to redirect legacy URLs, so that you don't lose SEO value when rebuilding & restructuring a website.
 
+> **Note**
+> This addon requires sqlite to be installed to work
+
 ![Screenshot](docs/img/redirect.png)
 
 Redirect supports traditional exact and RegEx matching of URL patterns.
