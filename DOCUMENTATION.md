@@ -1,5 +1,8 @@
 ## Installation
 
+> **Note**
+> This addon requires sqlite to be installed to work
+
 1. Install Statamic Redirect from the `Tools > Addons` section of your control panel, or via composer:
 
     ```
