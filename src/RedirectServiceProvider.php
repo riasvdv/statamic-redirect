@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Schema;
 use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
 use Rias\StatamicRedirect\Events\RedirectSaved;
-use Rias\StatamicRedirect\Http\Filters\ErrorFields;
 use Rias\StatamicRedirect\Http\Filters\ErrorHandled;
 use Rias\StatamicRedirect\Http\Filters\MatchType;
 use Rias\StatamicRedirect\Http\Filters\RedirectSite;
