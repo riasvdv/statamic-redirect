@@ -6,24 +6,26 @@
 
     <data-list
       v-if="!initializing"
-      class="mb-4"
-      :visible-columns="columns"
-      :columns="columns"
+      ref="datalist"
       :rows="items"
+      :columns="columns"
       :sort="false"
       :sort-column="sortColumn"
       :sort-direction="sortDirection"
+      @visible-columns-updated="visibleColumns = $event"
     >
       <div slot-scope="{ hasSelections }">
-        <div class="card p-0 relative">
-          <data-list-filter-presets
-            ref="presets"
-            :active-preset="activePreset"
-            :preferences-prefix="preferencesPrefix"
-            @selected="selectPreset"
-            @reset="filtersReset"
-          />
-          <div class="data-list-header">
+        <div class="card overflow-hidden p-0 relative">
+          <div class="flex flex-wrap items-center justify-between px-2 pb-2 text-sm border-b">
+            <data-list-filter-presets
+              ref="presets"
+              :active-preset="activePreset"
+              :preferences-prefix="preferencesPrefix"
+              @selected="selectPreset"
+              @reset="filtersReset"
+            />
+          </div>
+          <div>
             <data-list-filters
               :filters="filters"
               :active-preset="activePreset"
@@ -61,14 +63,8 @@
             @sorted="sorted"
           >
             <template slot="cell-enabled" slot-scope="{ row: redirect }">
-              <div
-                v-if="redirect.enabled"
-                class="bg-green block h-3 w-2 mx-auto rounded-full"
-              ></div>
-              <div
-                v-else
-                class="bg-red block h-3 w-2 mx-auto rounded-full"
-              ></div>
+              <div v-if="redirect.enabled" class="status-index-field select-none status-published">Enabled</div>
+              <div v-else class="status-index-field select-none status-draft bg-red-100">Disabled</div>
             </template>
             <template slot="cell-source" slot-scope="{ row: redirect }">
               <a style="word-break: break-all" :href="cp_url('redirect/redirects/' + redirect.id)">{{

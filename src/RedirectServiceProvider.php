@@ -85,7 +85,6 @@ class RedirectServiceProvider extends AddonServiceProvider
             app('router')->prependMiddlewareToGroup('statamic.web', HandleNotFound::class);
 
             ErrorHandled::register();
-            ErrorFields::register();
             MatchType::register();
             Type::register();
             RedirectSite::register();

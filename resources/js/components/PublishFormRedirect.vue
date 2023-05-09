@@ -9,6 +9,12 @@
   ></publish-form>
 </template>
 
+<style>
+  .publish-tab-actions {
+    display: none;
+  }
+</style>
+
 <script>
 export default {
   props: {
