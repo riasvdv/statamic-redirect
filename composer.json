@@ -27,6 +27,8 @@
         "test": "phpunit",
         "test:coverage": "phpdbg -qrr vendor/bin/phpunit --color --coverage-html tests/_reports"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "statamic": {
             "name": "Statamic Redirect",
