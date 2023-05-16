@@ -1,16 +1,18 @@
 <template>
-  <publish-form
-    :title="title"
-    :action="action"
-    :blueprint="blueprint"
-    :meta="meta"
-    :values="values"
-    @saved="saved"
-  ></publish-form>
+  <div id="statamic-redirect">
+    <publish-form
+      :title="title"
+      :action="action"
+      :blueprint="blueprint"
+      :meta="meta"
+      :values="values"
+      @saved="saved"
+    ></publish-form>
+  </div>
 </template>
 
 <style>
-  .publish-tab-actions {
+  #statamic-redirect .publish-tab-actions {
     display: none;
   }
 </style>
