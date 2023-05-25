@@ -43,6 +43,10 @@ By default, Statamic Redirect will also keep individual hits for each error, you
 
 By default, Statamic Redirect will create redirects when the URI of an entry changes. You can disable this by setting the `create_entry_redirects` config value to `false`.
 
+### Deleting entry conflicting redirects
+
+By default, Statamic Redirect will delete redirects when a saved entry's URI conflicts with the redirect. You can disable this by setting the `delete_entry_conflicting_redirects` config value to `false`.
+
 ### Cleaning errors
 
 The amount of errors can grow quickly, Statamic Redirect includes a scheduled command that by default cleans up errors older than 1 month.

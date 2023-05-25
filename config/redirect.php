@@ -13,6 +13,12 @@ return [
     'create_entry_redirects' => env('REDIRECT_AUTO_CREATE', true),
 
     /**
+     * Controls whether Redirect automatically deletes conflicting
+     * redirects when an entry is saved.
+     */
+    'delete_entry_conflicting_redirects' => env('REDIRECT_DELETE_CONFLICTS', true),
+
+    /**
      * Controls whether Redirect logs 404 errors
      */
     'log_errors' => env('REDIRECT_LOG_ERRORS', true),
