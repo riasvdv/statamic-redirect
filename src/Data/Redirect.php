@@ -85,8 +85,8 @@ class Redirect implements Localization
                     }
                 }
 
-                if (strcasecmp(Str::start($redirect->source(), '/'), Str::start($url, '/')) === 0
-                    || strcasecmp(Str::start($redirect->source(), '/'), Str::start($url . '/', '/')) === 0
+                if (strcmp(Str::start($redirect->source(), '/'), Str::start($url, '/')) === 0
+                    || strcmp(Str::start($redirect->source(), '/'), Str::start($url . '/', '/')) === 0
                 ) {
                     return $redirect;
                 }
