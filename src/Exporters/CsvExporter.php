@@ -44,6 +44,7 @@ class CsvExporter extends AbstractExporter
         $headers = array_keys(Redirect::all()->first()->fileData());
 
         unset($headers[array_search('id', $headers)]);
+        $headers[] = 'site';
 
         $this->writer->insertOne($headers);
     }
