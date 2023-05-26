@@ -16,7 +16,7 @@ return [
      * Controls whether Redirect automatically deletes conflicting
      * redirects when an entry is saved.
      */
-    'delete_entry_conflicting_redirects' => env('REDIRECT_DELETE_CONFLICTS', true),
+    'delete_conflicting_redirects' => env('REDIRECT_DELETE_CONFLICTS', true),
 
     /**
      * Controls whether Redirect logs 404 errors

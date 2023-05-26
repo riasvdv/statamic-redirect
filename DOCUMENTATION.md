@@ -45,7 +45,7 @@ By default, Statamic Redirect will create redirects when the URI of an entry cha
 
 ### Deleting entry conflicting redirects
 
-By default, Statamic Redirect will delete redirects when a saved entry's URI conflicts with the redirect. You can disable this by setting the `delete_entry_conflicting_redirects` config value to `false`.
+By default, Statamic Redirect will delete redirects when a saved entry's URI conflicts with the redirect. You can disable this by setting the `delete_conflicting_redirects` config value to `false`.
 
 ### Cleaning errors
 
