@@ -13,6 +13,7 @@ Route::get('redirect/export/{type}', '\\'. ExportController::class)->name('redir
 
 Route::get('redirect/api/errors', ['\\' . ApiErrorController::class, 'index'])->name('redirect.api.errors.index');
 Route::get('redirect/api/redirects', ['\\' . ApiRedirectController::class, 'index'])->name('redirect.api.redirects.index');
+Route::post('redirect/api/redirects/reorder', ['\\' . ApiRedirectController::class, 'reorder'])->name('redirect.api.redirects.reorder');
 
 Route::prefix('redirect/errors')->group(function () {
     Route::get('clear', ['\\' . ErrorController::class, 'clearAll'])->name('redirect.api.errors.clear');

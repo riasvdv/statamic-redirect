@@ -2,6 +2,7 @@
 
 namespace Rias\StatamicRedirect\Controllers\Api;
 
+use Illuminate\Http\JsonResponse;
 use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Http\Resources\RedirectsCollection;
 use Rias\StatamicRedirect\Stache\Redirects\RedirectQueryBuilder;
@@ -21,7 +22,7 @@ class RedirectController
         $sortDirection = request('order', 'asc');
 
         if (! $sortField && ! request('search')) {
-            $sortField = 'source';
+            $sortField = 'order';
             $sortDirection = 'asc';
         }
 
@@ -32,10 +33,22 @@ class RedirectController
         $redirects = $query->paginate(request('perPage'));
 
         return (new RedirectsCollection($redirects))
-            ->columnPreferenceKey('redirects.columns')
+            ->columnPreferenceKey('redirect.redirects.columns')
             ->additional(['meta' => [
                 'activeFilterBadges' => $activeFilterBadges,
             ]]);
+    }
+
+    public function reorder(): JsonResponse
+    {
+        foreach (request('redirects') as $order => $data) {
+            $redirect = Redirect::find($data['id']);
+            if (! $redirect) continue;
+            $redirect->order($order);
+            $redirect->save();
+        }
+
+        return response()->json();
     }
 
     protected function indexQuery(): RedirectQueryBuilder
@@ -43,7 +56,10 @@ class RedirectController
         $query = Redirect::query();
 
         if ($search = request('search')) {
-            $query->where('source', 'like', '%'.$search.'%');
+            $query->where(function ($query) use ($search) {
+                $query->where('source', 'like', '%'.$search.'%');
+                $query->orWhere('destination', 'like', '%'.$search.'%');
+            });
         }
 
         return $query;

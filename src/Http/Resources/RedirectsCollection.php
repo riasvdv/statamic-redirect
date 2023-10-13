@@ -3,11 +3,16 @@
 namespace Rias\StatamicRedirect\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Rias\StatamicRedirect\Blueprints\RedirectBlueprint;
 use Statamic\CP\Column;
 use Statamic\CP\Columns;
+use Statamic\Fields\Blueprint;
+use Statamic\Http\Resources\CP\Concerns\HasRequestedColumns;
 
 class RedirectsCollection extends ResourceCollection
 {
+    use HasRequestedColumns;
+
     public $collects = ListedRedirect::class;
 
     protected $columnPreferenceKey;
@@ -21,13 +26,8 @@ class RedirectsCollection extends ResourceCollection
 
     private function setColumns()
     {
-        $columns = new Columns([
-            Column::make('enabled')->label('Enabled'),
-            Column::make('source')->label('Source'),
-            Column::make('destination')->label('Destination'),
-            Column::make('type')->label('Type'),
-            Column::make('match_type')->label('Match Type'),
-        ]);
+        $blueprint = (new RedirectBlueprint())();
+        $columns = $blueprint->columns();
 
         if ($key = $this->columnPreferenceKey) {
             $columns->setPreferred($key);
@@ -42,12 +42,11 @@ class RedirectsCollection extends ResourceCollection
 
         return [
             'data' => $this->collection->each(function ($redirect) {
-                $redirect
-                    ->columns($this->columns);
+                $redirect->columns($this->requestedColumns());
             }),
 
             'meta' => [
-                'columns' => $this->columns,
+                'columns' => $this->visibleColumns(),
             ],
         ];
     }

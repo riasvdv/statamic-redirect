@@ -21,8 +21,8 @@
     @endif
 
     @if(config('statamic.redirect.log_hits'))
-        <div class="card p-4 content mb-2">
-            <div class="flex flex-wrap -mx-2 mb-4">
+        <div class="card p-4 content mb-6">
+            <div class="flex flex-wrap pb-4">
                 <div class="w-1/3 px-2">
                     <p class="mb-4">Last month</p>
                     <div class="px-1">

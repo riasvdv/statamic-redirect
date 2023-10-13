@@ -1,5 +1,22 @@
 <template>
   <div>
+    <header class="mb-3">
+
+      <div class="flex items-center">
+        <h1 class="flex-1" >Redirects</h1>
+
+        <dropdown-list class="mr-1" v-if="!!this.$scopedSlots.twirldown">
+          <slot name="twirldown" />
+        </dropdown-list>
+
+        <a
+            v-if="canCreate"
+            class="btn-primary"
+            :href="createUrl"
+            v-text="createLabel"></a>
+      </div>
+    </header>
+
     <div v-if="initializing" class="card loading">
       <loading-graphic />
     </div>
@@ -20,28 +37,41 @@
             <data-list-filter-presets
               ref="presets"
               :active-preset="activePreset"
+              :active-preset-payload="activePresetPayload"
+              :active-filters="activeFilters"
+              :has-active-filters="hasActiveFilters"
               :preferences-prefix="preferencesPrefix"
+              :search-query="searchQuery"
               @selected="selectPreset"
               @reset="filtersReset"
             />
+
+            <div class="w-full flex-1">
+              <data-list-search class="h-8 mt-2 min-w-[240px] w-full" ref="search" v-model="searchQuery" :placeholder="searchPlaceholder" />
+            </div>
+
+            <div class="flex space-x-2 mt-2">
+              <button class="btn btn-sm ml-2" v-text="__('Reset')" @click="$refs.presets.refreshPreset()" />
+              <button class="btn btn-sm ml-2" v-text="__('Save')" @click="$refs.presets.savePreset()" />
+              <data-list-column-picker :preferences-key="preferencesKey('columns')" />
+            </div>
           </div>
           <div>
             <data-list-filters
-              :filters="filters"
-              :active-preset="activePreset"
-              :active-preset-payload="activePresetPayload"
-              :active-filters="activeFilters"
-              :active-filter-badges="activeFilterBadges"
-              :active-count="activeFilterCount"
-              :search-query="searchQuery"
-              :saves-presets="true"
-              :preferences-prefix="preferencesPrefix"
-              @filter-changed="filterChanged"
-              @search-changed="searchChanged"
-              @saved="$refs.presets.setPreset($event)"
-              @deleted="$refs.presets.refreshPresets()"
-              @restore-preset="$refs.presets.viewPreset($event)"
-              @reset="filtersReset"
+                ref="filters"
+                :filters="filters"
+                :active-preset="activePreset"
+                :active-preset-payload="activePresetPayload"
+                :active-filters="activeFilters"
+                :active-filter-badges="activeFilterBadges"
+                :active-count="activeFilterCount"
+                :search-query="searchQuery"
+                :is-searching="true"
+                :saves-presets="true"
+                :preferences-prefix="preferencesPrefix"
+                @changed="filterChanged"
+                @saved="$refs.presets.setPreset($event)"
+                @deleted="$refs.presets.refreshPresets()"
             />
           </div>
 
@@ -53,23 +83,29 @@
 
           <data-list-table
             v-show="items.length"
-            :allow-bulk-actions="false"
             :loading="loading"
-            :reorderable="false"
-            :sortable="true"
+            :reorderable="true"
+            :sortable="false"
             :toggle-selection-on-row-click="false"
             :allow-column-picker="true"
             :column-preferences-key="preferencesKey('columns')"
             @sorted="sorted"
+            @reordered="reordered"
           >
-            <template slot="cell-enabled" slot-scope="{ row: redirect }">
-              <div v-if="redirect.enabled" class="status-index-field select-none status-published">Enabled</div>
-              <div v-else class="status-index-field select-none status-draft bg-red-100">Disabled</div>
-            </template>
             <template slot="cell-source" slot-scope="{ row: redirect }">
               <a style="word-break: break-all" :href="cp_url('redirect/redirects/' + redirect.id)">{{
                 redirect.source
               }}</a>
+            </template>
+            <template slot="cell-match_type" slot-scope="{ row: redirect }">
+              <span v-text="redirect.match_type"></span>
+            </template>
+            <template slot="cell-type" slot-scope="{ row: redirect }">
+              <span v-text="redirect.type"></span>
+            </template>
+            <template slot="cell-enabled" slot-scope="{ row: redirect }">
+              <div v-if="redirect.enabled" class="status-index-field select-none status-published">Enabled</div>
+              <div v-else class="status-index-field select-none status-draft bg-red-100">Disabled</div>
             </template>
             <template slot="actions" slot-scope="{ row: redirect, index }">
               <dropdown-list>
@@ -110,6 +146,13 @@ import Listing from "../../../vendor/statamic/cms/resources/js/components/Listin
 
 export default {
   mixins: [Listing],
+
+  props: {
+    canCreate: { type: Boolean, required: true },
+    createUrl: { type: String, required: true },
+    createLabel: { type: String, required: true },
+    searchQuery: { type: String, required: false, default: '' },
+  },
 
   data() {
     return {
@@ -158,6 +201,16 @@ export default {
         }
       })
     },
+
+    reordered(event) {
+      this.$axios.post(cp_url(`redirect/api/redirects/reorder`), {
+        redirects: event,
+      }).then(() => {
+        this.$toast.success(__('Redirects re-ordered'));
+      }).catch(() => {
+        this.$toast.error(__('Something went wrong'));
+      });
+    }
   }
 };
 </script>

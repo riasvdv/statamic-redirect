@@ -50,7 +50,7 @@ class Redirect implements Localization
 
     public static function query(): RedirectQueryBuilder
     {
-        return new RedirectQueryBuilder(Stache::store('redirects'));
+        return (new RedirectQueryBuilder(Stache::store('redirects')));
     }
 
     public static function all(): DataCollection
@@ -68,6 +68,7 @@ class Redirect implements Localization
         return self::query()
             ->where('enabled', true)
             ->where('locale', $siteHandle)
+            ->orderBy('order')
             ->get()
             ->map(function (Redirect $redirect) use ($url) {
                 if ($redirect->matchType() === MatchTypeEnum::REGEX) {
@@ -127,6 +128,11 @@ class Redirect implements Localization
         return $this->fluentlyGetOrSet('matchType')->args(func_get_args());
     }
 
+    public function order($order = null)
+    {
+        return $this->fluentlyGetOrSet('order')->args(func_get_args());
+    }
+
     public function locale($locale = null)
     {
         return $this
@@ -155,9 +161,10 @@ class Redirect implements Localization
 
     public function path()
     {
-        return vsprintf('%s/%s/%s.yaml', [
+        return vsprintf('%s/%s/%s%s.yaml', [
             rtrim(Stache::store('redirects')->directory(), '/'),
             $this->locale(),
+            !is_null($this->order()) ? $this->order() . '_' : '',
             $this->id(),
         ]);
     }
@@ -191,6 +198,7 @@ class Redirect implements Localization
             'destination' => $this->destination(),
             'type' => $this->type(),
             'match_type' => $this->matchType(),
+            'order' => $this->order(),
         ];
     }
 

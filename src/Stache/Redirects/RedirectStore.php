@@ -34,6 +34,7 @@ class RedirectStore extends BasicStore
             ->type(array_pull($data, 'type'))
             ->matchType(array_pull($data, 'match_type'))
             ->enabled(array_pull($data, 'enabled'))
+            ->order(array_pull($data, 'order'))
             ->setLocaleFromFilePath($path)
             ->initialPath($path);
 
