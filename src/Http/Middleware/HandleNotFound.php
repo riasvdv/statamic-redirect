@@ -110,7 +110,7 @@ class HandleNotFound
         return $error;
     }
 
-    private function markErrorHandled(Error $error, string $destination): void
+    private function markErrorHandled(Error $error, ?string $destination): void
     {
         $error->handled = true;
         $error->handledDestination = $destination;

@@ -115,7 +115,6 @@ class HandleNotFoundTest extends TestCase
 
         Redirect::make()
             ->source('/abc')
-            ->destination('/def')
             ->type(410)
             ->save();
 

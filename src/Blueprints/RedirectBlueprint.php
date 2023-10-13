@@ -28,7 +28,7 @@ class RedirectBlueprint extends Blueprint
                                 'type' => 'text',
                                 'display' => 'Destination',
                                 'instructions' => 'Enter the destination URL that should be redirected to.  This can either be a fully qualified URL or a relative URL.  e.g.: Exact Match: `/new-recipes/` or RegEx Match: `/new-recipes/$1`',
-                                'validate' => 'required|string',
+                                'validate' => 'required_unless:type,410|nullable|string',
                             ],
                         ],
                         [
