@@ -43,7 +43,9 @@ class RedirectController
     {
         foreach (request('redirects') as $order => $data) {
             $redirect = Redirect::find($data['id']);
-            if (! $redirect) continue;
+            if (! $redirect) {
+                continue;
+            }
             $redirect->order($order);
             $redirect->save();
         }

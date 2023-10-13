@@ -4,9 +4,6 @@ namespace Rias\StatamicRedirect\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Rias\StatamicRedirect\Blueprints\RedirectBlueprint;
-use Statamic\CP\Column;
-use Statamic\CP\Columns;
-use Statamic\Fields\Blueprint;
 use Statamic\Http\Resources\CP\Concerns\HasRequestedColumns;
 
 class RedirectsCollection extends ResourceCollection

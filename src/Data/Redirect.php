@@ -164,7 +164,7 @@ class Redirect implements Localization
         return vsprintf('%s/%s/%s%s.yaml', [
             rtrim(Stache::store('redirects')->directory(), '/'),
             $this->locale(),
-            !is_null($this->order()) ? $this->order() . '_' : '',
+            ! is_null($this->order()) ? $this->order() . '_' : '',
             $this->id(),
         ]);
     }
