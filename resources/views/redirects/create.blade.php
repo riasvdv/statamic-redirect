@@ -16,6 +16,6 @@
                 text: '< Redirects'
             }
         ]"
-        redirect-to="{{ cp_route('redirect.redirects.index') }}"
+        redirect-to="{{ request('source') ? cp_route('redirect.index') : cp_route('redirect.redirects.index') }}"
     ></publish-form-redirect>
 @stop
