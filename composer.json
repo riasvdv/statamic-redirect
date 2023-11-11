@@ -8,7 +8,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.10",
-        "orchestra/testbench": "8.13.0",
+        "orchestra/testbench": "8.15.0",
         "phpunit/phpunit": "9.6.13"
     },
     "autoload": {
