@@ -56,6 +56,7 @@ Widgets can be added to the dashboard by modifying the widgets array in the `con
 ],
 ```
 
+Like the default widgets of Statamic, you can also configure `title`& `width` of the widgets.
 
 ### Logging errors
 
