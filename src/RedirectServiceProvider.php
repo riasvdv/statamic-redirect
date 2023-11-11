@@ -2,6 +2,7 @@
 
 namespace Rias\StatamicRedirect;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
@@ -81,7 +82,9 @@ class RedirectServiceProvider extends AddonServiceProvider
         }
 
         Statamic::booted(function () {
-            app('router')->prependMiddlewareToGroup('statamic.web', HandleNotFound::class);
+            $router = $this->app->make(Router::class);
+            $router->prependMiddlewareToGroup('statamic.web', HandleNotFound::class);
+            $router->prependMiddlewareToGroup('web', HandleNotFound::class);
 
             ErrorHandled::register();
             MatchType::register();
