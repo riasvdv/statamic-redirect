@@ -20,6 +20,10 @@ use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
 use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
 use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
+use Rias\StatamicRedirect\Widgets\ErrorsLastDayWidget;
+use Rias\StatamicRedirect\Widgets\ErrorsLastMonthWidget;
+use Rias\StatamicRedirect\Widgets\ErrorsLastWeekWidget;
+use Rias\StatamicRedirect\Widgets\ErrorsWidget;
 use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
 use Statamic\Facades\CP\Nav;
@@ -52,6 +56,13 @@ class RedirectServiceProvider extends AddonServiceProvider
         EntrySaved::class => [
             CreateRedirect::class,
         ],
+    ];
+
+    protected $widgets = [
+        ErrorsWidget::class,
+        ErrorsLastMonthWidget::class,
+        ErrorsLastWeekWidget::class,
+        ErrorsLastDayWidget::class,
     ];
 
     public function register()

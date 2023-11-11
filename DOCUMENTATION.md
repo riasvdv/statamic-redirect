@@ -31,6 +31,32 @@ You can publish the config file using
 php artisan vendor:publish --tag=statamic-redirect-config
 ```
 
+## Widgets
+
+This addon comes with the following widgets:
+
+- `errors`: for a listing of the most recent errors
+- `errors_last_month`: the same chart as in the redirect dashboard
+- `errors_last_week`: the same chart as in the redirect dashboard
+- `errors_last_day`: the same chart as in the redirect dashboard
+
+Widgets can be added to the dashboard by modifying the widgets array in the `config/statamic/cp.php` file.
+
+```php
+// config/statamic/cp.php
+ 
+'widgets' => [
+  [
+      'type' => 'errors',
+      'limit' => 5,
+  ],
+  'errors_last_month',
+  'errors_last_week',
+  'errors_last_day',
+],
+```
+
+
 ### Logging errors
 
 By default, Statamic Redirect will create error logs, you can disable this by setting the `log_errors` config value to `false`.

@@ -37,7 +37,7 @@ class DashboardController
         ]);
     }
 
-    private function getStatsPastMonth()
+    public function getStatsPastMonth()
     {
         $weeks = [];
         for ($week = now()->subWeeks(4); $week < now(); $week->addWeek()) {
@@ -54,7 +54,7 @@ class DashboardController
         return $notFoundMonth;
     }
 
-    private function getStatsPastWeek()
+    public function getStatsPastWeek()
     {
         $days = [];
         for ($day = now()->subWeek(); $day < now(); $day->addDay()) {
@@ -70,7 +70,7 @@ class DashboardController
         return $notFoundWeek;
     }
 
-    private function getStatsPastDay()
+    public function getStatsPastDay()
     {
         $hours = [];
         for ($hour = now()->subDay(); $hour < now(); $hour->addHours(4)) {
