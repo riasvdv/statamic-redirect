@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateEloquentRedirectTable extends Migration
+{
+    public function up()
+    {
+        Schema::connection(config('statamic.redirect.connection', 'redirect'))
+            ->create('redirects', function (Blueprint $table): void {
+                $table->uuid('id')->unique()->index();
+                $table->string('source')->index();
+                $table->string('destination');
+                $table->char('match_type', 10);
+                $table->char('type', 10);
+                $table->string('locale');
+                $table->integer('order')->nullable();
+                $table->boolean('enabled');
+                $table->timestamps();
+            });
+    }
+
+    public function down()
+    {
+        Schema::connection(config('statamic.redirect.connection', 'redirect'))
+            ->dropIfExists('redirects');
+    }
+}
