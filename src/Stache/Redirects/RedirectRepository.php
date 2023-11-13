@@ -5,7 +5,9 @@ namespace Rias\StatamicRedirect\Stache\Redirects;
 use Rias\StatamicRedirect\Contracts\RedirectRepository as RepositoryContract;
 use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
+use Rias\StatamicRedirect\Events\RedirectSaved;
 use Statamic\Data\DataCollection;
+use Statamic\Facades\Stache as StacheFacade;
 use Statamic\Stache\Stache;
 use Statamic\Support\Str;
 
@@ -71,15 +73,19 @@ class RedirectRepository implements RepositoryContract
     public function save($redirect)
     {
         if (! $redirect->id()) {
-            $redirect->id($this->stache->generateId());
+            $redirect->id(StacheFacade::generateId());
         }
 
-        $this->store->save($redirect);
+        StacheFacade::store('redirects')->save($redirect);
+
+        event(new RedirectSaved($redirect));
     }
 
-    public function delete($entry)
+    public function delete($redirect)
     {
-        $this->store->delete($entry);
+        StacheFacade::store('redirects')->delete($redirect);
+        
+        return true;
     }
 
     public function query()

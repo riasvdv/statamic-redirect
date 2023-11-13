@@ -5,7 +5,7 @@ namespace Rias\StatamicRedirect\Data;
 use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
 use Rias\StatamicRedirect\Data\Concerns\TracksQueriedRelations;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
-use Rias\StatamicRedirect\Events\RedirectSaved;
+use Rias\StatamicRedirect\Facades\Redirect as RedirectFacade;
 use Statamic\Contracts\Data\Localization;
 use Statamic\Data\ExistsAsFile;
 use Statamic\Data\TracksQueriedColumns;
@@ -114,22 +114,12 @@ class Redirect implements Localization, RedirectContract
 
     public function save()
     {
-        if (! $this->id()) {
-            $this->id(Stache::generateId());
-        }
-
-        Stache::store('redirects')->save($this);
-
-        event(new RedirectSaved($this));
-
-        return true;
+        return RedirectFacade::save($this);
     }
 
     public function delete()
     {
-        Stache::store('redirects')->delete($this);
-
-        return true;
+        return RedirectFacade::delete($this);
     }
 
     public function fileData()
