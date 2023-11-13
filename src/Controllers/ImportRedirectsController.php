@@ -4,7 +4,7 @@ namespace Rias\StatamicRedirect\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Rias\StatamicRedirect\Data\Redirect;
+use Rias\StatamicRedirect\Facades\Redirect;
 use Spatie\SimpleExcel\SimpleExcelReader;
 use Statamic\Facades\User;
 

@@ -3,7 +3,7 @@
 namespace Rias\StatamicRedirect\Exporters;
 
 use League\Csv\Writer;
-use Rias\StatamicRedirect\Data\Redirect;
+use Rias\StatamicRedirect\Facades\Redirect;
 use SplTempFileObject;
 use Statamic\Forms\Exporters\AbstractExporter;
 

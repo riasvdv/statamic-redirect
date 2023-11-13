@@ -63,4 +63,11 @@ return [
      * not be inside the usual content/redirects folder
      */
     'redirect_store' => base_path('content/redirects'),
+    
+    /*
+     * Customise the redirect repository you want to use for data
+     * storage. Change to \Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository::class
+     * for eloquent storage, or create your own custom repository
+     */
+    'redirect_repository' => \Rias\StatamicRedirect\Stache\Redirects\RedirectRepository::class,
 ];

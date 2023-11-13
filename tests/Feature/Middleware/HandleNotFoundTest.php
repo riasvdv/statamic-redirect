@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Rias\StatamicRedirect\Data\Error;
-use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
+use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Rias\StatamicRedirect\Tests\TestCase;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -111,13 +111,13 @@ class HandleNotFoundTest extends TestCase
      */
     public function it_handles_401_redirects()
     {
-        $this->withExceptionHandling();
+        //$this->withExceptionHandling();
 
         Redirect::make()
             ->source('/abc')
             ->type(410)
             ->save();
-
+            
         try {
             $this->middleware->handle(Request::create('/abc'), function () {
                 return (new Response('', 404));

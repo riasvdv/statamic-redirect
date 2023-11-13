@@ -5,8 +5,9 @@ namespace Rias\StatamicRedirect\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
 use Rias\StatamicRedirect\Data\Error;
-use Rias\StatamicRedirect\Data\Redirect;
+use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Jobs\CleanErrorsJob;
 use Statamic\Facades\Site;
 use Statamic\Support\Str;
@@ -25,7 +26,7 @@ class HandleNotFound
         if ($response->status() !== 404 || ! config('statamic.redirect.enable', true)) {
             return $response;
         }
-
+        
         try {
             $site = Site::findByUrl($request->url()) ?? Site::default();
 
@@ -122,7 +123,7 @@ class HandleNotFound
      * @param \Rias\StatamicRedirect\Data\Redirect $redirect
      * @param string $url
      */
-    private function cacheNewRedirect(\Statamic\Sites\Site $site, Redirect $redirect, string $url): void
+    private function cacheNewRedirect(\Statamic\Sites\Site $site, RedirectContract $redirect, string $url): void
     {
         $this->cachedRedirects[$site->handle()][$url] = [
             'destination' => $redirect->destination(),

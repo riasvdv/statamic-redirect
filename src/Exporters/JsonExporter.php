@@ -2,7 +2,7 @@
 
 namespace Rias\StatamicRedirect\Exporters;
 
-use Rias\StatamicRedirect\Data\Redirect;
+use Rias\StatamicRedirect\Facades\Redirect;
 use Statamic\Forms\Exporters\AbstractExporter;
 
 class JsonExporter extends AbstractExporter

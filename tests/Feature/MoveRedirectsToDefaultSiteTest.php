@@ -3,7 +3,7 @@
 namespace Rias\StatamicRedirect\Tests\Feature;
 
 use Illuminate\Support\Facades\File;
-use Rias\StatamicRedirect\Data\Redirect;
+use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Tests\TestCase;
 use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
 use Statamic\Facades\Stache;
