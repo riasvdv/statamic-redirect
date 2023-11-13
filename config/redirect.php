@@ -69,5 +69,5 @@ return [
      * storage. Change to \Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository::class
      * for eloquent storage, or create your own custom repository
      */
-    'redirect_repository' => \Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository::class,
+    'redirect_repository' => \Rias\StatamicRedirect\Stache\Redirects\RedirectRepository::class,
 ];
