@@ -2,8 +2,8 @@
 
 namespace Rias\StatamicRedirect\Facades;
 
-use Rias\StatamicRedirect\Contracts\RedirectRepository;
 use Illuminate\Support\Facades\Facade;
+use Rias\StatamicRedirect\Contracts\RedirectRepository;
 
 class Redirect extends Facade
 {

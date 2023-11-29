@@ -104,7 +104,7 @@ class RedirectRepository implements RepositoryContract
     private function toModel(Redirect $redirect)
     {
         return RedirectModel::firstOrNew([
-            'id' => $redirect->id()
+            'id' => $redirect->id(),
         ], [
             'source' => $redirect->source(),
             'destination' => $redirect->destination(),
@@ -113,6 +113,6 @@ class RedirectRepository implements RepositoryContract
             'enabled' => $redirect->enabled(),
             'order' => $redirect->order(),
             'locale' => $redirect->locale(),
-        ]);  
+        ]);
     }
 }

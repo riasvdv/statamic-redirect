@@ -3,8 +3,8 @@
 namespace Rias\StatamicRedirect\Listeners;
 
 use Illuminate\Support\Facades\Cache;
-use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
+use Rias\StatamicRedirect\Facades\Redirect;
 use Statamic\Events\EntrySaved;
 
 class CreateRedirect
