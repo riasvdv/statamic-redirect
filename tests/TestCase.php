@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Data\Hit;
-use Rias\StatamicRedirect\Data\Redirect;
+use Rias\StatamicRedirect\Facades\Redirect;
 use Statamic\Extend\Manifest;
 use Statamic\Facades\User;
 use Statamic\Statamic;

@@ -3,8 +3,9 @@
 namespace Rias\StatamicRedirect\Tests\Feature\Controllers;
 
 use Illuminate\Http\UploadedFile;
+use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
 use Rias\StatamicRedirect\Controllers\ImportRedirectsController;
-use Rias\StatamicRedirect\Data\Redirect;
+use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Tests\TestCase;
 
 class ImportRedirectsControllerTest extends TestCase
@@ -26,7 +27,7 @@ class ImportRedirectsControllerTest extends TestCase
         ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully.');
 
         $this->assertEquals(1, Redirect::query()->count());
-        tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (Redirect $redirect) {
+        tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (RedirectContract $redirect) {
             $this->assertEquals('/bar', $redirect->destination());
             $this->assertEquals('302', $redirect->type());
             $this->assertEquals('exact', $redirect->matchType());
@@ -50,7 +51,7 @@ class ImportRedirectsControllerTest extends TestCase
         ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully.');
 
         $this->assertEquals(1, Redirect::query()->count());
-        tap(Redirect::findByUrl('en', '/foo'), function (Redirect $redirect) {
+        tap(Redirect::findByUrl('en', '/foo'), function (RedirectContract $redirect) {
             $this->assertEquals('/bar', $redirect->destination());
             $this->assertEquals('302', $redirect->type());
             $this->assertEquals('exact', $redirect->matchType());
@@ -74,7 +75,7 @@ class ImportRedirectsControllerTest extends TestCase
         ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully.');
 
         $this->assertEquals(1, Redirect::query()->count());
-        tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (Redirect $redirect) {
+        tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (RedirectContract $redirect) {
             $this->assertEquals('/bar', $redirect->destination());
             $this->assertEquals('302', $redirect->type());
             $this->assertEquals('exact', $redirect->matchType());
@@ -98,7 +99,7 @@ class ImportRedirectsControllerTest extends TestCase
         ])->assertRedirect()->assertSessionHas('success', "Redirects imported successfully. 4 rows skipped due to invalid data.");
 
         $this->assertEquals(1, Redirect::query()->count());
-        tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (Redirect $redirect) {
+        tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (RedirectContract $redirect) {
             $this->assertEquals('/bar', $redirect->destination());
             $this->assertEquals('302', $redirect->type());
             $this->assertEquals('exact', $redirect->matchType());

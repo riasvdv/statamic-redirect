@@ -2,10 +2,11 @@
 
 namespace Rias\StatamicRedirect\Stache\Redirects;
 
+use Rias\StatamicRedirect\Contracts\RedirectQueryBuilder as Contract;
 use Statamic\Data\DataCollection;
 use Statamic\Stache\Query\Builder;
 
-class RedirectQueryBuilder extends Builder
+class RedirectQueryBuilder extends Builder implements Contract
 {
     protected function getFilteredKeys()
     {

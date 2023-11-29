@@ -2,7 +2,7 @@
 
 namespace Rias\StatamicRedirect\Stache\Redirects;
 
-use Rias\StatamicRedirect\Data\Redirect;
+use Rias\StatamicRedirect\Facades\Redirect;
 use Statamic\Facades\YAML;
 use Statamic\Stache\Stores\BasicStore;
 use Symfony\Component\Finder\SplFileInfo;

@@ -9,7 +9,7 @@ interface RedirectRepository
 
     public function find($id);
 
-    public function findByUrl(string $url);
+    public function findByUrl(string $siteHandle, string $url);
 
     public function make();
 

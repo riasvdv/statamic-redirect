@@ -3,8 +3,8 @@
 namespace Rias\StatamicRedirect\Tests\Feature;
 
 use Illuminate\Support\Facades\Event;
-use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Events\RedirectSaved;
+use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Tests\TestCase;
 
 class RedirectTest extends TestCase

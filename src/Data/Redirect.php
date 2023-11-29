@@ -2,20 +2,18 @@
 
 namespace Rias\StatamicRedirect\Data;
 
-use Illuminate\Support\Str;
+use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
 use Rias\StatamicRedirect\Data\Concerns\TracksQueriedRelations;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
-use Rias\StatamicRedirect\Events\RedirectSaved;
-use Rias\StatamicRedirect\Stache\Redirects\RedirectQueryBuilder;
+use Rias\StatamicRedirect\Facades\Redirect as RedirectFacade;
 use Statamic\Contracts\Data\Localization;
-use Statamic\Data\DataCollection;
 use Statamic\Data\ExistsAsFile;
 use Statamic\Data\TracksQueriedColumns;
 use Statamic\Facades\Site;
 use Statamic\Facades\Stache;
 use Statamic\Support\Traits\FluentlyGetsAndSets;
 
-class Redirect implements Localization
+class Redirect implements Localization, RedirectContract
 {
     use FluentlyGetsAndSets;
     use ExistsAsFile;
@@ -42,61 +40,6 @@ class Redirect implements Localization
 
     /** @var string */
     protected $matchType = MatchTypeEnum::EXACT;
-
-    public static function make()
-    {
-        return new self();
-    }
-
-    public static function query(): RedirectQueryBuilder
-    {
-        return (new RedirectQueryBuilder(Stache::store('redirects')));
-    }
-
-    public static function all(): DataCollection
-    {
-        return self::query()->get();
-    }
-
-    public static function find($id): ?self
-    {
-        return self::query()->where('id', $id)->first();
-    }
-
-    public static function findByUrl(string $siteHandle, string $url): ?Redirect
-    {
-        return self::query()
-            ->where('enabled', true)
-            ->where('locale', $siteHandle)
-            ->orderBy('order')
-            ->get()
-            ->map(function (Redirect $redirect) use ($url) {
-                if ($redirect->matchType() === MatchTypeEnum::REGEX) {
-                    $source = str_replace('/', "\/", $redirect->source());
-                    $matchRegEx = '`'.$source.'`i';
-
-                    if (preg_match($matchRegEx, $url) === 1) {
-                        $redirect->destination(preg_replace(
-                            $matchRegEx,
-                            $redirect->destination(),
-                            $url
-                        ));
-
-                        return $redirect;
-                    }
-                }
-
-                if (strcmp(Str::start($redirect->source(), '/'), Str::start($url, '/')) === 0
-                    || strcmp(Str::start($redirect->source(), '/'), Str::start($url . '/', '/')) === 0
-                ) {
-                    return $redirect;
-                }
-
-                return null;
-            })
-            ->filter()
-            ->first();
-    }
 
     public function id($id = null)
     {
@@ -171,22 +114,12 @@ class Redirect implements Localization
 
     public function save()
     {
-        if (! $this->id()) {
-            $this->id(Stache::generateId());
-        }
-
-        Stache::store('redirects')->save($this);
-
-        event(new RedirectSaved($this));
-
-        return true;
+        return RedirectFacade::save($this);
     }
 
     public function delete()
     {
-        Stache::store('redirects')->delete($this);
-
-        return true;
+        return RedirectFacade::delete($this);
     }
 
     public function fileData()
