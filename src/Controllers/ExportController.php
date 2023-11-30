@@ -27,12 +27,12 @@ class ExportController
 
         if (request()->has('download')) {
             $path = storage_path('statamic/tmp/redirect/'.time().'.'.$type);
+
             File::put($path, $content);
-            $response = response()->download($path)->deleteFileAfterSend(true);
-        } else {
-            $response = response($content)->header('Content-Type', $exporter->contentType());
+
+            return response()->download($path)->deleteFileAfterSend();
         }
 
-        return $response;
+        return response($content)->header('Content-Type', $exporter->contentType());
     }
 }

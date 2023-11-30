@@ -3,16 +3,18 @@
 namespace Rias\StatamicRedirect\Exporters;
 
 use Rias\StatamicRedirect\Facades\Redirect;
-use Statamic\Forms\Exporters\AbstractExporter;
+use Statamic\Forms\Exporters\Exporter;
 
-class JsonExporter extends AbstractExporter
+class JsonExporter extends Exporter
 {
+    protected static string $title = 'Redirects';
+
     /**
      * Perform the export.
      *
      * @return string
      */
-    public function export()
+    public function export(): string
     {
         $submissions = Redirect::all()->map(function (Redirect $redirect) {
             $redirectData = $redirect->fileData();
@@ -31,7 +33,7 @@ class JsonExporter extends AbstractExporter
      *
      * @return string
      */
-    public function contentType()
+    public function contentType(): string
     {
         return 'application/json';
     }

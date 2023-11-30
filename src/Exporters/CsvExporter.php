@@ -5,10 +5,12 @@ namespace Rias\StatamicRedirect\Exporters;
 use League\Csv\Writer;
 use Rias\StatamicRedirect\Facades\Redirect;
 use SplTempFileObject;
-use Statamic\Forms\Exporters\AbstractExporter;
+use Statamic\Forms\Exporters\Exporter;
 
-class CsvExporter extends AbstractExporter
+class CsvExporter extends Exporter
 {
+    protected static string $title = 'Redirects';
+
     /**
      * @var Writer
      */
@@ -27,7 +29,7 @@ class CsvExporter extends AbstractExporter
      *
      * @return string
      */
-    public function export()
+    public function export(): string
     {
         $this->insertHeaders();
 
@@ -64,5 +66,10 @@ class CsvExporter extends AbstractExporter
         })->all();
 
         $this->writer->insertAll($data);
+    }
+
+    public function contentType(): string
+    {
+        return 'text/csv';
     }
 }
