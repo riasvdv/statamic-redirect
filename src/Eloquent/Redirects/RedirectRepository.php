@@ -75,7 +75,7 @@ class RedirectRepository implements RepositoryContract
 
     public function delete($entry)
     {
-        $this->toModel($redirect)?->delete();
+        $this->toModel($entry)?->delete();
     }
 
     public function query()
