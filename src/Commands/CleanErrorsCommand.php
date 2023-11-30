@@ -22,6 +22,12 @@ class CleanErrorsCommand extends Command
             return;
         }
 
+        if (! config('statamic.redirect.log_errors', true)) {
+            $this->info('Errors are not being logged. Change the statamic.redirect.log_errors config setting to enable cleaning.');
+
+            return;
+        }
+
         $this->info('Cleaning errors older than ' . config('statamic.redirect.clean_older_than', '1 month'));
 
         (new CleanErrorsJob())->handle();
