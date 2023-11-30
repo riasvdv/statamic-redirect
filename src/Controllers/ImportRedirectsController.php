@@ -4,8 +4,10 @@ namespace Rias\StatamicRedirect\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Spatie\SimpleExcel\SimpleExcelReader;
+use Statamic\Facades\Site;
 use Statamic\Facades\User;
 
 class ImportRedirectsController
@@ -47,6 +49,12 @@ class ImportRedirectsController
                 return;
             }
 
+            if (Redirect::query()->where('source', $data['source'])->where('site', $data['site'] ?? Site::current()->handle())->count() > 0) {
+                $skipped++;
+
+                return;
+            }
+
             /** @var Redirect $redirect */
             $redirect = Redirect::make()
                 ->source($data['source'])
@@ -65,7 +73,7 @@ class ImportRedirectsController
         $message = 'Redirects imported successfully.';
 
         if ($skipped > 0) {
-            $message .= " {$skipped} rows skipped due to invalid data.";
+            $message .= " {$skipped} " . Str::plural('row', $skipped) . " skipped due to invalid data.";
         }
 
         session()->flash('success', $message);
