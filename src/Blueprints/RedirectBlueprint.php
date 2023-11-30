@@ -3,7 +3,6 @@
 namespace Rias\StatamicRedirect\Blueprints;
 
 use Closure;
-use Illuminate\Validation\Rule;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Statamic\Facades\Blueprint;
