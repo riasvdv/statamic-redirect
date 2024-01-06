@@ -26,7 +26,7 @@ class RedirectBlueprint extends Blueprint
                                     $existing = Redirect::query()
                                         ->where('source', $value)
                                         ->when(request()->route('id'), fn ($query) => $query->where('id', '!=', request()->route('id')))
-                                        ->where('site', Site::current()->handle())
+                                        ->where('locale', Site::current()->handle())
                                         ->count() > 0;
 
                                     if ($existing) {
