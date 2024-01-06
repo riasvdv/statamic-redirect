@@ -8,23 +8,21 @@ class CreateEloquentRedirectTable extends Migration
 {
     public function up()
     {
-        Schema::connection(config('statamic.redirect.connection', 'redirect'))
-            ->create('redirects', function (Blueprint $table): void {
-                $table->uuid('id')->unique()->index();
-                $table->string('source')->index();
-                $table->string('destination');
-                $table->char('match_type', 10);
-                $table->char('type', 10);
-                $table->string('locale');
-                $table->integer('order')->nullable();
-                $table->boolean('enabled');
-                $table->timestamps();
-            });
+        Schema::create('redirects', function (Blueprint $table): void {
+            $table->uuid('id')->unique()->index();
+            $table->string('source')->index();
+            $table->string('destination');
+            $table->char('match_type', 10);
+            $table->char('type', 10);
+            $table->string('site')->index();
+            $table->integer('order')->nullable();
+            $table->boolean('enabled');
+            $table->timestamps();
+        });
     }
 
     public function down()
     {
-        Schema::connection(config('statamic.redirect.connection', 'redirect'))
-            ->dropIfExists('redirects');
+        Schema::dropIfExists('redirects');
     }
 }
