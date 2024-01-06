@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="mb-3">
+    <header class="mb-6">
 
       <div class="flex items-center">
         <h1 class="flex-1" >Redirects</h1>
