@@ -28,7 +28,7 @@
                             </div>
                         </td>
                         <td class="">
-                            <span>{{ Date::createFromTimestamp($error->lastSeenAt)->diffForHumans() }}</span>
+                            <span>{{ \Carbon\Carbon::createFromTimestamp($error->lastSeenAt)->diffForHumans() }}</span>
                         </td>
                         <th class="actions-column">
                             @if (! $error->handled)
