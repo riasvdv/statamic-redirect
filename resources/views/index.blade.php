@@ -3,8 +3,8 @@
 
 @section('content')
 
-    <header class="mb-5">
-        <h1>Dashboard</h1>
+    <header class="mb-3">
+        <h1>Redirect</h1>
     </header>
 
     @if(! config('statamic.redirect.enable', true))

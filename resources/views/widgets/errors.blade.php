@@ -8,6 +8,12 @@
                 <span>{{ $title }}</span>
             </a>
         </h2>
+        @if(\Statamic\Facades\User::fromUser(auth()->user())->isSuper() || \Statamic\Facades\User::fromUser(auth()->user())->hasPermission('create redirects'))
+            <a
+                class="btn-primary"
+                href="{{ cp_route('redirect.redirects.create') }}"
+            >{{ __('Create redirect') }}</a>
+        @endcan
     </div>
     <div>
         <div>
@@ -15,15 +21,18 @@
                 <tbody tabindex="0">
                 @foreach ($errors as $error)
                     <tr class="sortable-row outline-none" tabindex="0">
-                        <td class="text-gray-800">
-                            {{ $error->url }}
+                        <td class="">
+                            <div class="flex items-center">
+                                <div class="little-dot mr-2 {{ $error->handled ? 'bg-green-600' : 'bg-gray-400' }}"></div>
+                                <a class="text-blue hover:text-blue-dark" href="{{ cp_route('redirect.errors.show', $error->id) }}" style="word-break: break-all">{{ $error->url }}</a>
+                            </div>
                         </td>
                         <td class="">
                             <span>{{ \Carbon\Carbon::createFromTimestamp($error->lastSeenAt)->diffForHumans() }}</span>
                         </td>
                         <th class="actions-column">
                             @if (! $error->handled)
-                                <a href="{{ cp_route('redirect.redirects.create', ['source' => urlencode($error->url)]) }}" class="text-blue flex align-center mr-2">
+                                <a href="{{ cp_route('redirect.redirects.create', ['source' => urlencode($error->url)]) }}" class="text-blue inline-block">
                                     <svg
                                         class="w-4 h-4 mr-2"
                                         aria-hidden="true"
