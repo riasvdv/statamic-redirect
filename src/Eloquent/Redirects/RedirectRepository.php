@@ -33,7 +33,7 @@ class RedirectRepository implements RepositoryContract
     {
         return $this->query()
             ->where('enabled', true)
-            ->where('locale', $siteHandle)
+            ->where('site', $siteHandle)
             ->orderBy('order')
             ->get()
             ->map(function (Redirect $redirect) use ($url) {
