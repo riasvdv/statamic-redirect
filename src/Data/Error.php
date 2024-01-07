@@ -19,7 +19,7 @@ class Error extends Model
 
     public function getConnectionName()
     {
-        return config('statamic.redirect.connection', 'redirect');
+        return config('statamic.redirect.error_connection', 'redirect-sqlite');
     }
 
     protected static function booted()
