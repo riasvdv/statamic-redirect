@@ -81,14 +81,16 @@
                 <span v-html="relativeDate(error.lastSeenAt)"></span>
               </template>
               <template slot="cell-handled" slot-scope="{ row: error }">
-                <div
-                  v-if="error.handled"
-                  class="bg-green block h-3 w-2 mr-auto rounded-full"
-                ></div>
-                <div
-                  v-else
-                  class="bg-red block h-3 w-2 mr-auto rounded-full"
-                ></div>
+                <div class="flex items-center">
+                  <div
+                    v-if="error.handled"
+                    class="little-dot mr-2 bg-green-600"
+                  ></div>
+                  <div
+                    v-else
+                    class="little-dot mr-2 bg-red-500"
+                  ></div>
+                </div>
               </template>
               <template slot="cell-handledDestination" slot-scope="{ row: error }">
                 <span style="word-break: break-all">{{ error.handledDestination }}</span>
