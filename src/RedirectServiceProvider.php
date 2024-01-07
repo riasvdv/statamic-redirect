@@ -20,6 +20,7 @@ use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
 use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
 use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
+use Rias\StatamicRedirect\UpdateScripts\RenameLocaleToSiteOnRedirectsTable;
 use Rias\StatamicRedirect\Widgets\ErrorsLastDayWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsLastMonthWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsLastWeekWidget;
@@ -39,6 +40,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         AddHitsCount::class,
         ClearErrors::class,
         MoveRedirectsToDefaultSite::class,
+        RenameLocaleToSiteOnRedirectsTable::class,
     ];
 
     protected $scripts = [
@@ -90,7 +92,7 @@ class RedirectServiceProvider extends AddonServiceProvider
                     __DIR__ . '/../database/migrations/create_redirect_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_tables.php'),
                 ], 'migrations');
             }
-            
+
             if (! class_exists('CreateEloquentRedirectTable')) {
                 $this->publishes([
                     __DIR__ . '/../database/migrations/create_eloquent_redirect_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_eloquent_redirect_table.php'),
