@@ -254,7 +254,8 @@ class RedirectServiceProvider extends AddonServiceProvider
         DB::setDefaultConnection($defaultConnection);
     }
 
-    protected function generalConnectionIsNotSetToBuiltinSqlite() {
+    protected function generalConnectionIsNotSetToBuiltinSqlite()
+    {
         if(config('statamic.redirect.connection') === 'redirect-sqlite') {
             return false;
         }
