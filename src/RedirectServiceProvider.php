@@ -115,7 +115,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         }
 
         $this->publishes([
-            __DIR__ . '/../database/migrations/create_redirect_errors_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_errors_tables.php'),
+            __DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_error_tables.php'),
         ], 'statamic-redirect-error-migrations');
 
         $this->publishes([
@@ -232,8 +232,8 @@ class RedirectServiceProvider extends AddonServiceProvider
 
         $defaultConnection = DB::getDefaultConnection();
         DB::setDefaultConnection('redirect-sqlite');
-        require_once(__DIR__ . '/../database/migrations/create_redirect_errors_tables.php.stub');
-        (new \CreateRedirectErrorsTables())->up();
+        require_once(__DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub');
+        (new \CreateRedirectErrorTables())->up();
         DB::setDefaultConnection($defaultConnection);
     }
 
