@@ -19,6 +19,10 @@ class Error extends Model
 
     public function getConnectionName()
     {
+        if (config('statamic.redirect.connection') !== null) {
+            return config('statamic.redirect.connection');
+        }
+
         if (config('statamic.redirect.error_connection') === 'default') {
             return config('database.default');
         }
