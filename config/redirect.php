@@ -53,14 +53,14 @@ return [
     /*
      * The database connection used to store errors. By default
      * this is the included 'redirect-sqlite'. Use
-     * 'default' to use the laravel default.
+     * 'default' to use the Laravel default.
      */
     'error_connection' => env('REDIRECT_ERROR_CONNECTION', 'redirect-sqlite'),
 
     /*
      * The database connection redirect should use to store redirects
      * by default this is the included 'stache' connection.
-     * Use 'default' to use the laravel default.
+     * Use 'default' to use the Laravel default.
      */
     'redirect_connection' => env('REDIRECT_REDIRECT_CONNECTION', 'stache'),
 
