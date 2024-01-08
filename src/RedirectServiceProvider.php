@@ -22,6 +22,7 @@ use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
 use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
 use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
+use Rias\StatamicRedirect\UpdateScripts\RenameLocaleToSiteOnRedirectsTable;
 use Rias\StatamicRedirect\Widgets\ErrorsLastDayWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsLastMonthWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsLastWeekWidget;
@@ -41,6 +42,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         AddHitsCount::class,
         ClearErrors::class,
         MoveRedirectsToDefaultSite::class,
+        RenameLocaleToSiteOnRedirectsTable::class,
     ];
 
     protected $scripts = [

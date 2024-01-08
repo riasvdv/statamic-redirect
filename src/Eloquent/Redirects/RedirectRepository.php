@@ -33,7 +33,7 @@ class RedirectRepository implements RepositoryContract
     {
         return $this->query()
             ->where('enabled', true)
-            ->where('locale', $siteHandle)
+            ->where('site', $siteHandle)
             ->orderBy('order')
             ->get()
             ->map(function (Redirect $redirect) use ($url) {
@@ -87,7 +87,7 @@ class RedirectRepository implements RepositoryContract
     {
         return new Redirect();
     }
-    
+
     public static function fromModel(Model $model)
     {
         return (new Redirect)
@@ -98,9 +98,9 @@ class RedirectRepository implements RepositoryContract
             ->matchType($model->match_type)
             ->enabled($model->enabled)
             ->order($model->order)
-            ->locale($model->locale);
+            ->locale($model->site);
     }
-    
+
     private function toModel(Redirect $redirect)
     {
         return RedirectModel::firstOrNew([
@@ -112,7 +112,7 @@ class RedirectRepository implements RepositoryContract
             'type' => $redirect->type(),
             'enabled' => $redirect->enabled(),
             'order' => $redirect->order(),
-            'locale' => $redirect->locale(),
+            'site' => $redirect->locale(),
         ]);
     }
 }
