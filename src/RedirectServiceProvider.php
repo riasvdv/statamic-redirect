@@ -185,15 +185,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         File::ensureDirectoryExists(storage_path('redirect'));
 
         $sqlitePath = storage_path('redirect/redirect.sqlite');
-
-        if (! file_exists($sqlitePath)) {
-            File::put($sqlitePath, '');
-
-            $gitIgnorePath = storage_path('redirect/.gitignore');
-            if (! file_exists($gitIgnorePath)) {
-                File::put($gitIgnorePath, "*\n!.gitignore");
-            }
-        }
+        $this->ensureDatabaseExists($sqlitePath);
 
         app('config')->set('database.connections.redirect-sqlite', [
             'driver' => 'sqlite',
@@ -204,6 +196,26 @@ class RedirectServiceProvider extends AddonServiceProvider
         $this->bootDatabaseForRedirects();
 
         return $this;
+    }
+
+    protected function ensureDatabaseExists($sqlitePath)
+    {
+        $oldSqlitePath = storage_path('redirect/errors.sqlite');
+
+        if (! file_exists($sqlitePath) && file_exists($oldSqlitePath)) {
+            File::move($oldSqlitePath, $sqlitePath);
+
+            return;
+        }
+
+        if (! file_exists($sqlitePath)) {
+            File::put($sqlitePath, '');
+
+            $gitIgnorePath = storage_path('redirect/.gitignore');
+            if (! file_exists($gitIgnorePath)) {
+                File::put($gitIgnorePath, "*\n!.gitignore");
+            }
+        }
     }
 
     protected function bootDatabaseForErrors()
