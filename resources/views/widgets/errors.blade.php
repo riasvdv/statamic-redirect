@@ -32,7 +32,7 @@
                         </td>
                         <th class="actions-column">
                             @if (! $error->handled)
-                                <a href="{{ cp_route('redirect.redirects.create', ['source' => urlencode($error->url)]) }}" class="text-blue inline-block">
+                                <a href="{{ cp_route('redirect.redirects.create', ['source' => urlencode($error->url)]) }}" class="text-blue flex align-center">
                                     <svg
                                         class="w-4 h-4 mr-2"
                                         aria-hidden="true"
