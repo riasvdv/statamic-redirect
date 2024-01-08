@@ -15,7 +15,7 @@ class CreateEloquentRedirectTable extends Migration
                 $table->string('destination');
                 $table->char('match_type', 10);
                 $table->char('type', 10);
-                $table->string('locale');
+                $table->string('site')->index();
                 $table->integer('order')->nullable();
                 $table->boolean('enabled');
                 $table->timestamps();
