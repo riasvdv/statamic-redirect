@@ -51,17 +51,16 @@ return [
     'keep_unique_errors' => 1000,
 
     /*
-     * The database connection redirect should use to store errors. By
-     * default this is the included 'redirect-sqlite' connection
-     * that uses an sqlite database in storage.
+     * The database connection used to store errors. By default
+     * this is the included 'redirect-sqlite'. Use
+     * 'default' to use the laravel default.
      */
     'error_connection' => env('REDIRECT_ERROR_CONNECTION', 'redirect-sqlite'),
 
     /*
      * The database connection redirect should use to store redirects
-     * by default this is the included 'stache' connection
-     * that stores the redirects in yaml files inside
-     * the folder defined by 'redirect_store'.
+     * by default this is the included 'stache' connection.
+     * Use 'default' to use the laravel default.
      */
     'redirect_connection' => env('REDIRECT_REDIRECT_CONNECTION', 'stache'),
 
