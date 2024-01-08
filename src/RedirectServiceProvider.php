@@ -219,7 +219,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         $defaultConnection = DB::getDefaultConnection();
         DB::setDefaultConnection('redirect-sqlite');
         require_once(__DIR__ . '/../database/migrations/create_redirect_errors_tables.php.stub');
-        (new \CreateRedirectErrorsTable())->up();
+        (new \CreateRedirectErrorsTables())->up();
         DB::setDefaultConnection($defaultConnection);
     }
 
