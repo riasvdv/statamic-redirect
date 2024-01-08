@@ -17,6 +17,10 @@ class RedirectModel extends Model
 
     public function getConnectionName()
     {
+        if (config('statamic.redirect.redirect_connection') === 'default') {
+            return config('database.default');
+        }
+
         return config('statamic.redirect.redirect_connection', 'redirect-sqlite');
     }
 }

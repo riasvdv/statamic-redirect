@@ -19,6 +19,10 @@ class Error extends Model
 
     public function getConnectionName()
     {
+        if (config('statamic.redirect.error_connection') === 'default') {
+            return config('database.default');
+        }
+
         return config('statamic.redirect.error_connection', 'redirect-sqlite');
     }
 
