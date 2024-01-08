@@ -58,23 +58,23 @@ Widgets can be added to the dashboard by modifying the widgets array in the `con
 
 Like the default widgets of Statamic, you can also configure `title`& `width` of the widgets.
 
-### Logging errors
+## Logging errors
 
 By default, Statamic Redirect will create error logs, you can disable this by setting the `log_errors` config value to `false`.
 
-### Logging individual hits
+## Logging individual hits
 
 By default, Statamic Redirect will also keep individual hits for each error, you can disable this by setting the `log_hits` config value to `false`.
 
-### Create entry redirects
+## Create entry redirects
 
 By default, Statamic Redirect will create redirects when the URI of an entry changes. You can disable this by setting the `create_entry_redirects` config value to `false`.
 
-### Deleting entry conflicting redirects
+## Deleting entry conflicting redirects
 
 By default, Statamic Redirect will delete redirects when a saved entry's URI conflicts with the redirect. You can disable this by setting the `delete_conflicting_redirects` config value to `false`.
 
-### Cleaning errors
+## Cleaning errors
 
 The amount of errors can grow quickly, Statamic Redirect includes a scheduled command that by default cleans up errors older than 1 month.
 
@@ -82,18 +82,18 @@ You can disable the cleaning by setting the `clean_errors` config value to `fals
 
 > Make sure your [Schedule](https://laravel.com/docs/8.x/scheduling#introduction) is running for error cleaning to work.
 
-### Different storage
+## Different storage
 
 If you want to use a different storage method for the Errors or Redirects, you can change them in the config file.
 
-#### Errors
+### Errors
 
 By default, errors are stored using the built-in `redirect-sqlite` connection. Picking another connection can be useful if you're logging a lot of errors & hits. To do this, change the `error_connection` config value. Provide `default` to use the default Laravel connection.
 
 > [!NOTE]
 > When using a connection other than `redirect-sqlite`, make sure to publish (and run) the corresponding migration using `php artisan vendor:publish --tag="statamic-redirect-error-migrations"`.
 
-#### Redirects
+### Redirects
 
 By default, errors are stored in the `content/redirects` folder. Update the `redirect_store` config value to use a different folder.
 
