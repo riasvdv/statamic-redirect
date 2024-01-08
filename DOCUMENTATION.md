@@ -84,11 +84,11 @@ You can disable the cleaning by setting the `clean_errors` config value to `fals
 
 ## Different storage
 
-If you want to use a different storage method for the Errors or Redirects, you can change them in the config file.
+If you want to use a different storage method for errors or redirects, change them in the config file.
 
 ### Errors
 
-By default, errors are stored using the built-in `redirect-sqlite` connection. Picking another connection can be useful if you're logging a lot of errors & hits. To do this, change the `error_connection` config value. Provide `default` to use the default Laravel connection.
+By default, errors are stored using the built-in `redirect-sqlite` connection. Picking another connection can be useful when logging a lot of errors & hits. To do this, change the `error_connection` config value. Provide `default` to use the default Laravel connection.
 
 > [!NOTE]
 > When using a connection other than `redirect-sqlite`, make sure to publish (and run) the corresponding migration using `php artisan vendor:publish --tag="statamic-redirect-error-migrations"`.
