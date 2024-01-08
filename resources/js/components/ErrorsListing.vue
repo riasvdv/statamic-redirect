@@ -101,10 +101,10 @@
                     '?source=' +
                     encodeURI(error.url)
                   "
-                  class="text-blue inline-block"
+                  class="text-blue flex align-center"
                 >
                   <svg
-                    class="w-4 h-4 mr-2"
+                    class="w-4 h-4"
                     aria-hidden="true"
                     focusable="false"
                     data-prefix="far"
