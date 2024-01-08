@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Rias\StatamicRedirect\Data\Error;
 
-class CreateRedirectTables extends Migration
+class CreateRedirectErrorsTables extends Migration
 {
     public function up()
     {

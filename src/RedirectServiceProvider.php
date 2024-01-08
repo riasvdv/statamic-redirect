@@ -86,20 +86,6 @@ class RedirectServiceProvider extends AddonServiceProvider
             CleanErrorsCommand::class,
         ]);
 
-        if ($this->app->runningInConsole()) {
-            if (! class_exists('CreateRedirectTables')) {
-                $this->publishes([
-                    __DIR__ . '/../database/migrations/create_redirect_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_tables.php'),
-                ], 'migrations');
-            }
-
-            if (! class_exists('CreateEloquentRedirectTable')) {
-                $this->publishes([
-                    __DIR__ . '/../database/migrations/create_eloquent_redirect_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_eloquent_redirect_table.php'),
-                ], 'redirect-eloquent-migrations');
-            }
-        }
-
         Statamic::booted(function () {
             $router = $this->app->make(Router::class);
             $router->prependMiddlewareToGroup('statamic.web', HandleNotFound::class);
@@ -121,6 +107,18 @@ class RedirectServiceProvider extends AddonServiceProvider
                 ->bootDatabase()
                 ->bootPermissions();
         });
+
+        if (! $this->app->runningInConsole()) {
+            return;
+        }
+
+        $this->publishes([
+            __DIR__ . '/../database/migrations/create_redirect_errors_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_tables.php'),
+        ], 'statamic-redirect-error-migrations');
+
+        $this->publishes([
+            __DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_eloquent_redirect_table.php'),
+        ], 'statamic-redirect-redirect-migrations');
     }
 
     protected function getRedirectRepository()
@@ -220,8 +218,8 @@ class RedirectServiceProvider extends AddonServiceProvider
 
         $defaultConnection = DB::getDefaultConnection();
         DB::setDefaultConnection('redirect-sqlite');
-        require_once(__DIR__ . '/../database/migrations/create_redirect_tables.php.stub');
-        (new \CreateRedirectTables())->up();
+        require_once(__DIR__ . '/../database/migrations/create_redirect_errors_tables.php.stub');
+        (new \CreateRedirectErrorsTable())->up();
         DB::setDefaultConnection($defaultConnection);
     }
 
@@ -237,8 +235,8 @@ class RedirectServiceProvider extends AddonServiceProvider
 
         $defaultConnection = DB::getDefaultConnection();
         DB::setDefaultConnection('redirect-sqlite');
-        require_once(__DIR__ . '/../database/migrations/create_eloquent_redirect_table.php.stub');
-        (new \CreateEloquentRedirectTable())->up();
+        require_once(__DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub');
+        (new \CreateRedirectRedirectsTable())->up();
         DB::setDefaultConnection($defaultConnection);
     }
 

@@ -55,7 +55,7 @@ return [
      * default this is the included 'redirect-sqlite' connection
      * that uses an sqlite database in storage.
      */
-    'error_connection' => 'redirect-sqlite',
+    'error_connection' => env('REDIRECT_ERROR_CONNECTION', 'redirect-sqlite'),
 
     /*
      * The database connection redirect should use to store redirects
@@ -63,7 +63,7 @@ return [
      * that stores the redirects in yaml files inside
      * the folder defined by 'redirect_store'.
      */
-    'redirect_connection' => 'stache',
+    'redirect_connection' => env('REDIRECT_REDIRECT_CONNECTION', 'stache'),
 
     /*
      * Customize where on filesystem the redirects are being stored in stache.
