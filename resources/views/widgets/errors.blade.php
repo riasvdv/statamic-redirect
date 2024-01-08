@@ -23,7 +23,7 @@
                     <tr class="sortable-row outline-none" tabindex="0">
                         <td class="">
                             <div class="flex items-center">
-                                <div class="little-dot mr-2 {{ $error->handled ? 'bg-green-600' : 'bg-gray-400' }}"></div>
+                                <div class="little-dot mr-2 {{ $error->handled ? 'bg-green-600' : 'bg-red-500' }}"></div>
                                 <a class="text-blue hover:text-blue-dark" href="{{ cp_route('redirect.errors.show', $error->id) }}" style="word-break: break-all">{{ $error->url }}</a>
                             </div>
                         </td>
