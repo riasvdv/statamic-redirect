@@ -222,7 +222,10 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected function bootDatabaseForErrors()
     {
-        if(config('statamic.redirect.error_connection', 'redirect-sqlite') !== 'redirect-sqlite' && $this->generalConnectionIsNotSetToBuiltinSqlite()) {
+        if(
+            config('statamic.redirect.error_connection', 'redirect-sqlite') !== 'redirect-sqlite' &&
+            ! $this->generalConnectionIsBuiltinSqlite()
+        ) {
             return;
         }
 
@@ -239,7 +242,10 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected function bootDatabaseForRedirects()
     {
-        if(config('statamic.redirect.redirect_connection', 'stache') !== 'redirect-sqlite' && $this->generalConnectionIsNotSetToBuiltinSqlite()) {
+        if(
+            config('statamic.redirect.redirect_connection', 'stache') !== 'redirect-sqlite' &&
+            ! $this->generalConnectionIsBuiltinSqlite()
+        ) {
             return;
         }
 
@@ -254,17 +260,17 @@ class RedirectServiceProvider extends AddonServiceProvider
         DB::setDefaultConnection($defaultConnection);
     }
 
-    protected function generalConnectionIsNotSetToBuiltinSqlite()
+    protected function generalConnectionIsBuiltinSqlite()
     {
         if(config('statamic.redirect.connection') === 'redirect-sqlite') {
-            return false;
+            return true;
         }
 
         if(config('statamic.redirect.connection') === 'redirect') {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     protected function registerAddonConfig()
