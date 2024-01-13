@@ -104,7 +104,7 @@ class RedirectController
 
         return [
             'data' => new ListedRedirect($redirect),
-            'redirect' => cp_route('redirect.redirects.edit', ['id' => $redirect->id()])
+            'redirect' => cp_route('redirect.redirects.edit', ['id' => $redirect->id()]),
         ];
     }
 
