@@ -60,8 +60,7 @@
           @meta-updated="setFieldMeta"
           @focus="$refs.container.$emit('focus', $event)"
           @blur="$refs.container.$emit('blur', $event)"
-        >
-        </publish-tabs>
+        />
       </div>
     </publish-container>
 
