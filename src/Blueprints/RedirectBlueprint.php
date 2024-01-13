@@ -22,6 +22,7 @@ class RedirectBlueprint extends Blueprint
                                 'type' => 'text',
                                 'display' => 'Source',
                                 'instructions' => 'Enter the URL pattern that Redirect should match. This matches against the path only e.g.: Exact Match: `/recipes/`, or RegEx Match: `.*RecipeID=(.*)`',
+                                'listable' => true,
                                 'validate' => ['required', 'string', function (string $attribute, $value, Closure $fail) {
                                     $existing = Redirect::query()
                                         ->where('source', $value)
@@ -41,6 +42,7 @@ class RedirectBlueprint extends Blueprint
                                 'type' => 'text',
                                 'display' => 'Destination',
                                 'instructions' => 'Enter the destination URL that should be redirected to.  This can either be a fully qualified URL or a relative URL.  e.g.: Exact Match: `/new-recipes/` or RegEx Match: `/new-recipes/$1`',
+                                'listable' => true,
                                 'validate' => 'required_unless:type,410|nullable|string',
                             ],
                         ],
@@ -50,6 +52,7 @@ class RedirectBlueprint extends Blueprint
                                 'type' => 'select',
                                 'display' => 'Match type',
                                 'instructions' => 'Details on RegEx matching can be found at [regexr.com](http://regexr.com/)',
+                                'listable' => true,
                                 'validate' => 'required|string',
                                 'options' => [
                                     MatchTypeEnum::EXACT => 'Exact Match',
@@ -63,6 +66,7 @@ class RedirectBlueprint extends Blueprint
                             'field' => [
                                 'type' => 'select',
                                 'display' => 'Redirect type',
+                                'listable' => true,
                                 'validate' => 'required|string',
                                 'options' => [
                                     '302' => 'Temporary (302)',
@@ -82,6 +86,7 @@ class RedirectBlueprint extends Blueprint
                                 'type' => 'toggle',
                                 'default' => true,
                                 'display' => 'Enabled',
+                                'listable' => true,
                                 'validate' => 'required|boolean',
                             ],
                         ],
