@@ -1,21 +1,23 @@
 @extends('statamic::layout')
 
-@section('title', 'Edit redirect')
-@section('wrapper_class', 'max-w-3xl')
+@section('title', __('Edit redirect'))
+@section('wrapper_class', 'max-w-full')
 
 @section('content')
-    <publish-form-redirect
-        title="Update redirect"
+    <redirect-publish-form
+        title="{{ __('Update redirect') }}"
         action="{{ cp_route('redirect.redirects.update', $redirect->id()) }}"
+        :is-creating="false"
         :blueprint='@json($blueprint)'
-        :meta='@json($meta)'
-        :values='@json($values)'
+        :initial-meta='@json($meta)'
+        :initial-values='@json($values)'
+        listing-url="{{ cp_route('redirect.redirects.index') }}"
+        create-another-url="{{ cp_route('redirect.redirects.create') }}"
         :breadcrumbs="[
             {
                 url: '{{ cp_route('redirect.redirects.index') }}',
-                text: '< Redirects'
+                text: '{{ __('Redirects') }}'
             }
         ]"
-        redirect-to="{{ cp_route('redirect.redirects.edit', $redirect->id()) }}"
-    ></publish-form-redirect>
+    ></redirect-publish-form>
 @stop

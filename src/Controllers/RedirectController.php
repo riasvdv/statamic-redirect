@@ -100,11 +100,12 @@ class RedirectController
 
         $redirect->save();
 
-        session()->flash('success', 'Redirect created successfully');
-
         Cache::forget('statamic.redirect.redirects');
 
-        return new ListedRedirect($redirect);
+        return [
+            'data' => new ListedRedirect($redirect),
+            'redirect' => cp_route('redirect.redirects.edit', ['id' => $redirect->id()]),
+        ];
     }
 
     public function update($id, Request $request)
@@ -135,11 +136,11 @@ class RedirectController
 
         $redirect->save();
 
-        session()->flash('success', 'Redirect updated successfully');
-
         Cache::forget('statamic.redirect.redirects');
 
-        return new ListedRedirect($redirect);
+        return [
+            'data' => new ListedRedirect($redirect),
+        ];
     }
 
     public function destroy($id)

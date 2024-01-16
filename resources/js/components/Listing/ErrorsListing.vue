@@ -43,20 +43,20 @@
           </div>
           <div>
             <data-list-filters
-                ref="filters"
-                :filters="filters"
-                :active-preset="activePreset"
-                :active-preset-payload="activePresetPayload"
-                :active-filters="activeFilters"
-                :active-filter-badges="activeFilterBadges"
-                :active-count="activeFilterCount"
-                :search-query="searchQuery"
-                :is-searching="true"
-                :saves-presets="true"
-                :preferences-prefix="preferencesPrefix"
-                @changed="filterChanged"
-                @saved="$refs.presets.setPreset($event)"
-                @deleted="$refs.presets.refreshPresets()"
+              ref="filters"
+              :filters="filters"
+              :active-preset="activePreset"
+              :active-preset-payload="activePresetPayload"
+              :active-filters="activeFilters"
+              :active-filter-badges="activeFilterBadges"
+              :active-count="activeFilterCount"
+              :search-query="searchQuery"
+              :is-searching="true"
+              :saves-presets="true"
+              :preferences-prefix="preferencesPrefix"
+              @changed="filterChanged"
+              @saved="$refs.presets.setPreset($event)"
+              @deleted="$refs.presets.refreshPresets()"
             />
           </div>
 
@@ -138,8 +138,8 @@
 </template>
 
 <script>
-import DeletesListingRow from "./DeletesListingRow.js";
-import Listing from "../../../vendor/statamic/cms/resources/js/components/Listing";
+import DeletesListingRow from "./../../mixins/DeletesListingRow.js";
+import Listing from "../../../../vendor/statamic/cms/resources/js/components/Listing";
 
 export default {
   mixins: [Listing, DeletesListingRow],

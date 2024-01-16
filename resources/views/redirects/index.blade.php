@@ -1,5 +1,7 @@
 @extends('statamic::layout')
+
 @section('title', 'Redirects')
+@section('wrapper_class', 'max-w-full')
 
 @section('content')
     <redirect-listing

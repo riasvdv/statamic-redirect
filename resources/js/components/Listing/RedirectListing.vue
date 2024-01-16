@@ -1,11 +1,11 @@
 <template>
   <div>
-    <header class="mb-3">
+    <header class="mb-6">
 
       <div class="flex items-center">
         <h1 class="flex-1" >Redirects</h1>
 
-        <dropdown-list class="mr-1" v-if="!!this.$scopedSlots.twirldown">
+        <dropdown-list class="mr-2" v-if="!!this.$scopedSlots.twirldown">
           <slot name="twirldown" />
         </dropdown-list>
 
@@ -142,7 +142,7 @@
 </template>
 
 <script>
-import Listing from "../../../vendor/statamic/cms/resources/js/components/Listing";
+import Listing from "../../../../vendor/statamic/cms/resources/js/components/Listing";
 
 export default {
   mixins: [Listing],
