@@ -92,8 +92,8 @@ class TestCase extends OrchestraTestCase
     {
         $this->artisan('migrate', ['--database' => 'testing']);
 
-        include_once __DIR__ . '/../database/migrations/create_redirect_tables.php.stub';
-        (new \CreateRedirectTables())->up();
+        include_once __DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub';
+        (new \CreateRedirectErrorTables())->up();
     }
 
     /**

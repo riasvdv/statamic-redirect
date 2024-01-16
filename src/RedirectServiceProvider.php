@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
+use Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository as EloquentRedirectRepository;
 use Rias\StatamicRedirect\Events\RedirectSaved;
 use Rias\StatamicRedirect\Http\Filters\ErrorHandled;
 use Rias\StatamicRedirect\Http\Filters\MatchType;
@@ -16,6 +17,7 @@ use Rias\StatamicRedirect\Http\Filters\Type;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Rias\StatamicRedirect\Listeners\CacheOldUri;
 use Rias\StatamicRedirect\Listeners\CreateRedirect;
+use Rias\StatamicRedirect\Stache\Redirects\RedirectRepository as StacheRedirectRepository;
 use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
 use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
@@ -72,7 +74,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         $this->registerAddonConfig();
 
         $this->app->singleton(RedirectRepository::class, function () {
-            $class = config('statamic.redirect.redirect_repository');
+            $class = $this->getRedirectRepository();
 
             return new $class($this->app['stache']);
         });
@@ -85,20 +87,6 @@ class RedirectServiceProvider extends AddonServiceProvider
         $this->commands([
             CleanErrorsCommand::class,
         ]);
-
-        if ($this->app->runningInConsole()) {
-            if (! class_exists('CreateRedirectTables')) {
-                $this->publishes([
-                    __DIR__ . '/../database/migrations/create_redirect_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_tables.php'),
-                ], 'migrations');
-            }
-
-            if (! class_exists('CreateEloquentRedirectTable')) {
-                $this->publishes([
-                    __DIR__ . '/../database/migrations/create_eloquent_redirect_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_eloquent_redirect_table.php'),
-                ], 'redirect-eloquent-migrations');
-            }
-        }
 
         Statamic::booted(function () {
             $router = $this->app->make(Router::class);
@@ -121,6 +109,31 @@ class RedirectServiceProvider extends AddonServiceProvider
                 ->bootDatabase()
                 ->bootPermissions();
         });
+
+        if (! $this->app->runningInConsole()) {
+            return;
+        }
+
+        $this->publishes([
+            __DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_error_tables.php'),
+        ], 'statamic-redirect-error-migrations');
+
+        $this->publishes([
+            __DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_redirects_table.php'),
+        ], 'statamic-redirect-redirect-migrations');
+    }
+
+    protected function getRedirectRepository()
+    {
+        if (config('statamic.redirect.redirect_repository') !== null) {
+            return config('statamic.redirect.redirect_repository');
+        }
+
+        if (config('statamic.redirect.redirect_connection') !== 'stache') {
+            return EloquentRedirectRepository::class;
+        }
+
+        return StacheRedirectRepository::class;
     }
 
     protected function bootAddonViews()
@@ -173,7 +186,29 @@ class RedirectServiceProvider extends AddonServiceProvider
 
         File::ensureDirectoryExists(storage_path('redirect'));
 
-        $sqlitePath = storage_path('redirect/errors.sqlite');
+        $sqlitePath = storage_path('redirect/redirect.sqlite');
+        $this->ensureDatabaseExists($sqlitePath);
+
+        app('config')->set('database.connections.redirect-sqlite', [
+            'driver' => 'sqlite',
+            'database' => $sqlitePath,
+        ]);
+
+        $this->bootDatabaseForErrors();
+        $this->bootDatabaseForRedirects();
+
+        return $this;
+    }
+
+    protected function ensureDatabaseExists($sqlitePath)
+    {
+        $oldSqlitePath = storage_path('redirect/errors.sqlite');
+
+        if (! file_exists($sqlitePath) && file_exists($oldSqlitePath)) {
+            File::move($oldSqlitePath, $sqlitePath);
+
+            return;
+        }
 
         if (! file_exists($sqlitePath)) {
             File::put($sqlitePath, '');
@@ -183,25 +218,59 @@ class RedirectServiceProvider extends AddonServiceProvider
                 File::put($gitIgnorePath, "*\n!.gitignore");
             }
         }
+    }
 
-        app('config')->set('database.connections.redirect', [
-            'driver' => 'sqlite',
-            'database' => $sqlitePath,
-        ]);
-
-        if (! Schema::connection(config('statamic.redirect.connection', 'redirect'))->hasTable('errors')) {
-            $defaultConnection = DB::getDefaultConnection();
-
-            DB::setDefaultConnection(config('statamic.redirect.connection', 'redirect'));
-
-            require_once(__DIR__ . '/../database/migrations/create_redirect_tables.php.stub');
-
-            (new \CreateRedirectTables())->up();
-
-            DB::setDefaultConnection($defaultConnection);
+    protected function bootDatabaseForErrors()
+    {
+        if (
+            config('statamic.redirect.error_connection', 'redirect-sqlite') !== 'redirect-sqlite' &&
+            ! $this->generalConnectionIsBuiltinSqlite()
+        ) {
+            return;
         }
 
-        return $this;
+        if (Schema::connection('redirect-sqlite')->hasTable('errors')) {
+            return;
+        }
+
+        $defaultConnection = DB::getDefaultConnection();
+        DB::setDefaultConnection('redirect-sqlite');
+        require_once(__DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub');
+        (new \CreateRedirectErrorTables())->up();
+        DB::setDefaultConnection($defaultConnection);
+    }
+
+    protected function bootDatabaseForRedirects()
+    {
+        if (
+            config('statamic.redirect.redirect_connection', 'stache') !== 'redirect-sqlite' &&
+            ! $this->generalConnectionIsBuiltinSqlite()
+        ) {
+            return;
+        }
+
+        if (Schema::connection('redirect-sqlite')->hasTable('redirects')) {
+            return;
+        }
+
+        $defaultConnection = DB::getDefaultConnection();
+        DB::setDefaultConnection('redirect-sqlite');
+        require_once(__DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub');
+        (new \CreateRedirectRedirectsTable())->up();
+        DB::setDefaultConnection($defaultConnection);
+    }
+
+    protected function generalConnectionIsBuiltinSqlite()
+    {
+        if (config('statamic.redirect.connection') === 'redirect-sqlite') {
+            return true;
+        }
+
+        if (config('statamic.redirect.connection') === 'redirect') {
+            return true;
+        }
+
+        return false;
     }
 
     protected function registerAddonConfig()

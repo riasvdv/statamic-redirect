@@ -8,15 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class RedirectModel extends Model
 {
     use HasUuids;
-    
+
     protected $guarded = [];
 
     protected $casts = [];
-    
+
     protected $table = 'redirects';
 
     public function getConnectionName()
     {
-        return config('statamic.redirect.connection', 'redirect');
+        if (config('statamic.redirect.connection') !== null) {
+            return config('statamic.redirect.connection');
+        }
+
+        if (config('statamic.redirect.redirect_connection') === 'default') {
+            return config('database.default');
+        }
+
+        return config('statamic.redirect.redirect_connection', 'redirect-sqlite');
     }
 }

@@ -51,23 +51,30 @@ return [
     'keep_unique_errors' => 1000,
 
     /*
-     * The database connection redirect should use to store errors
-     * by default this is the included 'redirect' connection
-     * that uses an sqlite database in storage.
+     * The database connection used to store errors. By default
+     * this is the included 'redirect-sqlite'. Use
+     * 'default' to use the Laravel default.
      */
-    'connection' => 'redirect',
+    'error_connection' => env('REDIRECT_ERROR_CONNECTION', 'redirect-sqlite'),
 
     /*
-     * Customize where on filesystem the redirects are being stored
+     * The database connection used to store redirects. By
+     * default this is the included 'stache' connection.
+     * Use 'default' to use the Laravel default.
+     */
+    'redirect_connection' => env('REDIRECT_REDIRECT_CONNECTION', 'stache'),
+
+    /*
+     * Customize where on filesystem the redirects are being stored in stache.
      * Useful when using a non-conventional setup where data should
      * not be inside the usual content/redirects folder
      */
     'redirect_store' => base_path('content/redirects'),
-    
+
     /*
      * Customise the redirect repository you want to use for data
-     * storage. Change to \Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository::class
-     * for eloquent storage, or create your own custom repository
+     * storage. Provide null to automaticly use a repository
+     * based on the 'redirect_connection'.
      */
-    'redirect_repository' => \Rias\StatamicRedirect\Stache\Redirects\RedirectRepository::class,
+    'redirect_repository' => null,
 ];
