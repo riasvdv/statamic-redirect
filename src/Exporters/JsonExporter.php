@@ -16,9 +16,11 @@ class JsonExporter extends Exporter
      */
     public function export(): string
     {
-        $submissions = Redirect::all()->map(function (Redirect $redirect) {
+        $submissions = Redirect::all()->map(function (\Rias\StatamicRedirect\Data\Redirect $redirect) {
             $redirectData = $redirect->fileData();
-            $redirectData['site'] = $redirect->site()->handle;
+            $redirectData['site'] = $redirect->site()
+                ? $redirect->site()->handle
+                : null;
 
             unset($redirectData['id']);
 
