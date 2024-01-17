@@ -97,16 +97,9 @@ export default {
     title: { type: String, required: true },
     method: { type: String, default: 'post' },
     isCreating: { type: Boolean, default: false },
-    isInline: {
-      type: Boolean,
-      default: false,
-    },
+    isInline: { type: Boolean, default: false },
     publishContainer:  { type: String, default: 'base' },
     readOnly: Boolean,
-    resource: {
-      type: Object,
-      required: true,
-    },
     createAnotherUrl: String,
     listingUrl: String,
   },
@@ -116,7 +109,6 @@ export default {
       values: this.initialValues,
       meta: this.initialMeta,
       preferencesPrefix: `redirect.redirect`,
-
       errors: {},
       saving: false,
       containerWidth: null,
