@@ -90,7 +90,6 @@ If you want to use a different storage method for errors or redirects, change th
 
 By default, errors are stored using the built-in `redirect-sqlite` connection. Picking another connection can be useful when logging a lot of errors & hits. To do this, change the `error_connection` config value. Provide `default` to use the default Laravel connection.
 
-> [!NOTE]
 > When using a connection other than `redirect-sqlite`, make sure to publish (and run) the corresponding migration using `php artisan vendor:publish --tag="statamic-redirect-error-migrations"`.
 
 ### Redirects
@@ -99,5 +98,4 @@ By default, errors are stored in the `content/redirects` folder. Update the `red
 
 It is also possible to store your redirects in the database. To do this, change the `redirect_connection` config value. Provide `default` to use the default Laravel connection.
 
-> [!NOTE]
 > When using a connection other than `stache` or `redirect-sqlite`, make sure to publish (and run) the corresponding migration using `php artisan vendor:publish --tag="statamic-redirect-redirect-migrations"`.
