@@ -78,13 +78,13 @@ class RedirectRepository implements RepositoryContract
 
         StacheFacade::store('redirects')->save($redirect);
 
-        event(new RedirectSaved($redirect));
+        RedirectSaved::dispatch($redirect);
     }
 
     public function delete($redirect)
     {
         StacheFacade::store('redirects')->delete($redirect);
-        
+
         return true;
     }
 
