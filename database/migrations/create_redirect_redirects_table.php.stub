@@ -12,8 +12,8 @@ class CreateRedirectRedirectsTable extends Migration
             $table->uuid('id')->unique()->index();
             $table->string('source')->index();
             $table->string('destination');
-            $table->char('match_type', 10);
-            $table->char('type', 10);
+            $table->string('match_type', 10);
+            $table->string('type', 10);
             $table->string('site')->index();
             $table->integer('order')->nullable();
             $table->boolean('enabled');
