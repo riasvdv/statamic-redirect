@@ -41,6 +41,9 @@ class Redirect implements Localization, RedirectContract
     /** @var string */
     protected $matchType = MatchTypeEnum::EXACT;
 
+    /** @var int */
+    protected $order;
+
     public function id($id = null)
     {
         return $this->fluentlyGetOrSet('id')->args(func_get_args());
