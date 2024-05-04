@@ -14,13 +14,17 @@ class CacheOldUri
         if (! config('statamic.redirect.enable', true)) {
             return;
         }
-        
+
         $id = $entrySaving->entry->id();
-        
+
         Blink::forget('eloquent-entry-'.$id);
         $entry = Entry::find($id);
 
         if (! $entry || ! $uri = $entry->uri()) {
+            return;
+        }
+
+        if (! $entry->published()) {
             return;
         }
 
