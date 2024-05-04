@@ -5,6 +5,7 @@ namespace Rias\StatamicRedirect\Stache\Redirects;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Statamic\Facades\YAML;
 use Statamic\Stache\Stores\BasicStore;
+use Statamic\Support\Arr;
 use Symfony\Component\Finder\SplFileInfo;
 
 class RedirectStore extends BasicStore
@@ -22,19 +23,19 @@ class RedirectStore extends BasicStore
     {
         $data = YAML::file($path)->parse($contents);
 
-        if (! $id = array_pull($data, 'id')) {
+        if (! $id = Arr::pull($data, 'id')) {
             $idGenerated = true;
             $id = app('stache')->generateId();
         }
 
         $redirect = Redirect::make()
             ->id($id)
-            ->source(array_pull($data, 'source'))
-            ->destination(array_pull($data, 'destination'))
-            ->type(array_pull($data, 'type'))
-            ->matchType(array_pull($data, 'match_type'))
-            ->enabled(array_pull($data, 'enabled'))
-            ->order(array_pull($data, 'order'))
+            ->source(Arr::pull($data, 'source'))
+            ->destination(Arr::pull($data, 'destination'))
+            ->type(Arr::pull($data, 'type'))
+            ->matchType(Arr::pull($data, 'match_type'))
+            ->enabled(Arr::pull($data, 'enabled'))
+            ->order(Arr::pull($data, 'order'))
             ->setLocaleFromFilePath($path)
             ->initialPath($path);
 
