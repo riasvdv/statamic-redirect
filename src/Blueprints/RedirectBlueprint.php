@@ -67,7 +67,7 @@ class RedirectBlueprint extends Blueprint
                                 'type' => 'select',
                                 'display' => 'Redirect type',
                                 'listable' => true,
-                                'validate' => 'required|string',
+                                'validate' => 'required',
                                 'options' => [
                                     '302' => 'Temporary (302)',
                                     '301' => 'Permanent (301)',
