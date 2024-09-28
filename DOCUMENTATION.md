@@ -74,6 +74,10 @@ By default, Statamic Redirect will create redirects when the URI of an entry cha
 
 By default, Statamic Redirect will delete redirects when a saved entry's URI conflicts with the redirect. You can disable this by setting the `delete_conflicting_redirects` config value to `false`.
 
+## Preserving query strings
+
+By default, Statamic Redirect will not preserve query strings. You can set the `preserve_query_strings` config value to `true` to enable this behavior.
+
 ## Cleaning errors
 
 The amount of errors can grow quickly, Statamic Redirect includes a scheduled command that by default cleans up errors older than 1 month.

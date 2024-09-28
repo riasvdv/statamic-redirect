@@ -7,6 +7,11 @@ return [
     'enable' => env('REDIRECT_ENABLED', true),
 
     /**
+     * Whether Redirect should preserve query strings
+     */
+    'preserve_query_strings' => env('REDIRECT_PRESERVE_QUERY_STRINGS', false),
+
+    /**
      * Controls whether Redirect automatically creates a redirect
      * when an entry's URI changes.
      */

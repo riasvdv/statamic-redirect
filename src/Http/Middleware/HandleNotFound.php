@@ -54,7 +54,7 @@ class HandleNotFound
                 }
 
                 return redirect(
-                    $this->cachedRedirects[$site->handle()][$url]['destination'],
+                    $this->cachedRedirects[$site->handle()][$url]['destination'].(config('redirect.preserve_query_strings') && $request->getQueryString() ? '?'.$request->getQueryString() : ''),
                     $this->cachedRedirects[$site->handle()][$url]['type'],
                 );
             }
@@ -73,7 +73,10 @@ class HandleNotFound
                 abort(410);
             }
 
-            return redirect($redirect->destination(), $redirect->type());
+            return redirect(
+                $redirect->destination().(config('redirect.preserve_query_strings') && $request->getQueryString() ? '?'.$request->getQueryString() : ''),
+                $redirect->type()
+            );
         } catch (\Exception $e) {
             if ($e instanceof HttpException && $e->getStatusCode() === 410) {
                 throw $e;

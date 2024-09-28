@@ -209,6 +209,33 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url('/fr')));
     }
 
+    public function it_can_preserve_query_strings()
+    {
+        config()->set('redirect.preserve_query_strings', true);
+
+        Redirect::make()
+            ->source('/abc?lang=nl')
+            ->destination('/nl')
+            ->save();
+
+        Redirect::make()
+            ->source('/abc?lang=fr')
+            ->destination('/fr')
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/abc', 'GET', ['lang' => 'nl']), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect(url('/nl?lang=nl')));
+
+        $response = $this->middleware->handle(Request::create('/abc', 'GET', ['lang' => 'fr']), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect(url('/fr?lang=fr')));
+    }
+
     /**
      * @test
      */
