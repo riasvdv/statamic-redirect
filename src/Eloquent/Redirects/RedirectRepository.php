@@ -31,30 +31,42 @@ class RedirectRepository implements RepositoryContract
 
     public function findByUrl(string $siteHandle, string $url): ?Redirect
     {
+        // Try and find a static redirect first as that's a quicker query
+        $staticRedirect = $this->query()
+            ->where('enabled', true)
+            ->where('site', $siteHandle)
+            ->where(function (RedirectQueryBuilder $query) use ($url) {
+                $query
+                    ->orWhere('source', $url)
+                    ->orWhere('source', str($url)->start('/'))
+                    ->orWhere('source', str($url)->finish('/'))
+                    ->orWhere('source', str($url)->start('/')->finish('/'));
+            })
+            ->where('match_type', MatchTypeEnum::EXACT)
+            ->orderBy('order')
+            ->first();
+
+        if ($staticRedirect) {
+            return $staticRedirect;
+        }
+
         return $this->query()
             ->where('enabled', true)
             ->where('site', $siteHandle)
+            ->where('match_type', MatchTypeEnum::REGEX)
             ->orderBy('order')
             ->get()
             ->map(function (Redirect $redirect) use ($url) {
-                if ($redirect->matchType() === MatchTypeEnum::REGEX) {
-                    $source = str_replace('/', "\/", $redirect->source());
-                    $matchRegEx = '`'.$source.'`i';
+                $source = str_replace('/', "\/", $redirect->source());
+                $matchRegEx = '`'.$source.'`i';
 
-                    if (preg_match($matchRegEx, $url) === 1) {
-                        $redirect->destination(preg_replace(
-                            $matchRegEx,
-                            $redirect->destination(),
-                            $url
-                        ));
+                if (preg_match($matchRegEx, $url) === 1) {
+                    $redirect->destination(preg_replace(
+                        $matchRegEx,
+                        $redirect->destination(),
+                        $url
+                    ));
 
-                        return $redirect;
-                    }
-                }
-
-                if (strcmp(Str::start($redirect->source(), '/'), Str::start($url, '/')) === 0
-                    || strcmp(Str::start($redirect->source(), '/'), Str::start($url . '/', '/')) === 0
-                ) {
                     return $redirect;
                 }
 

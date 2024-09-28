@@ -26,7 +26,7 @@ class HandleNotFound
         if ($response->getStatusCode() !== 404 || ! config('statamic.redirect.enable', true)) {
             return $response;
         }
-        
+
         try {
             $site = Site::findByUrl($request->url()) ?? Site::default();
 

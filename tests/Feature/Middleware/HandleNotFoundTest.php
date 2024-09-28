@@ -5,6 +5,9 @@ namespace Rias\StatamicRedirect\Tests\Feature\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Rias\StatamicRedirect\Contracts\RedirectRepository;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Facades\Redirect;
@@ -85,25 +88,72 @@ class HandleNotFoundTest extends TestCase
 
     /**
      * @test
+     * @dataProvider provideRedirects
      */
-    public function it_redirects_and_sets_handled_if_a_redirect_is_found()
+    public function it_redirects_and_sets_handled_if_a_redirect_is_found(string $source, string $destination, string $requestUrl, string $result)
     {
         Redirect::make()
-            ->source('/abc')
-            ->destination('/def')
+            ->source($source)
+            ->destination($destination)
             ->save();
 
-        $response = $this->middleware->handle(Request::create('/abc'), function () {
+        $response = $this->middleware->handle(Request::create($requestUrl), function () {
             return (new Response('', 404));
         });
 
         $this->assertEquals(1, Error::query()->count());
-        tap(Error::findByUrl('/abc'), function (Error $error) {
+        tap(Error::findByUrl($source), function (Error $error) use ($destination) {
             $this->assertEquals(true, $error->handled);
-            $this->assertEquals('/def', $error->handledDestination);
+            $this->assertEquals($destination, $error->handledDestination);
         });
 
-        $this->assertTrue($response->isRedirect(url('/def')));
+        $this->assertTrue($response->isRedirect(url($result)));
+    }
+
+    /**
+     * @test
+     * @dataProvider provideRedirects
+     */
+    public function it_redirects_and_sets_handled_if_a_redirect_is_found_with_eloquent(string $source, string $destination, string $requestUrl, string $result)
+    {
+        config()->set('statamic.redirect.redirect_connection', 'redirect-sqlite');
+
+        DB::setDefaultConnection('redirect-sqlite');
+        Schema::dropIfExists('redirects');
+        require_once(__DIR__ . '/../../../database/migrations/create_redirect_redirects_table.php.stub');
+        (new \CreateRedirectRedirectsTable())->up();
+
+        app()->singleton(RedirectRepository::class, function () {
+            return new \Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository(app('stache'));
+        });
+        Redirect::clearResolvedInstances();
+
+        Redirect::make()
+            ->source($source)
+            ->destination($destination)
+            ->save();
+
+        $response = $this->middleware->handle(Request::create($requestUrl), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertEquals(1, Error::query()->count());
+        tap(Error::findByUrl($source), function (Error $error) use ($destination) {
+            $this->assertEquals(true, $error->handled);
+            $this->assertEquals($destination, $error->handledDestination);
+        });
+
+        $this->assertTrue($response->isRedirect(url($result)));
+    }
+
+    function provideRedirects(): array
+    {
+        return [
+            ['/abc', '/def', '/abc', '/def'],
+            ['/abc', '/def', 'abc', '/def'],
+            ['/abc', '/def', '/abc/', '/def'],
+            ['/abc', '/def', 'abc/', '/def'],
+        ];
     }
 
     /**
@@ -117,7 +167,7 @@ class HandleNotFoundTest extends TestCase
             ->source('/abc')
             ->type(410)
             ->save();
-            
+
         try {
             $this->middleware->handle(Request::create('/abc'), function () {
                 return (new Response('', 404));
