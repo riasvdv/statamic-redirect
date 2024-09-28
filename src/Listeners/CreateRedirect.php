@@ -40,9 +40,9 @@ class CreateRedirect
 
         Redirect::make()
             ->locale($entry->locale())
-            ->source($oldUri . '(.*)')
-            ->destination($entry->uri() . '$1')
-            ->matchType(MatchTypeEnum::REGEX)
+            ->source($oldUri)
+            ->destination($entry->uri())
+            ->matchType(MatchTypeEnum::EXACT)
             ->save();
     }
 }
