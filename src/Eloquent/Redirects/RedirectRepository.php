@@ -8,7 +8,6 @@ use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Statamic\Data\DataCollection;
 use Statamic\Stache\Stache;
-use Statamic\Support\Str;
 
 class RedirectRepository implements RepositoryContract
 {

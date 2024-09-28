@@ -9,7 +9,6 @@ use Rias\StatamicRedirect\Events\RedirectSaved;
 use Statamic\Data\DataCollection;
 use Statamic\Facades\Stache as StacheFacade;
 use Statamic\Stache\Stache;
-use Statamic\Support\Str;
 
 class RedirectRepository implements RepositoryContract
 {

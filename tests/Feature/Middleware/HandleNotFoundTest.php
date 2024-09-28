@@ -146,7 +146,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url($result)));
     }
 
-    function provideRedirects(): array
+    public function provideRedirects(): array
     {
         return [
             ['/abc', '/def', '/abc', '/def'],
