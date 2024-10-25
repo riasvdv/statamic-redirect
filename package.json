@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "laravel-mix": "6.0.49",
-    "vue": "2.7.16",
+    "vue": "3.0.0",
     "vue-template-compiler": "2.7.16"
   },
   "devDependencies": {
