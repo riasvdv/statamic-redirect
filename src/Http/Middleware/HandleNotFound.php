@@ -54,7 +54,7 @@ class HandleNotFound
                 }
 
                 return redirect(
-                    $this->cachedRedirects[$site->handle()][$url]['destination'].(config('redirect.preserve_query_strings') && $request->getQueryString() ? '?'.$request->getQueryString() : ''),
+                    $this->cachedRedirects[$site->handle()][$url]['destination'].(config('statamic.redirect.preserve_query_strings') && $request->getQueryString() ? '?'.$request->getQueryString() : ''),
                     $this->cachedRedirects[$site->handle()][$url]['type'],
                 );
             }
@@ -74,7 +74,7 @@ class HandleNotFound
             }
 
             return redirect(
-                $redirect->destination().(config('redirect.preserve_query_strings') && $request->getQueryString() ? '?'.$request->getQueryString() : ''),
+                $redirect->destination().(config('statamic.redirect.preserve_query_strings') && $request->getQueryString() ? '?'.$request->getQueryString() : ''),
                 $redirect->type()
             );
         } catch (\Exception $e) {
