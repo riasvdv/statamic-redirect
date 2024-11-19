@@ -211,7 +211,7 @@ class HandleNotFoundTest extends TestCase
 
     public function it_can_preserve_query_strings()
     {
-        config()->set('redirect.preserve_query_strings', true);
+        config()->set('statamic.redirect.preserve_query_strings', true);
 
         Redirect::make()
             ->source('/abc?lang=nl')
