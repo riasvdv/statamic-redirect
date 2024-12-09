@@ -24,7 +24,7 @@ class MatchType extends Filter
 
     public function apply($query, $values)
     {
-        return $query->where('matchType', '=', $values['status']);
+        return $query->where('match_type', '=', $values['status']);
     }
 
     public function visibleTo($key)
