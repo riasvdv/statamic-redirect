@@ -120,6 +120,7 @@ class RedirectServiceProvider extends AddonServiceProvider
 
         $this->publishes([
             __DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_redirects_table.php'),
+            __DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_add_description_to_redirect_redirects_table.php'),
         ], 'statamic-redirect-redirect-migrations');
     }
 
