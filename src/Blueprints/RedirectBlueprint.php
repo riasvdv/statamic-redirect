@@ -79,6 +79,16 @@ class RedirectBlueprint extends Blueprint
                                 'default' => '302',
                             ],
                         ],
+                        [
+                            'handle' => 'description',
+                            'field' => [
+                                'type' => 'textarea',
+                                'display' => 'Description',
+                                'instructions' => 'Extra information about this redirect. This is for internal use only.',
+                                'listable' => true,
+                                'validate' => 'nullable|string',
+                            ],
+                        ],
                     ],
                 ],
                 'sidebar' => [

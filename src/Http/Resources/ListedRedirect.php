@@ -30,6 +30,7 @@ class ListedRedirect extends JsonResource
             'match_type' => $redirect->matchType(),
             'site' => $redirect->site(),
             'order' => $redirect->order(),
+            'description' => $redirect->description(),
             'delete_url' => cp_route('redirect.redirects.delete', $redirect->id()),
         ];
     }

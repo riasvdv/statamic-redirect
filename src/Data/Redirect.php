@@ -44,6 +44,9 @@ class Redirect implements Localization, RedirectContract
     /** @var int */
     protected $order;
 
+    /** @var string|null */
+    protected $description;
+
     public function id($id = null)
     {
         return $this->fluentlyGetOrSet('id')->args(func_get_args());
@@ -115,6 +118,11 @@ class Redirect implements Localization, RedirectContract
         ]);
     }
 
+    public function description($matchType = null)
+    {
+        return $this->fluentlyGetOrSet('description')->args(func_get_args());
+    }
+
     public function save()
     {
         return RedirectFacade::save($this);
@@ -134,6 +142,7 @@ class Redirect implements Localization, RedirectContract
             'destination' => $this->destination(),
             'type' => $this->type(),
             'match_type' => $this->matchType(),
+            'description' => $this->description(),
             'order' => $this->order(),
         ];
     }

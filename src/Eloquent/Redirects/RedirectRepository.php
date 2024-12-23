@@ -109,7 +109,8 @@ class RedirectRepository implements RepositoryContract
             ->matchType($model->match_type)
             ->enabled($model->enabled)
             ->order($model->order)
-            ->locale($model->site);
+            ->locale($model->site)
+            ->description($model->description);
     }
 
     private function toModel(Redirect $redirect)
@@ -122,6 +123,7 @@ class RedirectRepository implements RepositoryContract
             'enabled' => $redirect->enabled(),
             'order' => $redirect->order(),
             'site' => $redirect->locale(),
+            'description' => $redirect->description(),
         ];
 
         $model = RedirectModel::firstOrNew(['id' => $redirect->id()], $properties);
