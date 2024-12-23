@@ -2,12 +2,12 @@
 
 return [
     /**
-     * Whether Redirect should be enabled
+     * Whether Redirect should be enabled.
      */
     'enable' => env('REDIRECT_ENABLED', true),
 
     /**
-     * Whether Redirect should preserve query strings
+     * Whether Redirect should preserve query strings.
      */
     'preserve_query_strings' => env('REDIRECT_PRESERVE_QUERY_STRINGS', false),
 
@@ -24,12 +24,12 @@ return [
     'delete_conflicting_redirects' => env('REDIRECT_DELETE_CONFLICTS', true),
 
     /**
-     * Controls whether Redirect logs 404 errors
+     * Controls whether Redirect logs 404 errors.
      */
     'log_errors' => env('REDIRECT_LOG_ERRORS', true),
 
     /**
-     * Controls whether Redirect logs individual hits
+     * Controls whether Redirect logs individual hits.
      */
     'log_hits' => env('REDIRECT_LOG_HITS', true),
 
@@ -49,37 +49,43 @@ return [
      */
     'clean_older_than' => '1 month',
 
-    /*
+    /**
      * The maximum number of unique errors to keep.
      * This does not include individual hits.
      */
     'keep_unique_errors' => 1000,
 
-    /*
-     * The database connection used to store errors. By default
+    /**
+     * The database connection used to store errors. By default,
      * this is the included 'redirect-sqlite'. Use
      * 'default' to use the Laravel default.
      */
     'error_connection' => env('REDIRECT_ERROR_CONNECTION', 'redirect-sqlite'),
 
-    /*
+    /**
      * The database connection used to store redirects. By
-     * default this is the included 'stache' connection.
+     * default, this is the included 'stache' connection.
      * Use 'default' to use the Laravel default.
      */
     'redirect_connection' => env('REDIRECT_REDIRECT_CONNECTION', 'stache'),
 
-    /*
+    /**
      * Customize where on filesystem the redirects are being stored in stache.
      * Useful when using a non-conventional setup where data should
-     * not be inside the usual content/redirects folder
+     * not be inside the usual content/redirects folder.
      */
     'redirect_store' => base_path('content/redirects'),
 
-    /*
-     * Customise the redirect repository you want to use for data
+    /**
+     * Customize the redirect repository you want to use for data
      * storage. Provide null to automaticly use a repository
      * based on the 'redirect_connection'.
      */
     'redirect_repository' => null,
+
+    /**
+     * Set the default redirect type for new redirects.
+     * Can be one of: 301, 302, 410.
+     */
+    'default_redirect_type' => 302,
 ];

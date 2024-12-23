@@ -72,11 +72,11 @@ class RedirectBlueprint extends Blueprint
                                 'listable' => true,
                                 'validate' => 'required',
                                 'options' => [
-                                    '302' => 'Temporary (302)',
-                                    '301' => 'Permanent (301)',
-                                    '410' => 'Gone (410)',
+                                    302 => 'Temporary (302)',
+                                    301 => 'Permanent (301)',
+                                    410 => 'Gone (410)',
                                 ],
-                                'default' => '302',
+                                'default' => (int) config('statamic.redirect.default_redirect_type', 301),
                             ],
                         ],
                         [

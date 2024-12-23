@@ -32,8 +32,8 @@ class Redirect implements Localization, RedirectContract
     /** @var string */
     protected $destination;
 
-    /** @var string */
-    protected $type = '301';
+    /** @var int */
+    protected $type = 301;
 
     /** @var string */
     protected $locale;
