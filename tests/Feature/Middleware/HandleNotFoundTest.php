@@ -122,6 +122,8 @@ class HandleNotFoundTest extends TestCase
         Schema::dropIfExists('redirects');
         require_once(__DIR__ . '/../../../database/migrations/create_redirect_redirects_table.php.stub');
         (new \CreateRedirectRedirectsTable())->up();
+        require_once(__DIR__ . '/../../../database/migrations/add_description_to_redirect_redirects_table.php.stub');
+        (new \AddDescriptionToRedirectRedirectsTable())->up();
 
         app()->singleton(RedirectRepository::class, function () {
             return new \Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository(app('stache'));
