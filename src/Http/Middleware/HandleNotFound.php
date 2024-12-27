@@ -53,8 +53,10 @@ class HandleNotFound
                     abort(410);
                 }
 
+                $destination = $this->cachedRedirects[$site->handle()][$url]['destination'];
+
                 return redirect(
-                    $this->cachedRedirects[$site->handle()][$url]['destination'].(config('statamic.redirect.preserve_query_strings') && $request->getQueryString() ? '?'.$request->getQueryString() : ''),
+                    $this->mergeQuery($request, $destination),
                     $this->cachedRedirects[$site->handle()][$url]['type'],
                 );
             }
@@ -74,7 +76,7 @@ class HandleNotFound
             }
 
             return redirect(
-                $redirect->destination().(config('statamic.redirect.preserve_query_strings') && $request->getQueryString() ? '?'.$request->getQueryString() : ''),
+                $this->mergeQuery($request, $redirect->destination()),
                 $redirect->type()
             );
         } catch (\Exception $e) {
@@ -134,5 +136,31 @@ class HandleNotFound
         ];
 
         Cache::put('statamic.redirect.redirects', $this->cachedRedirects);
+    }
+
+    public function mergeQuery(Request $request, string $destination): string
+    {
+        if (! config('statamic.redirect.preserve_query_strings')) {
+            return $destination;
+        }
+
+        if (! $request->getQueryString()) {
+            return $destination;
+        }
+
+        $destination_parsed = parse_url($destination);
+        $destination_query = [];
+
+        if (isset($destination_parsed['query'])) {
+            parse_str($destination_parsed['query'], $destination_query);
+        }
+
+        $query = array_merge($destination_query, $request->query());
+
+        if (count($query)) {
+            $destination .= '?' . http_build_query($query);
+        }
+
+        return $destination;
     }
 }
