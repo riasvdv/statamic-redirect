@@ -2,6 +2,7 @@
 
 namespace Rias\StatamicRedirect\Data;
 
+use Illuminate\Database\Eloquent\JsonEncodingException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -54,10 +55,14 @@ class Error extends Model
         ]);
 
         if (config('statamic.redirect.log_hits')) {
-            return $this->hits()->create([
-                'timestamp' => $timestamp,
-                'data' => $data,
-            ]);
+            try {
+                return $this->hits()->create([
+                    'timestamp' => $timestamp,
+                    'data' => $data,
+                ]);
+            } catch (JsonEncodingException $e) {
+                // Malformed data or urls are probably from malicious requests
+            }
         }
 
         return null;
