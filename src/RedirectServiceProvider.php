@@ -19,6 +19,7 @@ use Rias\StatamicRedirect\Listeners\CacheOldUri;
 use Rias\StatamicRedirect\Listeners\CreateRedirect;
 use Rias\StatamicRedirect\Stache\Redirects\RedirectRepository as StacheRedirectRepository;
 use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
+use Rias\StatamicRedirect\UpdateScripts\AddDescriptionColumnToRedirectsTable;
 use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
 use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
 use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
@@ -43,6 +44,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         ClearErrors::class,
         MoveRedirectsToDefaultSite::class,
         RenameLocaleToSiteOnRedirectsTable::class,
+        AddDescriptionColumnToRedirectsTable::class,
     ];
 
     protected $scripts = [
