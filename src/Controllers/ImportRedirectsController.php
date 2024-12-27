@@ -60,7 +60,7 @@ class ImportRedirectsController
                 ->source($data['source'])
                 ->destination($data['destination'])
                 ->enabled(true)
-                ->type($data['type'])
+                ->type((int) $data['type'])
                 ->matchType($data['match_type']);
 
             if (isset($data['site'])) {

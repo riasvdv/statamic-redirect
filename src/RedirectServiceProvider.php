@@ -256,8 +256,12 @@ class RedirectServiceProvider extends AddonServiceProvider
 
         $defaultConnection = DB::getDefaultConnection();
         DB::setDefaultConnection('redirect-sqlite');
+
         require_once(__DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub');
         (new \CreateRedirectRedirectsTable())->up();
+        require_once(__DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub');
+        (new \AddDescriptionToRedirectRedirectsTable())->up();
+
         DB::setDefaultConnection($defaultConnection);
     }
 

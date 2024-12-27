@@ -95,7 +95,7 @@ class RedirectController
             ->source($request->get('source'))
             ->destination($request->get('destination'))
             ->enabled($request->get('enabled'))
-            ->type($request->get('type'))
+            ->type((int) $request->get('type'))
             ->matchType($request->get('match_type'))
             ->description($request->get('description'));
 
@@ -132,7 +132,7 @@ class RedirectController
             ->source($request->get('source'))
             ->destination($request->get('destination'))
             ->enabled($request->get('enabled'))
-            ->type($request->get('type'))
+            ->type((int) $request->get('type'))
             ->matchType($request->get('match_type'))
             ->description($request->get('description'));
 
