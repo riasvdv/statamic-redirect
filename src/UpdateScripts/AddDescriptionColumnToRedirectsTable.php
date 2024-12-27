@@ -26,7 +26,7 @@ class AddDescriptionColumnToRedirectsTable extends UpdateScript
     public function update()
     {
         Artisan::call('vendor:publish', [
-            '--tag' => 'statamic-redirect-redirect-migrations'
+            '--tag' => 'statamic-redirect-redirect-migrations',
         ]);
 
         $this->console()->info('New migration for Redirect description published, make sure to it!');
