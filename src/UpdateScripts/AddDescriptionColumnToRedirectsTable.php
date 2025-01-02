@@ -11,12 +11,18 @@ class AddDescriptionColumnToRedirectsTable extends UpdateScript
 {
     public function shouldUpdate($newVersion, $oldVersion)
     {
-        if (config('statamic.redirect.redirect_connection') === 'stache') {
+        $connection = config('statamic.redirect.redirect_connection');
+
+        if ($connection === 'stache') {
             return false;
         }
 
+        if ($connection === 'default') {
+            $connection = config('database.default');
+        }
+
         try {
-            return ! Schema::connection(config('statamic.redirect.redirect_connection'))->hasColumn('redirects', 'description');
+            return ! Schema::connection($connection)->hasColumn('redirects', 'description');
         } catch (QueryException) {
             // Query exception happens when database is not set up
             return false;
@@ -29,6 +35,6 @@ class AddDescriptionColumnToRedirectsTable extends UpdateScript
             '--tag' => 'statamic-redirect-redirect-migrations',
         ]);
 
-        $this->console()->info('New migration for Redirect description published, make sure to it!');
+        $this->console()->info('New migration for Redirect description published, make sure to run it!');
     }
 }
