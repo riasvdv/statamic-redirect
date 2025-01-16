@@ -154,11 +154,13 @@ class HandleNotFound
         if (isset($destination_parsed['query'])) {
             parse_str($destination_parsed['query'], $destination_query);
         }
+        // in case of duplicate keys, the destination ones take precedence
+        $query = array_merge($request->query(), $destination_query);
 
-        $query = array_merge($destination_query, $request->query());
+        ksort($query);
 
         if (count($query)) {
-            $destination .= '?' . http_build_query($query);
+            $destination = $destination_parsed['path'] . '?' . http_build_query($query);
         }
 
         return $destination;
