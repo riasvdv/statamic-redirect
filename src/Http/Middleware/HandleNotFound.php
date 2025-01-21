@@ -160,7 +160,16 @@ class HandleNotFound
         ksort($query);
 
         if (count($query)) {
-            $destination = $destination_parsed['path'] . '?' . http_build_query($query);
+            // make sure to preserve fragment if specified in destination
+            $fragment = isset($destination_parsed['fragment']) ? '#' . $destination_parsed['fragment'] : '';
+            if (($urlBeforeFragment = strstr($destination, '#', true)) === false) {
+                $urlBeforeFragment = $destination;
+            }
+            if (($urlBeforeQuery = strstr($urlBeforeFragment, '?', true)) === false) {
+                $urlBeforeQuery = $destination;
+            }
+
+            $destination = $urlBeforeQuery . '?' . http_build_query($query) . $fragment;
         }
 
         return $destination;
