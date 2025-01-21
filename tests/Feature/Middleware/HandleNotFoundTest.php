@@ -260,6 +260,62 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url('/fr?another=value&lang=fr')));
     }
 
+    /**
+     * @test
+     */
+    public function it_merges_query_strings_on_urls_without_path()
+    {
+        config()->set('statamic.redirect.preserve_query_strings', true);
+
+        Redirect::make()
+            ->source('/abc?another=value')
+            ->destination('?lang=fr')
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/abc', 'GET', ['another' => 'value']), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect(url('?another=value&lang=fr')));
+    }
+
+    /**
+     * @test
+     */
+    public function it_merges_query_strings_on_urls_with_fragment()
+    {
+        config()->set('statamic.redirect.preserve_query_strings', true);
+
+        Redirect::make()
+            ->source('/abc?another=value')
+            ->destination('/abc?lang=fr#some-fragment?with=fragment_param')
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/abc', 'GET', ['another' => 'value']), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect(url('/abc?another=value&lang=fr#some-fragment?with=fragment_param')));
+    }
+
+    /**
+     * @test
+     */
+    public function it_merges_query_strings_on_urls_without_path_with_fragment()
+    {
+        config()->set('statamic.redirect.preserve_query_strings', true);
+
+        Redirect::make()
+            ->source('/abc?another=value')
+            ->destination('?lang=fr#some-fragment?with=fragment_param')
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/abc', 'GET', ['another' => 'value']), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect(url('?another=value&lang=fr#some-fragment?with=fragment_param')));
+    }
 
 
     /**
