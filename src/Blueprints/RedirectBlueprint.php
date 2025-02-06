@@ -103,6 +103,17 @@ class RedirectBlueprint extends Blueprint
                                 'validate' => 'required|boolean',
                             ],
                         ],
+                        [
+                            'handle' => 'site',
+                            'field' => [
+                                'type' => 'sites',
+                                'display' => 'Site',
+                                'max_items' => 1,
+                                'mode' => 'select',
+                                'listable' => true,
+                                'validate' => 'required',
+                            ],
+                        ],
                     ],
                 ],
             ],

@@ -456,7 +456,7 @@ class HandleNotFoundTest extends TestCase
     public function it_will_not_find_redirects_from_different_sites()
     {
         Redirect::make()
-            ->locale('some-different-site')
+            ->site('some-different-site')
             ->source('/abc')
             ->destination('/def')
             ->save();
