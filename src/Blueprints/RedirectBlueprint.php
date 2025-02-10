@@ -2,12 +2,9 @@
 
 namespace Rias\StatamicRedirect\Blueprints;
 
-use Closure;
-use Illuminate\Support\Facades\Session;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
-use Rias\StatamicRedirect\Facades\Redirect;
+use Rias\StatamicRedirect\Rules\SourceIsNotRedirected;
 use Statamic\Facades\Blueprint;
-use Statamic\Facades\Site;
 
 class RedirectBlueprint extends Blueprint
 {
@@ -24,19 +21,7 @@ class RedirectBlueprint extends Blueprint
                                 'display' => 'Source',
                                 'instructions' => 'Enter the URL pattern that Redirect should match. This matches against the path only e.g.: Exact Match: `/recipes/`, or RegEx Match: `.*RecipeID=(.*)`',
                                 'listable' => true,
-                                'validate' => ['required', 'string', function (string $attribute, $value, Closure $fail) {
-                                    $selectedSite = Session::get('statamic.cp.selected-site', Site::current()->handle());
-
-                                    $existing = Redirect::query()
-                                        ->where('source', $value)
-                                        ->when(request()->route('id'), fn ($query) => $query->where('id', '!=', request()->route('id')))
-                                        ->where('site', $selectedSite)
-                                        ->first();
-
-                                    if ($existing) {
-                                        $fail(__("This source already has a redirect associated with it."));
-                                    }
-                                }],
+                                'validate' => ['required', 'string', new SourceIsNotRedirected],
                             ],
                         ],
                         [
