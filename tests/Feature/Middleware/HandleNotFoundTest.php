@@ -124,6 +124,8 @@ class HandleNotFoundTest extends TestCase
         (new \CreateRedirectRedirectsTable())->up();
         require_once(__DIR__ . '/../../../database/migrations/add_description_to_redirect_redirects_table.php.stub');
         (new \AddDescriptionToRedirectRedirectsTable())->up();
+        require_once(__DIR__ . '/../../../database/migrations/increase_redirect_redirects_table_url_length.php.stub');
+        (new \IncreaseRedirectRedirectsTableUrlLength())->up();
 
         app()->singleton(RedirectRepository::class, function () {
             return new \Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository(app('stache'));
