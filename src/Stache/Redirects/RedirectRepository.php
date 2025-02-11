@@ -42,10 +42,25 @@ class RedirectRepository implements RepositoryContract
             ->where('locale', $siteHandle)
             ->where(function (RedirectQueryBuilder $query) use ($url) {
                 $query
-                    ->orWhere('source', $url)
-                    ->orWhere('source', str($url)->start('/'))
-                    ->orWhere('source', str($url)->finish('/'))
-                    ->orWhere('source', str($url)->start('/')->finish('/'));
+                    ->orWhere(function (RedirectQueryBuilder $query) use ($url) {
+                        $query->where('source_md5', md5($url))
+                            ->where('source', $url);
+                    })
+                    ->orWhere(function (RedirectQueryBuilder $query) use ($url) {
+                        $source = str($url)->start('/');
+                        $query->where('source_md5', md5($source))
+                            ->where('source', $source);
+                    })
+                    ->orWhere(function (RedirectQueryBuilder $query) use ($url) {
+                        $source = str($url)->finish('/');
+                        $query->where('source_md5', md5($source))
+                            ->where('source', $source);
+                    })
+                    ->orWhere(function (RedirectQueryBuilder $query) use ($url) {
+                        $source = str($url)->start('/')->finish('/');
+                        $query->where('source_md5', md5($source))
+                            ->where('source', $source);
+                    });
             })
             ->where('matchType', MatchTypeEnum::EXACT)
             ->orderBy('order')
@@ -86,6 +101,7 @@ class RedirectRepository implements RepositoryContract
         if (! $redirect->id()) {
             $redirect->id(StacheFacade::generateId());
         }
+        $redirect->source_md5(md5($redirect->source()));
 
         StacheFacade::store('redirects')->save($redirect);
 

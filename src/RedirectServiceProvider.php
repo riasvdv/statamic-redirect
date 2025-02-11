@@ -118,11 +118,13 @@ class RedirectServiceProvider extends AddonServiceProvider
 
         $this->publishes([
             __DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_error_tables.php'),
+            __DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_increase_redirect_error_table_url_length.php'),
         ], 'statamic-redirect-error-migrations');
 
         $this->publishes([
             __DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_redirects_table.php'),
             __DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_add_description_to_redirect_redirects_table.php'),
+            __DIR__ . '/../database/migrations/increase_redirect_redirects_table_url_length.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_increase_redirect_redirects_table_url_length.php'),
         ], 'statamic-redirect-redirect-migrations');
     }
 
@@ -240,6 +242,8 @@ class RedirectServiceProvider extends AddonServiceProvider
         DB::setDefaultConnection('redirect-sqlite');
         require_once(__DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub');
         (new \CreateRedirectErrorTables())->up();
+        require_once(__DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub');
+        (new \IncreaseRedirectErrorTableUrlLength())->up();
         DB::setDefaultConnection($defaultConnection);
     }
 
@@ -263,6 +267,8 @@ class RedirectServiceProvider extends AddonServiceProvider
         (new \CreateRedirectRedirectsTable())->up();
         require_once(__DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub');
         (new \AddDescriptionToRedirectRedirectsTable())->up();
+        require_once(__DIR__ . '/../database/migrations/increase_redirect_redirects_table_url_length.php.stub');
+        (new \IncreaseRedirectRedirectsTableUrlLength())->up();
 
         DB::setDefaultConnection($defaultConnection);
     }

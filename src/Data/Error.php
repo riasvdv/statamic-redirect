@@ -37,6 +37,9 @@ class Error extends Model
 
     protected static function booted()
     {
+        self::saving(function ($model) {
+            $model->url_md5 = md5($model->url);
+        });
         self::deleting(function ($error) {
             $error->hits()->delete();
         });
@@ -70,6 +73,6 @@ class Error extends Model
 
     public static function findByUrl(string $url): ?self
     {
-        return self::where('url', $url)->first();
+        return self::where('url_md5', md5($url))->where('url', $url)->first();
     }
 }
