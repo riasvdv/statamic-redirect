@@ -48,11 +48,11 @@ class RedirectServiceProvider extends AddonServiceProvider
     ];
 
     protected $scripts = [
-        __DIR__.'/../resources/dist/js/cp.js',
+        __DIR__ . '/../resources/dist/js/cp.js',
     ];
 
     protected $routes = [
-        'cp' => __DIR__.'/../routes/cp.php',
+        'cp' => __DIR__ . '/../routes/cp.php',
     ];
 
     protected $listen = [
@@ -112,19 +112,19 @@ class RedirectServiceProvider extends AddonServiceProvider
                 ->bootPermissions();
         });
 
-        if (! $this->app->runningInConsole()) {
+        if (!$this->app->runningInConsole()) {
             return;
         }
 
         $this->publishes([
             __DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_error_tables.php'),
-            __DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_increase_redirect_error_table_url_length.php'),
+            __DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub' => database_path('migrations/' . date('Y_m_d_His', time() + 1) . '_increase_redirect_error_table_url_length.php'),
         ], 'statamic-redirect-error-migrations');
 
         $this->publishes([
             __DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_redirects_table.php'),
-            __DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_add_description_to_redirect_redirects_table.php'),
-            __DIR__ . '/../database/migrations/increase_redirect_redirects_table_url_length.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_increase_redirect_redirects_table_url_length.php'),
+            __DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time() + 1) . '_add_description_to_redirect_redirects_table.php'),
+            __DIR__ . '/../database/migrations/increase_redirect_redirects_table_url_length.php.stub' => database_path('migrations/' . date('Y_m_d_His', time() + 1) . '_increase_redirect_redirects_table_url_length.php'),
         ], 'statamic-redirect-redirect-migrations');
     }
 
@@ -143,7 +143,7 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected function bootAddonViews()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'redirect');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'redirect');
 
         return $this;
     }
@@ -162,8 +162,8 @@ class RedirectServiceProvider extends AddonServiceProvider
             $nav->tools('Redirect')
                 ->route(
                     config('statamic.redirect.log_errors')
-                    ? 'redirect.index'
-                    : 'redirect.redirects.index'
+                        ? 'redirect.index'
+                        : 'redirect.redirects.index'
                 )
                 ->icon('git')
                 ->active('redirect')
@@ -185,7 +185,7 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected function bootDatabase()
     {
-        if (! config('statamic.redirect.log_errors')) {
+        if (!config('statamic.redirect.log_errors')) {
             return $this;
         }
 
@@ -209,17 +209,17 @@ class RedirectServiceProvider extends AddonServiceProvider
     {
         $oldSqlitePath = storage_path('redirect/errors.sqlite');
 
-        if (! file_exists($sqlitePath) && file_exists($oldSqlitePath)) {
+        if (!file_exists($sqlitePath) && file_exists($oldSqlitePath)) {
             File::move($oldSqlitePath, $sqlitePath);
 
             return;
         }
 
-        if (! file_exists($sqlitePath)) {
+        if (!file_exists($sqlitePath)) {
             File::put($sqlitePath, '');
 
             $gitIgnorePath = storage_path('redirect/.gitignore');
-            if (! file_exists($gitIgnorePath)) {
+            if (!file_exists($gitIgnorePath)) {
                 File::put($gitIgnorePath, "*\n!.gitignore");
             }
         }
@@ -229,7 +229,7 @@ class RedirectServiceProvider extends AddonServiceProvider
     {
         if (
             config('statamic.redirect.error_connection', 'redirect-sqlite') !== 'redirect-sqlite' &&
-            ! $this->generalConnectionIsBuiltinSqlite()
+            !$this->generalConnectionIsBuiltinSqlite()
         ) {
             return;
         }
@@ -251,7 +251,7 @@ class RedirectServiceProvider extends AddonServiceProvider
     {
         if (
             config('statamic.redirect.redirect_connection', 'stache') !== 'redirect-sqlite' &&
-            ! $this->generalConnectionIsBuiltinSqlite()
+            !$this->generalConnectionIsBuiltinSqlite()
         ) {
             return;
         }
@@ -288,10 +288,10 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected function registerAddonConfig()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/redirect.php', 'statamic.redirect');
+        $this->mergeConfigFrom(__DIR__ . '/../config/redirect.php', 'statamic.redirect');
 
         $this->publishes([
-            __DIR__.'/../config/redirect.php' => config_path('statamic/redirect.php'),
+            __DIR__ . '/../config/redirect.php' => config_path('statamic/redirect.php'),
         ], 'statamic-redirect-config');
 
         return $this;
