@@ -29,6 +29,9 @@ class Redirect implements RedirectContract
     protected $source;
 
     /** @var string */
+    protected $source_md5;
+
+    /** @var string */
     protected $destination;
 
     /** @var int */
@@ -59,6 +62,11 @@ class Redirect implements RedirectContract
     public function source($source = null)
     {
         return $this->fluentlyGetOrSet('source')->args(func_get_args());
+    }
+
+    public function source_md5($source_md5 = null)
+    {
+        return $this->fluentlyGetOrSet('source_md5')->args(func_get_args());
     }
 
     public function destination($destination = null)

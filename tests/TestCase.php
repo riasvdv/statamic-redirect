@@ -94,6 +94,9 @@ class TestCase extends OrchestraTestCase
 
         include_once __DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub';
         (new \CreateRedirectErrorTables())->up();
+
+        include_once __DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub';
+        (new \IncreaseRedirectErrorTableUrlLength())->up();
     }
 
     /**

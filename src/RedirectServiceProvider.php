@@ -22,6 +22,8 @@ use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Rias\StatamicRedirect\UpdateScripts\AddDescriptionColumnToRedirectsTable;
 use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
 use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
+use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnErrors;
+use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnRedirects;
 use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
 use Rias\StatamicRedirect\UpdateScripts\RenameLocaleToSiteOnRedirectsTable;
 use Rias\StatamicRedirect\Widgets\ErrorsLastDayWidget;
@@ -45,14 +47,16 @@ class RedirectServiceProvider extends AddonServiceProvider
         MoveRedirectsToDefaultSite::class,
         RenameLocaleToSiteOnRedirectsTable::class,
         AddDescriptionColumnToRedirectsTable::class,
+        IncreaseUrlSizeOnRedirects::class,
+        IncreaseUrlSizeOnErrors::class,
     ];
 
     protected $scripts = [
-        __DIR__.'/../resources/dist/js/cp.js',
+        __DIR__ . '/../resources/dist/js/cp.js',
     ];
 
     protected $routes = [
-        'cp' => __DIR__.'/../routes/cp.php',
+        'cp' => __DIR__ . '/../routes/cp.php',
     ];
 
     protected $listen = [
@@ -118,11 +122,13 @@ class RedirectServiceProvider extends AddonServiceProvider
 
         $this->publishes([
             __DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_error_tables.php'),
+            __DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub' => database_path('migrations/' . date('Y_m_d_His', time() + 1) . '_increase_redirect_error_table_url_length.php'),
         ], 'statamic-redirect-error-migrations');
 
         $this->publishes([
             __DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_redirects_table.php'),
-            __DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_add_description_to_redirect_redirects_table.php'),
+            __DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time() + 1) . '_add_description_to_redirect_redirects_table.php'),
+            __DIR__ . '/../database/migrations/increase_redirect_redirects_table_url_length.php.stub' => database_path('migrations/' . date('Y_m_d_His', time() + 2) . '_increase_redirect_redirects_table_url_length.php'),
         ], 'statamic-redirect-redirect-migrations');
     }
 
@@ -141,7 +147,7 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected function bootAddonViews()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'redirect');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'redirect');
 
         return $this;
     }
@@ -160,8 +166,8 @@ class RedirectServiceProvider extends AddonServiceProvider
             $nav->tools('Redirect')
                 ->route(
                     config('statamic.redirect.log_errors')
-                    ? 'redirect.index'
-                    : 'redirect.redirects.index'
+                        ? 'redirect.index'
+                        : 'redirect.redirects.index'
                 )
                 ->icon('git')
                 ->active('redirect')
@@ -240,6 +246,8 @@ class RedirectServiceProvider extends AddonServiceProvider
         DB::setDefaultConnection('redirect-sqlite');
         require_once(__DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub');
         (new \CreateRedirectErrorTables())->up();
+        require_once(__DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub');
+        (new \IncreaseRedirectErrorTableUrlLength())->up();
         DB::setDefaultConnection($defaultConnection);
     }
 
@@ -263,6 +271,8 @@ class RedirectServiceProvider extends AddonServiceProvider
         (new \CreateRedirectRedirectsTable())->up();
         require_once(__DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub');
         (new \AddDescriptionToRedirectRedirectsTable())->up();
+        require_once(__DIR__ . '/../database/migrations/increase_redirect_redirects_table_url_length.php.stub');
+        (new \IncreaseRedirectRedirectsTableUrlLength())->up();
 
         DB::setDefaultConnection($defaultConnection);
     }
@@ -282,10 +292,10 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected function registerAddonConfig()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/redirect.php', 'statamic.redirect');
+        $this->mergeConfigFrom(__DIR__ . '/../config/redirect.php', 'statamic.redirect');
 
         $this->publishes([
-            __DIR__.'/../config/redirect.php' => config_path('statamic/redirect.php'),
+            __DIR__ . '/../config/redirect.php' => config_path('statamic/redirect.php'),
         ], 'statamic-redirect-config');
 
         return $this;

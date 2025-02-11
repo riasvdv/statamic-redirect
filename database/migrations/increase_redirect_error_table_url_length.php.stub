@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Rias\StatamicRedirect\Data\Error;
+
+class IncreaseRedirectErrorTableUrlLength extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('errors', function (Blueprint $table): void {
+            $table->dropIndex('errors_url_index');
+        });
+
+        Schema::table('errors', function (Blueprint $table): void {
+            $table->string('url', 2048)->change();
+            $table->string('url_md5')->index()->after('url');
+        });
+
+        Error::each(function (Error $error) {
+            $error->update(['url_md5' => md5($error->url)]);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('errors', function (Blueprint $table): void {
+            $table->dropColumn('url_md5');
+            $table->string('url')->index()->change();
+        });
+    }
+}
