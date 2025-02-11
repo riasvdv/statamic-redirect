@@ -27,13 +27,9 @@ class RedirectBlueprint extends Blueprint
                                 'validate' => ['required', 'string', function (string $attribute, $value, Closure $fail) {
                                     $selectedSite = Session::get('statamic.cp.selected-site', Site::current()->handle());
 
-                                    $existing = Redirect::query()
-                                        ->where('source', $value)
-                                        ->when(request()->route('id'), fn ($query) => $query->where('id', '!=', request()->route('id')))
-                                        ->where('site', $selectedSite)
-                                        ->first();
+                                    $existing = Redirect::findByUrl($selectedSite, $value);
 
-                                    if ($existing) {
+                                    if ($existing && $existing->id() !== request()->route('id')) {
                                         $fail(__("This source already has a redirect associated with it."));
                                     }
                                 }],
