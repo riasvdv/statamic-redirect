@@ -22,6 +22,8 @@ use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Rias\StatamicRedirect\UpdateScripts\AddDescriptionColumnToRedirectsTable;
 use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
 use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
+use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnErrors;
+use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnRedirects;
 use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
 use Rias\StatamicRedirect\UpdateScripts\RenameLocaleToSiteOnRedirectsTable;
 use Rias\StatamicRedirect\Widgets\ErrorsLastDayWidget;
@@ -45,6 +47,8 @@ class RedirectServiceProvider extends AddonServiceProvider
         MoveRedirectsToDefaultSite::class,
         RenameLocaleToSiteOnRedirectsTable::class,
         AddDescriptionColumnToRedirectsTable::class,
+        IncreaseUrlSizeOnRedirects::class,
+        IncreaseUrlSizeOnErrors::class,
     ];
 
     protected $scripts = [
@@ -124,7 +128,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         $this->publishes([
             __DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_redirect_redirects_table.php'),
             __DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time() + 1) . '_add_description_to_redirect_redirects_table.php'),
-            __DIR__ . '/../database/migrations/increase_redirect_redirects_table_url_length.php.stub' => database_path('migrations/' . date('Y_m_d_His', time() + 1) . '_increase_redirect_redirects_table_url_length.php'),
+            __DIR__ . '/../database/migrations/increase_redirect_redirects_table_url_length.php.stub' => database_path('migrations/' . date('Y_m_d_His', time() + 2) . '_increase_redirect_redirects_table_url_length.php'),
         ], 'statamic-redirect-redirect-migrations');
     }
 
