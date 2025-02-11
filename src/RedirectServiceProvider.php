@@ -116,7 +116,7 @@ class RedirectServiceProvider extends AddonServiceProvider
                 ->bootPermissions();
         });
 
-        if (!$this->app->runningInConsole()) {
+        if (! $this->app->runningInConsole()) {
             return;
         }
 
@@ -189,7 +189,7 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected function bootDatabase()
     {
-        if (!config('statamic.redirect.log_errors')) {
+        if (! config('statamic.redirect.log_errors')) {
             return $this;
         }
 
@@ -213,17 +213,17 @@ class RedirectServiceProvider extends AddonServiceProvider
     {
         $oldSqlitePath = storage_path('redirect/errors.sqlite');
 
-        if (!file_exists($sqlitePath) && file_exists($oldSqlitePath)) {
+        if (! file_exists($sqlitePath) && file_exists($oldSqlitePath)) {
             File::move($oldSqlitePath, $sqlitePath);
 
             return;
         }
 
-        if (!file_exists($sqlitePath)) {
+        if (! file_exists($sqlitePath)) {
             File::put($sqlitePath, '');
 
             $gitIgnorePath = storage_path('redirect/.gitignore');
-            if (!file_exists($gitIgnorePath)) {
+            if (! file_exists($gitIgnorePath)) {
                 File::put($gitIgnorePath, "*\n!.gitignore");
             }
         }
@@ -233,7 +233,7 @@ class RedirectServiceProvider extends AddonServiceProvider
     {
         if (
             config('statamic.redirect.error_connection', 'redirect-sqlite') !== 'redirect-sqlite' &&
-            !$this->generalConnectionIsBuiltinSqlite()
+            ! $this->generalConnectionIsBuiltinSqlite()
         ) {
             return;
         }
@@ -255,7 +255,7 @@ class RedirectServiceProvider extends AddonServiceProvider
     {
         if (
             config('statamic.redirect.redirect_connection', 'stache') !== 'redirect-sqlite' &&
-            !$this->generalConnectionIsBuiltinSqlite()
+            ! $this->generalConnectionIsBuiltinSqlite()
         ) {
             return;
         }
