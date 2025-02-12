@@ -64,7 +64,7 @@ class ImportRedirectsController
                 ->matchType($data['match_type']);
 
             if (isset($data['site'])) {
-                $redirect->locale($data['site']);
+                $redirect->site($data['site']);
             }
 
             $redirect->save();

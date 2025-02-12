@@ -29,43 +29,49 @@ class HandleNotFound
 
         try {
             $site = Site::findByUrl($request->url()) ?? Site::default();
+            $uri = $request->getRequestUri();
 
+            // Remove site URI
+            $siteUri = Str::after($site->url(), '/');
+            if (! empty($siteUri) && str_contains($uri, $siteUri)) {
+                $uri = Str::after($uri, $site->url());
+            }
             // Make sure it starts with '/'
-            $url = Str::start($request->getRequestUri(), '/');
+            $uri = Str::start($uri, '/');
             // Make sure we remove any trailing slash
-            $url = Str::substr(Str::finish($url, '/'), 0, -1);
+            $uri = Str::substr(Str::finish($uri, '/'), 0, -1);
 
             $logErrors = config('statamic.redirect.log_errors', true);
 
             if ($logErrors) {
-                $error = $this->createError($request, $url);
+                $error = $this->createError($request, $uri);
                 CleanErrorsJob::dispatchIf(config('statamic.redirect.clean_errors_on_save'));
             }
 
             $this->cachedRedirects = Cache::get('statamic.redirect.redirects', []);
 
-            if (isset($this->cachedRedirects[$site->handle()][$url])) {
+            if (isset($this->cachedRedirects[$site->handle()][$uri])) {
                 if ($logErrors) {
-                    $this->markErrorHandled($error, $this->cachedRedirects[$site->handle()][$url]['destination']);
+                    $this->markErrorHandled($error, $this->cachedRedirects[$site->handle()][$uri]['destination']);
                 }
 
-                if ((string) $this->cachedRedirects[$site->handle()][$url]['type'] === (string) 410) {
+                if ((string) $this->cachedRedirects[$site->handle()][$uri]['type'] === (string) 410) {
                     abort(410);
                 }
 
-                $destination = $this->cachedRedirects[$site->handle()][$url]['destination'];
+                $destination = $this->cachedRedirects[$site->handle()][$uri]['destination'];
 
                 return redirect(
                     $this->mergeQuery($request, $destination),
-                    $this->cachedRedirects[$site->handle()][$url]['type'],
+                    $this->cachedRedirects[$site->handle()][$uri]['type'],
                 );
             }
 
-            if (! $redirect = Redirect::findByUrl($site->handle(), $url)) {
+            if (! $redirect = Redirect::findByUrl($site->handle(), $uri)) {
                 return $response;
             }
 
-            $this->cacheNewRedirect($site, $redirect, $url);
+            $this->cacheNewRedirect($site, $redirect, $uri);
 
             if ($logErrors) {
                 $this->markErrorHandled($error, $redirect->destination());
