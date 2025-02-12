@@ -85,6 +85,7 @@ class RedirectController
         $redirect = Redirect::make()
             ->site($request->get('site')[0])
             ->source($request->get('source'))
+            ->source_md5(md5($request->get('source')))
             ->destination($request->get('destination'))
             ->enabled($request->get('enabled'))
             ->type((int) $request->get('type'))
@@ -120,6 +121,7 @@ class RedirectController
         $redirect
             ->site($request->get('site')[0])
             ->source($request->get('source'))
+            ->source_md5(md5($request->get('source')))
             ->destination($request->get('destination'))
             ->enabled($request->get('enabled'))
             ->type((int) $request->get('type'))
