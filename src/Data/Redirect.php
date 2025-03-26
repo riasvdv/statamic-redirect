@@ -105,6 +105,7 @@ class Redirect implements RedirectContract
                 $siteHandle = $site instanceof \Statamic\Sites\Site ? $site->handle() : $site;
 
                 $this->site = $siteHandle;
+
                 return $siteHandle;
             })
             ->getter(function ($site) {
