@@ -2,12 +2,9 @@
 
 namespace Rias\StatamicRedirect\Blueprints;
 
-use Closure;
-use Illuminate\Support\Facades\Session;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
-use Rias\StatamicRedirect\Facades\Redirect;
+use Rias\StatamicRedirect\Rules\SourceIsNotRedirected;
 use Statamic\Facades\Blueprint;
-use Statamic\Facades\Site;
 
 class RedirectBlueprint extends Blueprint
 {
@@ -24,15 +21,7 @@ class RedirectBlueprint extends Blueprint
                                 'display' => 'Source',
                                 'instructions' => 'Enter the URL pattern that Redirect should match. This matches against the path only e.g.: Exact Match: `/recipes/`, or RegEx Match: `.*RecipeID=(.*)`',
                                 'listable' => true,
-                                'validate' => ['required', 'string', function (string $attribute, $value, Closure $fail) {
-                                    $selectedSite = Session::get('statamic.cp.selected-site', Site::current()->handle());
-
-                                    $existing = Redirect::findByUrl($selectedSite, $value);
-
-                                    if ($existing && $existing->id() !== request()->route('id')) {
-                                        $fail(__("This source already has a redirect associated with it."));
-                                    }
-                                }],
+                                'validate' => ['required', 'string', new SourceIsNotRedirected],
                             ],
                         ],
                         [
@@ -97,6 +86,17 @@ class RedirectBlueprint extends Blueprint
                                 'display' => 'Enabled',
                                 'listable' => true,
                                 'validate' => 'required|boolean',
+                            ],
+                        ],
+                        [
+                            'handle' => 'site',
+                            'field' => [
+                                'type' => 'sites',
+                                'display' => 'Site',
+                                'max_items' => 1,
+                                'mode' => 'select',
+                                'listable' => true,
+                                'validate' => 'required',
                             ],
                         ],
                     ],

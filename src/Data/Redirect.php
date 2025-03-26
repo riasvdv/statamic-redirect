@@ -6,14 +6,13 @@ use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
 use Rias\StatamicRedirect\Data\Concerns\TracksQueriedRelations;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Facades\Redirect as RedirectFacade;
-use Statamic\Contracts\Data\Localization;
 use Statamic\Data\ExistsAsFile;
 use Statamic\Data\TracksQueriedColumns;
 use Statamic\Facades\Site;
 use Statamic\Facades\Stache;
 use Statamic\Support\Traits\FluentlyGetsAndSets;
 
-class Redirect implements Localization, RedirectContract
+class Redirect implements RedirectContract
 {
     use FluentlyGetsAndSets;
     use ExistsAsFile;
@@ -39,7 +38,7 @@ class Redirect implements Localization, RedirectContract
     protected $type = 301;
 
     /** @var string */
-    protected $locale;
+    protected $site;
 
     /** @var string */
     protected $matchType = MatchTypeEnum::EXACT;
@@ -90,37 +89,35 @@ class Redirect implements Localization, RedirectContract
         return $this->fluentlyGetOrSet('order')->args(func_get_args());
     }
 
-    public function locale($locale = null)
-    {
-        return $this
-            ->fluentlyGetOrSet('locale')
-            ->setter(function ($locale) {
-                return $locale instanceof \Statamic\Sites\Site ? $locale->handle() : $locale;
-            })
-            ->getter(function ($locale) {
-                return $locale ?? Site::default()->handle();
-            })
-            ->args(func_get_args());
-    }
-
-    public function setLocaleFromFilePath($path)
+    public function setSiteFromFilePath($path)
     {
         $explodedPath = explode('/', $path);
-        $locale = $explodedPath[count($explodedPath) - 2]; // locale is 2nd last path segment
+        $site = $explodedPath[count($explodedPath) - 2]; // site is 2nd last path segment
 
-        return $this->locale($locale);
+        return $this->site($site);
     }
 
-    public function site()
+    public function site($site = null)
     {
-        return Site::get($this->locale());
+        return $this
+            ->fluentlyGetOrSet('site')
+            ->setter(function ($site) {
+                $siteHandle = $site instanceof \Statamic\Sites\Site ? $site->handle() : $site;
+
+                $this->site = $siteHandle;
+                return $siteHandle;
+            })
+            ->getter(function ($site) {
+                return $site ?? Site::default()->handle();
+            })
+            ->args(func_get_args());
     }
 
     public function path()
     {
         return vsprintf('%s/%s/%s%s.yaml', [
             rtrim(Stache::store('redirects')->directory(), '/'),
-            $this->locale(),
+            $this->site(),
             ! is_null($this->order()) ? $this->order() . '_' : '',
             $this->id(),
         ]);
@@ -149,6 +146,7 @@ class Redirect implements Localization, RedirectContract
             'source' => $this->source(),
             'destination' => $this->destination(),
             'type' => $this->type(),
+            'site' => $this->site(),
             'match_type' => $this->matchType(),
             'description' => $this->description(),
             'order' => $this->order(),

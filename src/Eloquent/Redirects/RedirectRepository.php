@@ -125,7 +125,7 @@ class RedirectRepository implements RepositoryContract
             ->matchType($model->match_type)
             ->enabled($model->enabled)
             ->order($model->order)
-            ->locale($model->site)
+            ->site($model->site)
             ->description($model->description);
     }
 
@@ -139,7 +139,7 @@ class RedirectRepository implements RepositoryContract
             'type' => $redirect->type(),
             'enabled' => $redirect->enabled(),
             'order' => $redirect->order(),
-            'site' => $redirect->locale(),
+            'site' => $redirect->site(),
             'description' => $redirect->description(),
         ];
 

@@ -8,18 +8,15 @@ use Rias\StatamicRedirect\Blueprints\RedirectBlueprint;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Http\Resources\ListedRedirect;
 use Statamic\Facades\Scope;
-use Statamic\Facades\Site;
 use Statamic\Facades\User;
 
 class RedirectController
 {
-    public function index(Request $request)
+    public function index()
     {
         $user = User::fromUser(auth()->user());
 
         abort_unless($user->isSuper() || $user->hasPermission('view redirects'), 401);
-
-        $site = $request->site ? Site::get($request->site) : Site::selected();
 
         $blueprint = new RedirectBlueprint();
         $columns = $blueprint()
@@ -29,15 +26,8 @@ class RedirectController
             ->values();
 
         return view('redirect::redirects.index', [
-            'site' => $site->handle(),
             'filters' => Scope::filters('redirects'),
             'columns' => $columns,
-            'sites' => Site::all()->map(function (\Statamic\Sites\Site $site) {
-                return [
-                    'handle' => $site->handle(),
-                    'name' => $site->name(),
-                ];
-            })->values()->all(),
         ]);
     }
 
@@ -84,14 +74,16 @@ class RedirectController
 
         abort_unless($user->isSuper() || $user->hasPermission('create redirects'), 401);
 
+        if (empty($request->get('site'))) {
+            abort(402, 'Site is required');
+        }
+
         $blueprint = new RedirectBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
 
-        $selectedSite = $request->session()->get('statamic.cp.selected-site', Site::current()->handle());
-
         $redirect = Redirect::make()
-            ->locale($selectedSite)
+            ->site($request->get('site')[0])
             ->source($request->get('source'))
             ->source_md5(md5($request->get('source')))
             ->destination($request->get('destination'))
@@ -122,14 +114,12 @@ class RedirectController
 
         $redirect = Redirect::find($id);
 
-        $selectedSite = $request->session()->get('statamic.cp.selected-site', Site::current()->handle());
-
         if (! $redirect) {
             abort('404');
         }
 
         $redirect
-            ->locale($selectedSite)
+            ->site($request->get('site')[0])
             ->source($request->get('source'))
             ->source_md5(md5($request->get('source')))
             ->destination($request->get('destination'))

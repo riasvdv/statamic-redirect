@@ -39,7 +39,7 @@ class RedirectRepository implements RepositoryContract
         // Try and find a static redirect first as that's a quicker query
         $staticRedirect = $this->query()
             ->where('enabled', true)
-            ->where('locale', $siteHandle)
+            ->where('site', $siteHandle)
             ->where(function (RedirectQueryBuilder $query) use ($url) {
                 $query
                     ->orWhere(function (RedirectQueryBuilder $query) use ($url) {
