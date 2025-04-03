@@ -47,24 +47,28 @@ class ImportRedirectsController
             if (! $data['source']) {
                 Log::error("Redirect has no source", $data);
                 $skipped++;
+
                 return;
             }
 
             if (! $data['type']) {
                 Log::error("Redirect has no type", $data);
                 $skipped++;
+
                 return;
             }
 
             if (! $data['match_type']) {
                 Log::error("Redirect has no match_type", $data);
                 $skipped++;
+
                 return;
             }
 
             if ((! $data['destination'] && ($data['type'] != 410))) {
                 Log::error("Redirect has no destination, it is required when type is not 410", $data);
                 $skipped++;
+
                 return;
             }
 
