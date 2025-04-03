@@ -238,16 +238,19 @@ class RedirectServiceProvider extends AddonServiceProvider
             return;
         }
 
-        if (Schema::connection('redirect-sqlite')->hasTable('errors')) {
-            return;
-        }
-
         $defaultConnection = DB::getDefaultConnection();
         DB::setDefaultConnection('redirect-sqlite');
-        require_once(__DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub');
-        (new \CreateRedirectErrorTables())->up();
-        require_once(__DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub');
-        (new \IncreaseRedirectErrorTableUrlLength())->up();
+
+        if (! Schema::connection('redirect-sqlite')->hasTable('errors')) {
+            require_once(__DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub');
+            (new \CreateRedirectErrorTables())->up();
+        }
+
+        if (! Schema::connection('redirect-sqlite')->hasColumn('errors', 'url_md5')) {
+            require_once(__DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub');
+            (new \IncreaseRedirectErrorTableUrlLength())->up();
+        }
+
         DB::setDefaultConnection($defaultConnection);
     }
 
