@@ -17,7 +17,7 @@ class IncreaseRedirectErrorTableUrlLength extends Migration
 
         Schema::table('errors', function (Blueprint $table): void {
             $table->string('url', 2048)->change();
-            $table->string('url_md5')->index()->after('url');
+            $table->string('url_md5')->index()->after('url')->nullable();
         });
 
         Error::each(function (Error $error) {

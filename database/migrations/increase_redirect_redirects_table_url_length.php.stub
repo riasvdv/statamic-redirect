@@ -17,7 +17,7 @@ class IncreaseRedirectRedirectsTableUrlLength extends Migration
 
         Schema::table('redirects', function (Blueprint $table): void {
             $table->string('source', 2048)->change();
-            $table->string('source_md5')->index()->after('source');
+            $table->string('source_md5')->index()->after('source')->nullable();
             $table->string('destination', 2048)->change();
         });
 
