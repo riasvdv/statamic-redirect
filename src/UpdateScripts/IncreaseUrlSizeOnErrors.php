@@ -2,7 +2,6 @@
 
 namespace Rias\StatamicRedirect\UpdateScripts;
 
-use Illuminate\Database\QueryException;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
