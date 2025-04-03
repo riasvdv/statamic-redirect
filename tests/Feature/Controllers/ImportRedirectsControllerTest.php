@@ -96,7 +96,7 @@ class ImportRedirectsControllerTest extends TestCase
         $this->post(action([ImportRedirectsController::class, 'store']), [
             'file' => $file,
             'delimiter' => ',',
-        ])->assertRedirect()->assertSessionHas('success', "Redirects imported successfully. 4 rows skipped due to invalid data.");
+        ])->assertRedirect()->assertSessionHas('success', "Redirects imported successfully. 4 rows skipped due to invalid data. You can find more info in the Laravel log.");
 
         $this->assertEquals(1, Redirect::query()->count());
         tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (RedirectContract $redirect) {
@@ -109,7 +109,7 @@ class ImportRedirectsControllerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_ignore_redirects_with_duplicate_source()
+    public function it_will_update_redirects_with_duplicate_source()
     {
         $this->asAdmin();
 
@@ -120,12 +120,12 @@ class ImportRedirectsControllerTest extends TestCase
         $this->post(action([ImportRedirectsController::class, 'store']), [
             'file' => $file,
             'delimiter' => ',',
-        ])->assertRedirect()->assertSessionHas('success', "Redirects imported successfully. 1 row skipped due to invalid data.");
+        ])->assertRedirect()->assertSessionHas('success', "Redirects imported successfully.");
 
         $this->assertEquals(1, Redirect::query()->count());
         tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (RedirectContract $redirect) {
             $this->assertEquals('/bar', $redirect->destination());
-            $this->assertEquals('302', $redirect->type());
+            $this->assertEquals('301', $redirect->type());
             $this->assertEquals('exact', $redirect->matchType());
         });
     }
