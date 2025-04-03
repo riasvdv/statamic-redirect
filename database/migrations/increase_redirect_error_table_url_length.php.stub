@@ -9,9 +9,11 @@ class IncreaseRedirectErrorTableUrlLength extends Migration
 {
     public function up(): void
     {
-        Schema::table('errors', function (Blueprint $table): void {
-            $table->dropIndex('errors_url_index');
-        });
+        if (Schema::hasIndex('errors', 'errors_url_index')) {
+            Schema::table('errors', function (Blueprint $table): void {
+                $table->dropIndex('errors_url_index');
+            });
+        }
 
         Schema::table('errors', function (Blueprint $table): void {
             $table->string('url', 2048)->change();

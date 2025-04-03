@@ -9,9 +9,11 @@ class IncreaseRedirectRedirectsTableUrlLength extends Migration
 {
     public function up(): void
     {
-        Schema::table('redirects', function (Blueprint $table): void {
-            $table->dropIndex('redirects_source_index');
-        });
+        if (Schema::hasIndex('redirects', 'redirects_source_index')) {
+            Schema::table('redirects', function (Blueprint $table): void {
+                $table->dropIndex('redirects_source_index');
+            });
+        }
 
         Schema::table('redirects', function (Blueprint $table): void {
             $table->string('source', 2048)->change();
