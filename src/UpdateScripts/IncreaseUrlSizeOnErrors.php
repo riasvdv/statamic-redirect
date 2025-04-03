@@ -19,12 +19,7 @@ class IncreaseUrlSizeOnErrors extends UpdateScript
             $errorConnection = config('database.default');
         }
 
-        try {
-            return ! Schema::connection($errorConnection)->hasColumn('errors', 'url_md5');
-        } catch (QueryException) {
-            // Query exception happens when database is not set up
-            return false;
-        }
+        return ! Schema::connection($errorConnection)->hasColumn('errors', 'url_md5');
     }
 
     public function update()

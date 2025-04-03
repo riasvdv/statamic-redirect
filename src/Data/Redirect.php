@@ -145,6 +145,7 @@ class Redirect implements RedirectContract
             'id' => $this->id(),
             'enabled' => $this->enabled(),
             'source' => $this->source(),
+            'source_md5' => $this->source_md5(),
             'destination' => $this->destination(),
             'type' => $this->type(),
             'site' => $this->site(),

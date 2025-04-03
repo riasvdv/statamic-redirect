@@ -7,6 +7,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Rias\StatamicRedirect\Eloquent\Redirects\RedirectModel;
+use Rias\StatamicRedirect\Facades\Redirect;
+use Statamic\Facades\Stache;
 use Statamic\UpdateScripts\UpdateScript;
 
 class IncreaseUrlSizeOnRedirects extends UpdateScript
@@ -15,8 +17,8 @@ class IncreaseUrlSizeOnRedirects extends UpdateScript
     {
         $redirectConnection = config('statamic.redirect.redirect_connection');
 
-        if ($redirectConnection === 'stache') {
-            return false;
+        if ($redirectConnection === 'stache' && ! Redirect::all()->first()->source_md5()) {
+            return true;
         }
 
         if ($redirectConnection === 'default') {
@@ -34,6 +36,22 @@ class IncreaseUrlSizeOnRedirects extends UpdateScript
     public function update()
     {
         $redirectConnection = config('statamic.redirect.redirect_connection');
+
+        if ($redirectConnection === 'stache') {
+            if (Redirect::all()->first()->source_md5()) {
+                return;
+            }
+
+            Redirect::all()->each(function (\Rias\StatamicRedirect\Data\Redirect $redirect) {
+                $redirect->save();
+            });
+
+            Stache::clear();
+
+            $this->console()->info('Updated redirects with md5 index.');
+
+            return;
+        }
 
         if ($redirectConnection === 'redirect-sqlite') {
             if (Schema::connection($redirectConnection)->hasIndex('redirects', 'redirects_source_index')) {

@@ -31,6 +31,7 @@ class RedirectStore extends BasicStore
         $redirect = Redirect::make()
             ->id($id)
             ->source(Arr::pull($data, 'source'))
+            ->source_md5(Arr::pull($data, 'source_md5'))
             ->destination(Arr::pull($data, 'destination'))
             ->type(Arr::pull($data, 'type'))
             ->matchType(Arr::pull($data, 'match_type'))
