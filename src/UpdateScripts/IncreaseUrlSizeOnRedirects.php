@@ -38,7 +38,7 @@ class IncreaseUrlSizeOnRedirects extends UpdateScript
         $redirectConnection = config('statamic.redirect.redirect_connection');
 
         if ($redirectConnection === 'stache') {
-            if (Redirect::all()->first()->source_md5()) {
+            if (! Redirect::all()->first() || Redirect::all()->first()->source_md5()) {
                 return;
             }
 
