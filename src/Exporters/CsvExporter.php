@@ -59,7 +59,7 @@ class CsvExporter extends Exporter
         $data = Redirect::all()->map(function (\Rias\StatamicRedirect\Data\Redirect $redirect) {
             $redirectData = $redirect->fileData();
             $redirectData['site'] = $redirect->site()
-                ? $redirect->site()->handle
+                ? $redirect->site()
                 : null;
 
             unset($redirectData['id']);
