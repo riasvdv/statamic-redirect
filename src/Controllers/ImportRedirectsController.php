@@ -74,20 +74,19 @@ class ImportRedirectsController
 
             $redirect = Redirect::query()
                 ->where('source', $data['source'])
-                ->where('site', $data['site'] ?? Site::current()->handle())
+                ->where('site', $data['site'] ?: Site::current()->handle())
                 ->first();
 
             if (! $redirect) {
-                $redirect = Redirect::make()
-                    ->source($data['source'])
-                    ->site($data['site'] ?? Site::current()->handle());
+                $redirect = Redirect::make()->source($data['source']);
             }
 
-            /** @var Redirect $redirect */
+            /** @var \Rias\StatamicRedirect\Data\Redirect $redirect */
             $redirect
                 ->destination($data['destination'] ?? null)
                 ->enabled($data['enabled'] ?? true)
                 ->type((int) $data['type'])
+                ->site($data['site'] ?: Site::current()->handle())
                 ->matchType($data['match_type']);
 
             $redirect->save();
