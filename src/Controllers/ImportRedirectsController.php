@@ -72,7 +72,7 @@ class ImportRedirectsController
                 return;
             }
 
-            $siteHandle = !empty($data['site'])
+            $siteHandle = ! empty($data['site'])
                 ? $data['site']
                 : Site::current()->handle();
 
