@@ -72,9 +72,13 @@ class ImportRedirectsController
                 return;
             }
 
+            $siteHandle = !empty($data['site'])
+                ? $data['site']
+                : Site::current()->handle();
+
             $redirect = Redirect::query()
                 ->where('source', $data['source'])
-                ->where('site', $data['site'] ?: Site::current()->handle())
+                ->where('site', $siteHandle)
                 ->first();
 
             if (! $redirect) {
@@ -86,7 +90,7 @@ class ImportRedirectsController
                 ->destination($data['destination'] ?? null)
                 ->enabled($data['enabled'] ?? true)
                 ->type((int) $data['type'])
-                ->site($data['site'] ?: Site::current()->handle())
+                ->site($siteHandle)
                 ->matchType($data['match_type']);
 
             $redirect->save();
