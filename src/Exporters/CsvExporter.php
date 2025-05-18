@@ -6,6 +6,7 @@ use League\Csv\Writer;
 use Rias\StatamicRedirect\Facades\Redirect;
 use SplTempFileObject;
 use Statamic\Forms\Exporters\Exporter;
+use Statamic\Support\Arr;
 
 class CsvExporter extends Exporter
 {
@@ -45,8 +46,11 @@ class CsvExporter extends Exporter
     {
         $headers = array_keys(Redirect::all()->first()->fileData());
 
-        unset($headers[array_search('id', $headers)]);
-        $headers[] = 'site';
+        $headers = Arr::except($headers, ['id']);
+
+        if (! in_array('site', $headers)) {
+            $headers[] = 'site';
+        }
 
         $this->writer->insertOne($headers);
     }
@@ -58,13 +62,14 @@ class CsvExporter extends Exporter
     {
         $data = Redirect::all()->map(function (\Rias\StatamicRedirect\Data\Redirect $redirect) {
             $redirectData = $redirect->fileData();
-            $redirectData['site'] = $redirect->site()
-                ? $redirect->site()
-                : null;
 
-            unset($redirectData['id']);
+            if (!isset($redirectData['site'])) {
+                $redirectData['site'] = $redirect->site()
+                    ? $redirect->site()
+                    : null;
+            }
 
-            return $redirectData;
+            return Arr::except($redirectData, ['id']);
         })->all();
 
         $this->writer->insertAll($data);
