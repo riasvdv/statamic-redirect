@@ -46,7 +46,7 @@ class CsvExporter extends Exporter
     {
         $headers = array_keys(Redirect::all()->first()->fileData());
 
-        $headers = Arr::except($headers, ['id']);
+        $headers = Arr::except($headers, array_search('id', $headers, true));
 
         if (! in_array('site', $headers)) {
             $headers[] = 'site';
