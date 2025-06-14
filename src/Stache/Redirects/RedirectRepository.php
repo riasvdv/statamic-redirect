@@ -4,8 +4,10 @@ namespace Rias\StatamicRedirect\Stache\Redirects;
 
 use Rias\StatamicRedirect\Contracts\RedirectRepository as RepositoryContract;
 use Rias\StatamicRedirect\Data\Redirect;
+use Rias\StatamicRedirect\Eloquent\Redirects\RedirectQueryBuilder;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Events\RedirectSaved;
+use Rias\StatamicRedirect\GenerateUrlVariants;
 use Statamic\Data\DataCollection;
 use Statamic\Facades\Stache as StacheFacade;
 use Statamic\Stache\Stache;
@@ -41,26 +43,14 @@ class RedirectRepository implements RepositoryContract
             ->where('enabled', true)
             ->where('site', $siteHandle)
             ->where(function (RedirectQueryBuilder $query) use ($url) {
-                $query
-                    ->orWhere(function (RedirectQueryBuilder $query) use ($url) {
-                        $query->where('source_md5', md5($url))
-                            ->where('source', $url);
-                    })
-                    ->orWhere(function (RedirectQueryBuilder $query) use ($url) {
-                        $source = str($url)->start('/');
-                        $query->where('source_md5', md5($source))
-                            ->where('source', $source);
-                    })
-                    ->orWhere(function (RedirectQueryBuilder $query) use ($url) {
-                        $source = str($url)->finish('/');
-                        $query->where('source_md5', md5($source))
-                            ->where('source', $source);
-                    })
-                    ->orWhere(function (RedirectQueryBuilder $query) use ($url) {
-                        $source = str($url)->start('/')->finish('/');
-                        $query->where('source_md5', md5($source))
-                            ->where('source', $source);
+                $variants = app(GenerateUrlVariants::class)($url);
+
+                foreach ($variants as $variant) {
+                    $query->orWhere(function (RedirectQueryBuilder $query) use ($variant) {
+                        $query->where('source_md5', md5($variant))
+                            ->where('source', $variant);
                     });
+                }
             })
             ->where('matchType', MatchTypeEnum::EXACT)
             ->orderBy('order')
