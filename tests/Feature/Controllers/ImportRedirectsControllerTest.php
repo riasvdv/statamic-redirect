@@ -3,6 +3,7 @@
 namespace Rias\StatamicRedirect\Tests\Feature\Controllers;
 
 use Illuminate\Http\UploadedFile;
+use PHPUnit\Framework\Attributes\Test;
 use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
 use Rias\StatamicRedirect\Controllers\ImportRedirectsController;
 use Rias\StatamicRedirect\Facades\Redirect;
@@ -10,9 +11,7 @@ use Rias\StatamicRedirect\Tests\TestCase;
 
 class ImportRedirectsControllerTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_import_redirects()
     {
         $this->asAdmin();
@@ -34,9 +33,7 @@ class ImportRedirectsControllerTest extends TestCase
         });
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_set_the_site()
     {
         $this->asAdmin();
@@ -58,9 +55,7 @@ class ImportRedirectsControllerTest extends TestCase
         });
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_import_redirects_with_a_txt_file()
     {
         $this->asAdmin();
@@ -82,9 +77,7 @@ class ImportRedirectsControllerTest extends TestCase
         });
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_will_ignore_invalid_redirects()
     {
         $this->asAdmin();
@@ -106,9 +99,7 @@ class ImportRedirectsControllerTest extends TestCase
         });
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_will_update_redirects_with_duplicate_source()
     {
         $this->asAdmin();

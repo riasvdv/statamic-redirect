@@ -4,7 +4,6 @@ namespace Rias\StatamicRedirect\Stache\Redirects;
 
 use Rias\StatamicRedirect\Contracts\RedirectRepository as RepositoryContract;
 use Rias\StatamicRedirect\Data\Redirect;
-use Rias\StatamicRedirect\Eloquent\Redirects\RedirectQueryBuilder;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Events\RedirectSaved;
 use Rias\StatamicRedirect\GenerateUrlVariants;

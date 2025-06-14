@@ -3,6 +3,7 @@
 namespace Rias\StatamicRedirect;
 
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
@@ -80,13 +81,11 @@ class RedirectServiceProvider extends AddonServiceProvider
         $this->registerAddonConfig();
 
         $this->app->singleton(RedirectRepository::class, function () {
-            $class = $this->getRedirectRepository();
-
-            return new $class($this->app['stache']);
+            return $this->app->get($this->getRedirectRepository());
         });
     }
 
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
 
@@ -108,11 +107,14 @@ class RedirectServiceProvider extends AddonServiceProvider
                 Git::listen(RedirectSaved::class);
             }
 
+            File::ensureDirectoryExists(storage_path('redirect'));
+
+            $this->loadViewsFrom(__DIR__ . '/../resources/views', 'redirect');
+
             $this
-                ->bootAddonViews()
                 ->bootAddonNav()
-                ->bootStores()
-                ->bootDatabase()
+                ->bootErrors()
+                ->bootRedirects()
                 ->bootPermissions();
         });
 
@@ -145,14 +147,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         return StacheRedirectRepository::class;
     }
 
-    protected function bootAddonViews()
-    {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'redirect');
-
-        return $this;
-    }
-
-    protected function bootAddonNav()
+    protected function bootAddonNav(): self
     {
         Nav::extend(function ($nav) {
             $items = [];
@@ -178,38 +173,87 @@ class RedirectServiceProvider extends AddonServiceProvider
         return $this;
     }
 
-    protected function bootStores()
-    {
-        $redirectStore = new RedirectStore();
-        $redirectStore->directory(config('statamic.redirect.redirect_store', base_path('content/redirects')));
-        app(Stache::class)->registerStore($redirectStore);
-
-        return $this;
-    }
-
-    protected function bootDatabase()
+    protected function bootErrors(): self
     {
         if (! config('statamic.redirect.log_errors')) {
             return $this;
         }
 
-        File::ensureDirectoryExists(storage_path('redirect'));
+        if (config('statamic.redirect.error_connection', 'redirect-sqlite') !== 'redirect-sqlite' && ! $this->generalConnectionIsBuiltinSqlite()) {
+            return $this;
+        }
 
-        $sqlitePath = storage_path('redirect/redirect.sqlite');
-        $this->ensureDatabaseExists($sqlitePath);
+        $this->createSqliteConnection();
 
-        app('config')->set('database.connections.redirect-sqlite', [
-            'driver' => 'sqlite',
-            'database' => $sqlitePath,
-        ]);
+        $defaultConnection = DB::getDefaultConnection();
+        DB::setDefaultConnection('redirect-sqlite');
 
-        $this->bootDatabaseForErrors();
-        $this->bootDatabaseForRedirects();
+        if (! Schema::hasTable('errors')) {
+            require_once(__DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub');
+            (new \CreateRedirectErrorTables())->up();
+        }
+
+        if (! Schema::hasColumn('errors', 'url_md5')) {
+            require_once(__DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub');
+            (new \IncreaseRedirectErrorTableUrlLength())->up();
+        }
+
+        DB::setDefaultConnection($defaultConnection);
 
         return $this;
     }
 
-    protected function ensureDatabaseExists($sqlitePath)
+    protected function bootRedirects(): self
+    {
+        $connection = config('statamic.redirect.redirect_connection', 'stache');
+
+        if ($connection === 'stache') {
+            $redirectStore = new RedirectStore();
+            $redirectStore->directory(config('statamic.redirect.redirect_store', base_path('content/redirects')));
+            app(Stache::class)->registerStore($redirectStore);
+
+            return $this;
+        }
+
+        if ($this->generalConnectionIsBuiltinSqlite()) {
+            $this->createSqliteConnection();
+        }
+
+        if (Schema::connection($connection)->hasTable('redirects')) {
+            return $this;
+        }
+
+        $defaultConnection = DB::getDefaultConnection();
+        DB::setDefaultConnection($connection);
+
+        require_once(__DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub');
+        (new \CreateRedirectRedirectsTable())->up();
+        require_once(__DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub');
+        (new \AddDescriptionToRedirectRedirectsTable())->up();
+        require_once(__DIR__ . '/../database/migrations/increase_redirect_redirects_table_url_length.php.stub');
+        (new \IncreaseRedirectRedirectsTableUrlLength())->up();
+
+        DB::setDefaultConnection($defaultConnection);
+
+        return $this;
+    }
+
+    protected function createSqliteConnection(): void
+    {
+        $sqlitePath = storage_path('redirect/redirect.sqlite');
+        $this->ensureDatabaseExists($sqlitePath);
+
+        if (Config::has('database.connections.redirect-sqlite')) {
+            return;
+        }
+
+        Config::set('database.connections.redirect-sqlite', [
+            'driver' => 'sqlite',
+            'database' => $sqlitePath,
+        ]);
+    }
+
+    protected function ensureDatabaseExists($sqlitePath): void
     {
         $oldSqlitePath = storage_path('redirect/errors.sqlite');
 
@@ -229,57 +273,6 @@ class RedirectServiceProvider extends AddonServiceProvider
         }
     }
 
-    protected function bootDatabaseForErrors()
-    {
-        if (
-            config('statamic.redirect.error_connection', 'redirect-sqlite') !== 'redirect-sqlite' &&
-            ! $this->generalConnectionIsBuiltinSqlite()
-        ) {
-            return;
-        }
-
-        $defaultConnection = DB::getDefaultConnection();
-        DB::setDefaultConnection('redirect-sqlite');
-
-        if (! Schema::connection('redirect-sqlite')->hasTable('errors')) {
-            require_once(__DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub');
-            (new \CreateRedirectErrorTables())->up();
-        }
-
-        if (! Schema::connection('redirect-sqlite')->hasColumn('errors', 'url_md5')) {
-            require_once(__DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub');
-            (new \IncreaseRedirectErrorTableUrlLength())->up();
-        }
-
-        DB::setDefaultConnection($defaultConnection);
-    }
-
-    protected function bootDatabaseForRedirects()
-    {
-        if (
-            config('statamic.redirect.redirect_connection', 'stache') !== 'redirect-sqlite' &&
-            ! $this->generalConnectionIsBuiltinSqlite()
-        ) {
-            return;
-        }
-
-        if (Schema::connection('redirect-sqlite')->hasTable('redirects')) {
-            return;
-        }
-
-        $defaultConnection = DB::getDefaultConnection();
-        DB::setDefaultConnection('redirect-sqlite');
-
-        require_once(__DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub');
-        (new \CreateRedirectRedirectsTable())->up();
-        require_once(__DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub');
-        (new \AddDescriptionToRedirectRedirectsTable())->up();
-        require_once(__DIR__ . '/../database/migrations/increase_redirect_redirects_table_url_length.php.stub');
-        (new \IncreaseRedirectRedirectsTableUrlLength())->up();
-
-        DB::setDefaultConnection($defaultConnection);
-    }
-
     protected function generalConnectionIsBuiltinSqlite()
     {
         if (config('statamic.redirect.connection') === 'redirect-sqlite') {
@@ -293,7 +286,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         return false;
     }
 
-    protected function registerAddonConfig()
+    protected function registerAddonConfig(): self
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/redirect.php', 'statamic.redirect');
 

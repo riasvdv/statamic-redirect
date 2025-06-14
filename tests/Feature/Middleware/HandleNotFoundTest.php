@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
@@ -27,9 +29,7 @@ class HandleNotFoundTest extends TestCase
         $this->middleware = app(HandleNotFound::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_does_nothing_if_the_response_is_not_a_404()
     {
         $this->middleware->handle(Request::create('/abc'), function () {
@@ -39,9 +39,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(0, Error::query()->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_does_nothing_if_redirect_is_not_enabled()
     {
         config()->set('statamic.redirect.enable', false);
@@ -58,9 +56,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(0, Error::query()->count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_creates_an_error_when_the_response_is_404_and_saves_metadata()
     {
         Carbon::setTestNow(now());
@@ -86,10 +82,8 @@ class HandleNotFoundTest extends TestCase
         });
     }
 
-    /**
-     * @test
-     * @dataProvider provideRedirects
-     */
+    #[Test]
+    #[DataProvider('provideRedirects')]
     public function it_redirects_and_sets_handled_if_a_redirect_is_found(string $source, string $destination, string $requestUrl, string $result)
     {
         Redirect::make()
@@ -110,10 +104,8 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url($result)));
     }
 
-    /**
-     * @test
-     * @dataProvider provideRedirects
-     */
+    #[Test]
+    #[DataProvider('provideRedirects')]
     public function it_redirects_and_sets_handled_if_a_redirect_is_found_with_eloquent(string $source, string $destination, string $requestUrl, string $result)
     {
         config()->set('statamic.redirect.redirect_connection', 'redirect-sqlite');
@@ -160,9 +152,7 @@ class HandleNotFoundTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_handles_401_redirects()
     {
         //$this->withExceptionHandling();
@@ -185,9 +175,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(true, Error::findByUrl('/abc')->handled);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_handles_query_parameters()
     {
         Redirect::make()
@@ -213,9 +201,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url('/fr')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_preserve_query_strings()
     {
         config()->set('statamic.redirect.preserve_query_strings', true);
@@ -243,9 +229,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url('/fr?lang=fr')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_merges_query_strings()
     {
         config()->set('statamic.redirect.preserve_query_strings', true);
@@ -262,9 +246,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url('/fr?another=value&lang=fr')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_merges_query_strings_on_urls_without_path()
     {
         config()->set('statamic.redirect.preserve_query_strings', true);
@@ -281,9 +263,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url('?another=value&lang=fr')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_merges_query_strings_on_urls_with_fragment()
     {
         config()->set('statamic.redirect.preserve_query_strings', true);
@@ -300,9 +280,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url('/abc?another=value&lang=fr#some-fragment?with=fragment_param')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_merges_query_strings_on_urls_without_path_with_fragment()
     {
         config()->set('statamic.redirect.preserve_query_strings', true);
@@ -320,9 +298,7 @@ class HandleNotFoundTest extends TestCase
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_redirect_to_external_urls()
     {
         Redirect::make()
@@ -338,9 +314,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect('https://google.com?s=a'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_redirect_the_homepage()
     {
         Redirect::make()
@@ -356,9 +330,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url('/blog')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_handles_trailing_slashes()
     {
         Redirect::make()
@@ -374,9 +346,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url('/bar')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_handles_if_the_source_has_a_trailing_slash()
     {
         Redirect::make()
@@ -392,9 +362,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertTrue($response->isRedirect(url('/bar')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_cleans_if_config_is_set_to_clean()
     {
         config()->set('statamic.redirect.clean_errors', true);
@@ -414,9 +382,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(1, Error::count());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_doesnt_log_errors_if_log_errors_is_false()
     {
         config()->set('statamic.redirect.log_errors');
@@ -434,9 +400,7 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(404, $response->status());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_doesnt_log_hits_if_log_hits_is_false()
     {
         config()->set('statamic.redirect.log_errors', true);

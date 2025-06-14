@@ -2,7 +2,7 @@
     "name": "rias/statamic-redirect",
     "require": {
         "ext-json": "*",
-        "php": "^7.4|^8.0",
+        "php": "^8.2",
         "spatie/simple-excel": "^1.0|^2.0|^3.0",
         "statamic/cms": "^4.10|^5.0",
         "doctrine/dbal": "^4.2"

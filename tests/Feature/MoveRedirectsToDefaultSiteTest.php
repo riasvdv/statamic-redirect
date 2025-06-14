@@ -3,6 +3,7 @@
 namespace Rias\StatamicRedirect\Tests\Feature;
 
 use Illuminate\Support\Facades\File;
+use PHPUnit\Framework\Attributes\Test;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Tests\TestCase;
 use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
@@ -10,7 +11,7 @@ use Statamic\Facades\Stache;
 
 class MoveRedirectsToDefaultSiteTest extends TestCase
 {
-    /** @test * */
+    #[Test]
     public function it_moves_redirects()
     {
         $redirectsDirectory = Stache::store('redirects')->directory();
