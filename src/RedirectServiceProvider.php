@@ -219,6 +219,10 @@ class RedirectServiceProvider extends AddonServiceProvider
             $this->createSqliteConnection();
         }
 
+        if ($connection === 'default') {
+            $connection = DB::getDefaultConnection();
+        }
+
         if (Schema::connection($connection)->hasTable('redirects')) {
             return $this;
         }
