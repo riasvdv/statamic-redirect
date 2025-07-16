@@ -185,20 +185,23 @@ class RedirectServiceProvider extends AddonServiceProvider
 
         $this->createSqliteConnection();
 
-        $defaultConnection = DB::getDefaultConnection();
-        DB::setDefaultConnection('redirect-sqlite');
+        if (config('statamic.redirect.run_migrations')) {
+            $defaultConnection = DB::getDefaultConnection();
+            DB::setDefaultConnection('redirect-sqlite');
 
-        if (! Schema::hasTable('errors')) {
-            require_once(__DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub');
-            (new \CreateRedirectErrorTables())->up();
+            if (!Schema::hasTable('errors')) {
+                require_once(__DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub');
+                (new \CreateRedirectErrorTables())->up();
+            }
+
+            if (!Schema::hasColumn('errors', 'url_md5')) {
+                require_once(__DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub');
+                (new \IncreaseRedirectErrorTableUrlLength())->up();
+            }
+
+            DB::setDefaultConnection($defaultConnection);
         }
 
-        if (! Schema::hasColumn('errors', 'url_md5')) {
-            require_once(__DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub');
-            (new \IncreaseRedirectErrorTableUrlLength())->up();
-        }
-
-        DB::setDefaultConnection($defaultConnection);
 
         return $this;
     }
@@ -227,17 +230,20 @@ class RedirectServiceProvider extends AddonServiceProvider
             return $this;
         }
 
-        $defaultConnection = DB::getDefaultConnection();
-        DB::setDefaultConnection($connection);
 
-        require_once(__DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub');
-        (new \CreateRedirectRedirectsTable())->up();
-        require_once(__DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub');
-        (new \AddDescriptionToRedirectRedirectsTable())->up();
-        require_once(__DIR__ . '/../database/migrations/increase_redirect_redirects_table_url_length.php.stub');
-        (new \IncreaseRedirectRedirectsTableUrlLength())->up();
+        if (config('statamic.redirect.run_migrations')) {
+            $defaultConnection = DB::getDefaultConnection();
+            DB::setDefaultConnection($connection);
 
-        DB::setDefaultConnection($defaultConnection);
+            require_once(__DIR__ . '/../database/migrations/create_redirect_redirects_table.php.stub');
+            (new \CreateRedirectRedirectsTable())->up();
+            require_once(__DIR__ . '/../database/migrations/add_description_to_redirect_redirects_table.php.stub');
+            (new \AddDescriptionToRedirectRedirectsTable())->up();
+            require_once(__DIR__ . '/../database/migrations/increase_redirect_redirects_table_url_length.php.stub');
+            (new \IncreaseRedirectRedirectsTableUrlLength())->up();
+
+            DB::setDefaultConnection($defaultConnection);
+        }
 
         return $this;
     }
