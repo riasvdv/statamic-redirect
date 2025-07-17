@@ -7,6 +7,11 @@ return [
     'enable' => env('REDIRECT_ENABLED', true),
 
     /**
+     * Whether Redirect should automatically run database migrations or not
+     */
+    'run_migrations' => env('REDIRECT_RUN_MIGRATIONS', true),
+
+    /**
      * Whether Redirect should preserve query strings.
      */
     'preserve_query_strings' => env('REDIRECT_PRESERVE_QUERY_STRINGS', false),
