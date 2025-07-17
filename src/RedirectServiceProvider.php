@@ -189,12 +189,12 @@ class RedirectServiceProvider extends AddonServiceProvider
             $defaultConnection = DB::getDefaultConnection();
             DB::setDefaultConnection('redirect-sqlite');
 
-            if (!Schema::hasTable('errors')) {
+            if (! Schema::hasTable('errors')) {
                 require_once(__DIR__ . '/../database/migrations/create_redirect_error_tables.php.stub');
                 (new \CreateRedirectErrorTables())->up();
             }
 
-            if (!Schema::hasColumn('errors', 'url_md5')) {
+            if (! Schema::hasColumn('errors', 'url_md5')) {
                 require_once(__DIR__ . '/../database/migrations/increase_redirect_error_table_url_length.php.stub');
                 (new \IncreaseRedirectErrorTableUrlLength())->up();
             }
