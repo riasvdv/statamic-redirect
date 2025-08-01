@@ -4,13 +4,11 @@ namespace Rias\StatamicRedirect\Http\Controllers\Redirects;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use Rias\StatamicRedirect\Blueprints\RedirectBlueprint;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Http\Resources\ListedRedirect;
 use Statamic\CP\Breadcrumbs\Breadcrumb;
 use Statamic\CP\Breadcrumbs\Breadcrumbs;
-use Statamic\CP\Column;
 use Statamic\Facades\Scope;
 use Statamic\Facades\User;
 
@@ -59,7 +57,7 @@ class RedirectController
             'title' => 'Create Redirect',
             'blueprint' => $blueprint()->toPublishArray(),
             'values' => $fields->values()->merge([
-                'source' => request('source')
+                'source' => request('source'),
             ]),
             'meta' => $fields->meta(),
             'submitUrl' => cp_route('redirect.redirects.store'),
