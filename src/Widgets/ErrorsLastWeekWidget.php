@@ -2,7 +2,7 @@
 
 namespace Rias\StatamicRedirect\Widgets;
 
-use Rias\StatamicRedirect\Controllers\DashboardController;
+use Rias\StatamicRedirect\Http\Controllers\DashboardController;
 use Statamic\Widgets\Widget;
 
 class ErrorsLastWeekWidget extends Widget

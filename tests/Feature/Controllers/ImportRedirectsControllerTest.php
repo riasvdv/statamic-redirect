@@ -5,8 +5,8 @@ namespace Rias\StatamicRedirect\Tests\Feature\Controllers;
 use Illuminate\Http\UploadedFile;
 use PHPUnit\Framework\Attributes\Test;
 use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
-use Rias\StatamicRedirect\Controllers\ImportRedirectsController;
 use Rias\StatamicRedirect\Facades\Redirect;
+use Rias\StatamicRedirect\Http\Controllers\Redirects\ImportRedirectsController;
 use Rias\StatamicRedirect\Tests\TestCase;
 
 class ImportRedirectsControllerTest extends TestCase
