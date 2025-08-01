@@ -1,22 +1,40 @@
 @extends('statamic::layout')
-
-@section('title', 'Redirects')
-@section('wrapper_class', 'max-w-full')
+@section('title', Statamic::crumb("Redirect", "Redirects"))
 
 @section('content')
+    <ui-header title="{{ __('Redirects') }}" icon="arrow-up-right">
+
+        @can('create', \Rias\StatamicRedirect\Contracts\Redirect::class)
+            <ui-dropdown>
+                <ui-dropdown-menu>
+                    <ui-dropdown-item
+                        icon="upload"
+                        text="Import CSV"
+                        href="{{ cp_route('redirect.redirects.import') }}"
+                    ></ui-dropdown-item>
+                    <ui-dropdown-item
+                        icon="download"
+                        text="Export as CSV"
+                        href="{{ cp_route('redirect.export', ['type' => 'csv']) }}?download=true"
+                    ></ui-dropdown-item>
+                    <ui-dropdown-item
+                        icon="download"
+                        text="Export as JSON"
+                        href="{{ cp_route('redirect.export', ['type' => 'json']) }}?download=true"
+                    ></ui-dropdown-item>
+                </ui-dropdown-menu>
+            </ui-dropdown>
+            <ui-button
+                href="{{ cp_route('redirect.redirects.create') }}"
+                text="{{ __('Create Redirect') }}"
+                variant="primary"
+            />
+        @endcan
+    </ui-header>
+
     <redirect-listing
-        :can-create="{{ \Statamic\Facades\User::fromUser(auth()->user())->isSuper() || \Statamic\Facades\User::fromUser(auth()->user())->hasPermission('create redirects') ? 'true' : 'false' }}"
-        create-url="{{ cp_route('redirect.redirects.create') }}"
-        create-label="Create redirect"
-        :columns="{{ $columns->toJson() }}"
-        :filters="{{ $filters->toJson() }}"
-    >
-        <template slot="twirldown">
-            @if(\Statamic\Facades\User::fromUser(auth()->user())->isSuper() || \Statamic\Facades\User::fromUser(auth()->user())->hasPermission('create redirects'))
-                <dropdown-item :text="__('Import CSV')" redirect="{{ cp_route('redirect.redirects.import') }}"></dropdown-item>
-            @endif
-            <dropdown-item :text="__('Export as CSV')" redirect="{{ cp_route('redirect.export', ['type' => 'csv']) }}?download=true"></dropdown-item>
-            <dropdown-item :text="__('Export as JSON')" redirect="{{ cp_route('redirect.export', ['type' => 'json']) }}?download=true"></dropdown-item>
-        </template>
-    </redirect-listing>
+        :columns="{{ json_encode($columns) }}"
+        :filters="{{ json_encode($filters) }}"
+        action-url="{{ $actionUrl }}"
+    ></redirect-listing>
 @endsection

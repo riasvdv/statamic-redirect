@@ -49,6 +49,11 @@ class Redirect implements RedirectContract
     /** @var string|null */
     protected $description;
 
+    public function title()
+    {
+        return "{$this->source()} --> {$this->destination()}";
+    }
+
     public function id($id = null)
     {
         return $this->fluentlyGetOrSet('id')->args(func_get_args());

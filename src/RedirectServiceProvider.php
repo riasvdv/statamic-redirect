@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
+use Rias\StatamicRedirect\Actions\Delete;
 use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
 use Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository as EloquentRedirectRepository;
@@ -31,6 +32,7 @@ use Rias\StatamicRedirect\Widgets\ErrorsLastDayWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsLastMonthWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsLastWeekWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsWidget;
+use Statamic\CP\Navigation\NavItem;
 use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
 use Statamic\Facades\CP\Nav;
@@ -52,8 +54,12 @@ class RedirectServiceProvider extends AddonServiceProvider
         IncreaseUrlSizeOnErrors::class,
     ];
 
-    protected $scripts = [
-        __DIR__ . '/../resources/dist/js/cp.js',
+    protected $vite = [
+        'input' => [
+            'resources/js/cp.js',
+        ],
+        'publicDirectory' => 'resources/dist',
+        'hotFile' => __DIR__.'/../resources/dist/hot',
     ];
 
     protected $routes = [
@@ -74,6 +80,10 @@ class RedirectServiceProvider extends AddonServiceProvider
         ErrorsLastMonthWidget::class,
         ErrorsLastWeekWidget::class,
         ErrorsLastDayWidget::class,
+    ];
+
+    protected $actions = [
+        Delete::class,
     ];
 
     public function register()
@@ -149,7 +159,7 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected function bootAddonNav(): self
     {
-        Nav::extend(function ($nav) {
+        Nav::extend(function (\Statamic\CP\Navigation\Nav $nav) {
             $items = [];
 
             if (config('statamic.redirect.log_errors')) {
@@ -158,16 +168,16 @@ class RedirectServiceProvider extends AddonServiceProvider
 
             $items['Redirects'] = cp_route('redirect.redirects.index');
 
-            $nav->tools('Redirect')
-                ->route(
-                    config('statamic.redirect.log_errors')
-                        ? 'redirect.index'
-                        : 'redirect.redirects.index'
-                )
-                ->icon('git')
-                ->active('redirect')
-                ->can('view redirects')
-                ->children($items);
+            $navItem = $nav->item('Redirect');
+            $navItem->section('Tools');
+            $navItem->route(
+                config('statamic.redirect.log_errors')
+                    ? 'redirect.index'
+                    : 'redirect.redirects.index'
+            );
+            $navItem->icon('arrow-up-right');
+            $navItem->can('view redirects');
+            $navItem->children($items);
         });
 
         return $this;

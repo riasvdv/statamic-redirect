@@ -84,7 +84,7 @@ class RedirectBlueprint extends Blueprint
                                 'type' => 'toggle',
                                 'default' => true,
                                 'display' => 'Enabled',
-                                'listable' => true,
+                                'listable' => false,
                                 'validate' => 'required|boolean',
                             ],
                         ],

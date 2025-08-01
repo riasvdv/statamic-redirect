@@ -1,22 +1,17 @@
 {
   "private": true,
   "scripts": {
-    "dev": "npx mix",
-    "development": "npx mix",
-    "watch": "npx mix watch",
-    "watch-poll": "npx mix watch -- --watch-options-poll=1000",
-    "hot": "npx mix watch --hot",
-    "prod": "npx mix --production",
-    "production": "npx mix --production",
+    "build": "vite build",
+    "dev": "vite",
     "format": "prettier 'resources/**/*.{css,js,json,css,ts,tsx,vue}' '*.{js,css}' --write"
   },
   "dependencies": {
-    "laravel-mix": "6.0.49",
-    "vue": "2.7.16",
-    "vue-template-compiler": "2.7.16"
+    "vite-svg-loader": "^5.1.0"
   },
   "devDependencies": {
-    "prettier": "3.6.2",
-    "vue-loader": "17.4.2"
+      "@vitejs/plugin-vue": "^5.2.3",
+      "laravel-vite-plugin": "^1.2.0",
+      "vite": "^6.3.4",
+      "vite-plugin-externals": "^0.6.2"
   }
 }
