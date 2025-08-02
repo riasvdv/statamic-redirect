@@ -167,6 +167,10 @@ class RedirectServiceProvider extends AddonServiceProvider
 
             $items['Redirects'] = cp_route('redirect.redirects.index');
 
+            if (config('statamic.redirect.log_errors')) {
+                $items['Errors'] = cp_route('redirect.errors.index');
+            }
+
             $navItem = $nav->item('Redirect');
             $navItem->section('Tools');
             $navItem->route(

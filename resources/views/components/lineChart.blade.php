@@ -4,7 +4,7 @@
     @foreach ($data as $index => [$value, $label])
         <div class="bg-gray-200 bottom-0 absolute top-0 w-px" style="left: {{ ($index / ((count($data) - 1) ?: 1)) * 100 }}%">
             <div class="absolute text-center text-gray-500 -mb-1" style="bottom: -20px; left: 50%; transform: translateX(-50%); min-width: 35px;">{{ $label }}</div>
-            <div class="rounded-full text-black font-bold absolute text-center z-10 flex justify-center items-center" style="width: 18px; height: 18px; font-size: 10px; background: #BEDBFF; left: 50%; bottom: {{ ($value / ($maxValue ?: 1)) * 100 }}%; transform: translateX(-50%) translateY(6px)">
+            <div class="rounded-full text-black font-bold absolute text-center z-10 flex justify-center items-center px-1.5 py-0.5" style="font-size: 10px; background: #BEDBFF; left: 50%; bottom: {{ ($value / ($maxValue ?: 1)) * 100 }}%; transform: translateX(-50%) translateY(6px)">
                 {{ $value }}
             </div>
         </div>
