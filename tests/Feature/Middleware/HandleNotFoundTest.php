@@ -33,7 +33,7 @@ class HandleNotFoundTest extends TestCase
     public function it_does_nothing_if_the_response_is_not_a_404()
     {
         $this->middleware->handle(Request::create('/abc'), function () {
-            return (new Response('', 200));
+            return new Response('', 200);
         });
 
         $this->assertEquals(0, Error::query()->count());
@@ -50,7 +50,7 @@ class HandleNotFoundTest extends TestCase
         ]);
 
         $response = $this->middleware->handle($request, function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertEquals(0, Error::query()->count());
@@ -67,7 +67,7 @@ class HandleNotFoundTest extends TestCase
         ]);
 
         $response = $this->middleware->handle($request, function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertEquals(1, Error::query()->count());
@@ -92,7 +92,7 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create($requestUrl), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertEquals(1, Error::query()->count());
@@ -112,12 +112,12 @@ class HandleNotFoundTest extends TestCase
 
         DB::setDefaultConnection('redirect-sqlite');
         Schema::dropIfExists('redirects');
-        require_once(__DIR__ . '/../../../database/migrations/create_redirect_redirects_table.php.stub');
-        (new \CreateRedirectRedirectsTable())->up();
-        require_once(__DIR__ . '/../../../database/migrations/add_description_to_redirect_redirects_table.php.stub');
-        (new \AddDescriptionToRedirectRedirectsTable())->up();
-        require_once(__DIR__ . '/../../../database/migrations/increase_redirect_redirects_table_url_length.php.stub');
-        (new \IncreaseRedirectRedirectsTableUrlLength())->up();
+        require_once __DIR__.'/../../../database/migrations/create_redirect_redirects_table.php.stub';
+        (new \CreateRedirectRedirectsTable)->up();
+        require_once __DIR__.'/../../../database/migrations/add_description_to_redirect_redirects_table.php.stub';
+        (new \AddDescriptionToRedirectRedirectsTable)->up();
+        require_once __DIR__.'/../../../database/migrations/increase_redirect_redirects_table_url_length.php.stub';
+        (new \IncreaseRedirectRedirectsTableUrlLength)->up();
 
         app()->singleton(RedirectRepository::class, function () {
             return new \Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository(app('stache'));
@@ -130,7 +130,7 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create($requestUrl), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertEquals(1, Error::query()->count());
@@ -155,7 +155,7 @@ class HandleNotFoundTest extends TestCase
     #[Test]
     public function it_handles_401_redirects()
     {
-        //$this->withExceptionHandling();
+        // $this->withExceptionHandling();
 
         Redirect::make()
             ->source('/abc')
@@ -164,7 +164,7 @@ class HandleNotFoundTest extends TestCase
 
         try {
             $this->middleware->handle(Request::create('/abc'), function () {
-                return (new Response('', 404));
+                return new Response('', 404);
             });
         } catch (HttpException $e) {
             $this->assertEquals(410, $e->getStatusCode());
@@ -189,13 +189,13 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create('/abc', 'GET', ['lang' => 'nl']), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isRedirect(url('/nl')));
 
         $response = $this->middleware->handle(Request::create('/abc', 'GET', ['lang' => 'fr']), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isRedirect(url('/fr')));
@@ -217,13 +217,13 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create('/abc', 'GET', ['lang' => 'nl']), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isRedirect(url('/nl?lang=nl')));
 
         $response = $this->middleware->handle(Request::create('/abc', 'GET', ['lang' => 'fr']), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isRedirect(url('/fr?lang=fr')));
@@ -240,7 +240,7 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create('/abc', 'GET', ['another' => 'value']), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isRedirect(url('/fr?another=value&lang=fr')));
@@ -257,7 +257,7 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create('/abc', 'GET', ['another' => 'value']), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isRedirect(url('?another=value&lang=fr')));
@@ -274,7 +274,7 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create('/abc', 'GET', ['another' => 'value']), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isRedirect(url('/abc?another=value&lang=fr#some-fragment?with=fragment_param')));
@@ -291,12 +291,11 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create('/abc', 'GET', ['another' => 'value']), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isRedirect(url('?another=value&lang=fr#some-fragment?with=fragment_param')));
     }
-
 
     #[Test]
     public function it_can_redirect_to_external_urls()
@@ -308,7 +307,7 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create('/abc/a'), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isRedirect('https://google.com?s=a'));
@@ -324,7 +323,7 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create('/'), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isRedirect(url('/blog')));
@@ -340,7 +339,7 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create('/foo/'), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isRedirect(url('/bar')));
@@ -356,7 +355,7 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create('/foo'), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isRedirect(url('/bar')));
@@ -376,7 +375,7 @@ class HandleNotFoundTest extends TestCase
         $request = Request::create('/abc');
 
         $this->middleware->handle($request, function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertEquals(1, Error::count());
@@ -393,7 +392,7 @@ class HandleNotFoundTest extends TestCase
         ]);
 
         $response = $this->middleware->handle($request, function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertEquals(0, Error::query()->count());
@@ -409,7 +408,7 @@ class HandleNotFoundTest extends TestCase
         $request = Request::create('/abc');
 
         $response = $this->middleware->handle($request, function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertEquals(1, Error::query()->count());
@@ -428,7 +427,7 @@ class HandleNotFoundTest extends TestCase
             ->save();
 
         $response = $this->middleware->handle(Request::create('/abc'), function () {
-            return (new Response('', 404));
+            return new Response('', 404);
         });
 
         $this->assertTrue($response->isNotFound());

@@ -20,7 +20,7 @@ class SourceIsNotRedirected implements DataAwareRule, ValidationRule
             ->first();
 
         if ($existing) {
-            $fail(__("This source already has a redirect associated with it."));
+            $fail(__('This source already has a redirect associated with it.'));
         }
     }
 

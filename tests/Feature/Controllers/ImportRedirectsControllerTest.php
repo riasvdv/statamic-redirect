@@ -89,7 +89,7 @@ class ImportRedirectsControllerTest extends TestCase
         $this->post(action([ImportRedirectsController::class, 'store']), [
             'file' => $file,
             'delimiter' => ',',
-        ])->assertRedirect()->assertSessionHas('success', "Redirects imported successfully. 4 rows skipped due to invalid data. You can find more info in the Laravel log.");
+        ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully. 4 rows skipped due to invalid data. You can find more info in the Laravel log.');
 
         $this->assertEquals(1, Redirect::query()->count());
         tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (RedirectContract $redirect) {
@@ -111,7 +111,7 @@ class ImportRedirectsControllerTest extends TestCase
         $this->post(action([ImportRedirectsController::class, 'store']), [
             'file' => $file,
             'delimiter' => ',',
-        ])->assertRedirect()->assertSessionHas('success', "Redirects imported successfully.");
+        ])->assertRedirect()->assertSessionHas('success', 'Redirects imported successfully.');
 
         $this->assertEquals(1, Redirect::query()->count());
         tap(Redirect::findByUrl(\Statamic\Facades\Site::default()->handle(), '/foo'), function (RedirectContract $redirect) {

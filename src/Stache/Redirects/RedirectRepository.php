@@ -111,6 +111,6 @@ class RedirectRepository implements RepositoryContract
 
     public function make(): Redirect
     {
-        return new Redirect();
+        return new Redirect;
     }
 }

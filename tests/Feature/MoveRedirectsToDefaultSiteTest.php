@@ -19,7 +19,7 @@ class MoveRedirectsToDefaultSiteTest extends TestCase
         File::deleteDirectory($redirectsDirectory);
         File::ensureDirectoryExists($redirectsDirectory);
 
-        file_put_contents($redirectsDirectory . '68f3b32b-b89d-4bb2-bbc3-367542228c71.yaml', <<<'yaml'
+        file_put_contents($redirectsDirectory.'68f3b32b-b89d-4bb2-bbc3-367542228c71.yaml', <<<'yaml'
 id: 68f3b32b-b89d-4bb2-bbc3-367542228c71
 enabled: true
 source: foo
@@ -33,14 +33,14 @@ yaml);
         $this->assertEquals(0, Redirect::all()->count());
 
         $this->assertDirectoryExists($redirectsDirectory);
-        $this->assertFileExists($redirectsDirectory . '68f3b32b-b89d-4bb2-bbc3-367542228c71.yaml');
+        $this->assertFileExists($redirectsDirectory.'68f3b32b-b89d-4bb2-bbc3-367542228c71.yaml');
 
         $script->update();
 
         $this->assertEquals(1, Redirect::all()->count());
 
-        $this->assertDirectoryExists($redirectsDirectory . 'default');
-        $this->assertFileDoesNotExist($redirectsDirectory . '68f3b32b-b89d-4bb2-bbc3-367542228c71.yaml');
-        $this->assertFileExists($redirectsDirectory . 'default/68f3b32b-b89d-4bb2-bbc3-367542228c71.yaml');
+        $this->assertDirectoryExists($redirectsDirectory.'default');
+        $this->assertFileDoesNotExist($redirectsDirectory.'68f3b32b-b89d-4bb2-bbc3-367542228c71.yaml');
+        $this->assertFileExists($redirectsDirectory.'default/68f3b32b-b89d-4bb2-bbc3-367542228c71.yaml');
     }
 }

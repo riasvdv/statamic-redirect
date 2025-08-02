@@ -77,7 +77,7 @@ class HandleNotFound
                 $this->markErrorHandled($error, $redirect->destination());
             }
 
-            if ((string) $redirect->type() === "410") {
+            if ((string) $redirect->type() === '410') {
                 abort(410);
             }
 
@@ -112,7 +112,6 @@ class HandleNotFound
         $error->lastSeenAt = now()->timestamp;
         $error->save();
 
-
         $error->addHit(now()->timestamp, [
             'userAgent' => $request->userAgent(),
             'ip' => $request->ip(),
@@ -130,9 +129,7 @@ class HandleNotFound
     }
 
     /**
-     * @param \Statamic\Sites\Site $site
-     * @param \Rias\StatamicRedirect\Data\Redirect $redirect
-     * @param string $url
+     * @param  \Rias\StatamicRedirect\Data\Redirect  $redirect
      */
     private function cacheNewRedirect(\Statamic\Sites\Site $site, RedirectContract $redirect, string $url): void
     {
@@ -167,7 +164,7 @@ class HandleNotFound
 
         if (count($query)) {
             // make sure to preserve fragment if specified in destination
-            $fragment = isset($destination_parsed['fragment']) ? '#' . $destination_parsed['fragment'] : '';
+            $fragment = isset($destination_parsed['fragment']) ? '#'.$destination_parsed['fragment'] : '';
             if (($urlBeforeFragment = strstr($destination, '#', true)) === false) {
                 $urlBeforeFragment = $destination;
             }
@@ -175,7 +172,7 @@ class HandleNotFound
                 $urlBeforeQuery = $destination;
             }
 
-            $destination = $urlBeforeQuery . '?' . http_build_query($query) . $fragment;
+            $destination = $urlBeforeQuery.'?'.http_build_query($query).$fragment;
         }
 
         return $destination;

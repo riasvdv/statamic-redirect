@@ -11,8 +11,6 @@ class JsonExporter extends Exporter
 
     /**
      * Perform the export.
-     *
-     * @return string
      */
     public function export(): string
     {
@@ -35,8 +33,6 @@ class JsonExporter extends Exporter
 
     /**
      * Get the content type.
-     *
-     * @return string
      */
     public function contentType(): string
     {

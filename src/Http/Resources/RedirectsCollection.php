@@ -23,7 +23,7 @@ class RedirectsCollection extends ResourceCollection
 
     private function setColumns()
     {
-        $blueprint = (new RedirectBlueprint())();
+        $blueprint = (new RedirectBlueprint)();
         $columns = $blueprint->columns();
 
         if ($key = $this->columnPreferenceKey) {
