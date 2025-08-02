@@ -2,6 +2,4 @@
 
 namespace Rias\StatamicRedirect\Contracts;
 
-interface Redirect
-{
-}
+interface Redirect {}

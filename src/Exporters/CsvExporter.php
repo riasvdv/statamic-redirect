@@ -27,8 +27,6 @@ class CsvExporter extends Exporter
 
     /**
      * Perform the export.
-     *
-     * @return string
      */
     public function export(): string
     {

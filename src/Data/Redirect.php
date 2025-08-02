@@ -14,8 +14,8 @@ use Statamic\Support\Traits\FluentlyGetsAndSets;
 
 class Redirect implements RedirectContract
 {
-    use FluentlyGetsAndSets;
     use ExistsAsFile;
+    use FluentlyGetsAndSets;
     use TracksQueriedColumns;
     use TracksQueriedRelations;
 
@@ -124,7 +124,7 @@ class Redirect implements RedirectContract
         return vsprintf('%s/%s/%s%s.yaml', [
             rtrim(Stache::store('redirects')->directory(), '/'),
             $this->site(),
-            ! is_null($this->order()) ? $this->order() . '_' : '',
+            ! is_null($this->order()) ? $this->order().'_' : '',
             $this->id(),
         ]);
     }

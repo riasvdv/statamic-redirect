@@ -24,11 +24,11 @@ class RedirectController
             return view('redirect::redirects.empty');
         }
 
-        $blueprint = new RedirectBlueprint();
+        $blueprint = new RedirectBlueprint;
 
         $columns = $blueprint()
             ->columns()
-            ->setPreferred("redirect.columns")
+            ->setPreferred('redirect.columns')
             ->rejectUnlisted()
             ->values();
 
@@ -49,7 +49,7 @@ class RedirectController
 
         abort_unless($user->isSuper() || $user->hasPermission('create redirects'), 401);
 
-        $blueprint = new RedirectBlueprint();
+        $blueprint = new RedirectBlueprint;
         $fields = $blueprint()->fields()->preProcess();
 
         return view('statamic::publish.form', [
@@ -79,7 +79,7 @@ class RedirectController
 
         $redirect = Redirect::find($id);
         $redirectValues = $redirect->fileData();
-        $redirectBlueprint = new RedirectBlueprint();
+        $redirectBlueprint = new RedirectBlueprint;
         $redirectFields = $redirectBlueprint()->fields()->addValues($redirectValues)->preProcess();
 
         return view('statamic::publish.form', [
@@ -105,7 +105,7 @@ class RedirectController
             abort(402, 'Site is required');
         }
 
-        $blueprint = new RedirectBlueprint();
+        $blueprint = new RedirectBlueprint;
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
 
@@ -135,7 +135,7 @@ class RedirectController
 
         abort_unless($user->isSuper() || $user->hasPermission('edit redirects'), 401);
 
-        $blueprint = new RedirectBlueprint();
+        $blueprint = new RedirectBlueprint;
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
 

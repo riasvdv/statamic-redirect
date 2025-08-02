@@ -18,26 +18,26 @@ class RedirectPolicy
 
     public function view($user, Redirect $redirect)
     {
-        return User::fromUser($user)->hasPermission("view redirects");
+        return User::fromUser($user)->hasPermission('view redirects');
     }
 
     public function create($user, Redirect $redirect)
     {
-        return User::fromUser($user)->hasPermission("create redirects");
+        return User::fromUser($user)->hasPermission('create redirects');
     }
 
     public function edit($user, Redirect $redirect)
     {
-        return User::fromUser($user)->hasPermission("edit redirects");
+        return User::fromUser($user)->hasPermission('edit redirects');
     }
 
     public function delete($user, Redirect $redirect)
     {
-        return User::fromUser($user)->hasPermission("delete redirects");
+        return User::fromUser($user)->hasPermission('delete redirects');
     }
 
     public function publish($user, Redirect $redirect)
     {
-        return User::fromUser($user)->hasPermission("edit redirects");
+        return User::fromUser($user)->hasPermission('edit redirects');
     }
 }

@@ -45,28 +45,28 @@ class ImportRedirectsController
         $skipped = 0;
         $reader->getRows()->each(function (array $data) use (&$skipped) {
             if (! $data['source']) {
-                Log::error("Redirect has no source", $data);
+                Log::error('Redirect has no source', $data);
                 $skipped++;
 
                 return;
             }
 
             if (! $data['type']) {
-                Log::error("Redirect has no type", $data);
+                Log::error('Redirect has no type', $data);
                 $skipped++;
 
                 return;
             }
 
             if (! $data['match_type']) {
-                Log::error("Redirect has no match_type", $data);
+                Log::error('Redirect has no match_type', $data);
                 $skipped++;
 
                 return;
             }
 
             if ((! $data['destination'] && ($data['type'] != 410))) {
-                Log::error("Redirect has no destination, it is required when type is not 410", $data);
+                Log::error('Redirect has no destination, it is required when type is not 410', $data);
                 $skipped++;
 
                 return;
@@ -99,7 +99,7 @@ class ImportRedirectsController
         $message = 'Redirects imported successfully.';
 
         if ($skipped > 0) {
-            $message .= " {$skipped} " . Str::plural('row', $skipped) . " skipped due to invalid data. You can find more info in the Laravel log.";
+            $message .= " {$skipped} ".Str::plural('row', $skipped).' skipped due to invalid data. You can find more info in the Laravel log.';
         }
 
         session()->flash('success', $message);

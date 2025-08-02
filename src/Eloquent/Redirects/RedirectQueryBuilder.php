@@ -10,7 +10,7 @@ class RedirectQueryBuilder extends EloquentQueryBuilder implements Contract
 {
     protected function transform($items, $columns = [])
     {
-        return DataCollection::make($items)->map(function ($model) use ($columns) {
+        return DataCollection::make($items)->map(function ($model) {
             return RedirectRepository::fromModel($model);
         });
     }

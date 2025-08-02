@@ -50,6 +50,7 @@ return [
 
     /**
      * Error logs older than this will be deleted.
+     *
      * @link http://php.net/manual/en/dateinterval.createfromdatestring.php
      */
     'clean_older_than' => '1 month',
