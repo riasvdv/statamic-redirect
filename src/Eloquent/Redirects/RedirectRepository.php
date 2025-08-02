@@ -115,7 +115,8 @@ class RedirectRepository implements RepositoryContract
             ->enabled($model->enabled)
             ->order($model->order)
             ->site($model->site)
-            ->description($model->description);
+            ->description($model->description)
+            ->lastUsedAt($model->last_used_at);
     }
 
     private function toModel(Redirect $redirect)
@@ -130,6 +131,7 @@ class RedirectRepository implements RepositoryContract
             'order' => $redirect->order(),
             'site' => $redirect->site(),
             'description' => $redirect->description(),
+            'last_used_at' => $redirect->lastUsedAt(),
         ];
 
         $model = RedirectModel::firstOrNew(['id' => $redirect->id()], $properties);

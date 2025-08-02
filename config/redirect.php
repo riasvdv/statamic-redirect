@@ -44,6 +44,11 @@ return [
     'log_hits' => env('REDIRECT_LOG_HITS', true),
 
     /**
+     * Controls whether Redirect logs the last_used_at on redirects.
+     */
+    'log_last_used_at' => env('REDIRECT_LOG_LAST_USED_AT', true),
+
+    /**
      * Should error logs be cleaned? Make sure your schedule is running.
      */
     'clean_errors' => env('REDIRECT_CLEAN_ERRORS', true),

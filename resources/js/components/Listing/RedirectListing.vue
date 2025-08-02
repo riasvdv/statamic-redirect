@@ -90,6 +90,10 @@ function reordered(value) {
               <span v-text="redirect.source" />
             </span>
           </template>
+          <template v-slot:[`cell-last_used_at`]="{ row: redirect }">
+            <span v-text="redirect.last_used_at"></span>
+          </template>
+
           <template #prepended-row-actions="{ row: redirect }">
               <DropdownItem
                   v-if="redirect.editable"

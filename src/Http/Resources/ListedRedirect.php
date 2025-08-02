@@ -3,6 +3,7 @@
 namespace Rias\StatamicRedirect\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Date;
 use Statamic\Facades\User;
 
 class ListedRedirect extends JsonResource
@@ -30,6 +31,9 @@ class ListedRedirect extends JsonResource
             'match_type' => [$redirect->matchType()],
             'site' => $redirect->site(),
             'order' => $redirect->order(),
+            'last_used_at' => $redirect->lastUsedAt()
+                ? Date::parse($redirect->lastUsedAt())->toDateTimeString()
+                : '',
             'description' => $redirect->description(),
             'delete_url' => cp_route('redirect.redirects.delete', $redirect->id()),
             'editable' => User::fromUser(auth()->user())->can('edit', $redirect),

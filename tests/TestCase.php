@@ -9,7 +9,6 @@ use Rias\StatamicRedirect\Data\Hit;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\RedirectServiceProvider;
 use Statamic\Facades\User;
-use Statamic\Statamic;
 use Statamic\Testing\AddonTestCase;
 
 class TestCase extends AddonTestCase
