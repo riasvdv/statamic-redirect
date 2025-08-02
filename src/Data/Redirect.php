@@ -49,6 +49,9 @@ class Redirect implements RedirectContract
     /** @var string|null */
     protected $description;
 
+    /** @var null|\Carbon\CarbonInterface */
+    protected $lastUsedAt;
+
     public function title()
     {
         return "{$this->source()} --> {$this->destination()}";
@@ -92,6 +95,11 @@ class Redirect implements RedirectContract
     public function order($order = null)
     {
         return $this->fluentlyGetOrSet('order')->args(func_get_args());
+    }
+
+    public function lastUsedAt($lastUsedAt = null)
+    {
+        return $this->fluentlyGetOrSet('lastUsedAt')->args(func_get_args());
     }
 
     public function setSiteFromFilePath($path)
@@ -157,6 +165,7 @@ class Redirect implements RedirectContract
             'match_type' => $this->matchType(),
             'description' => $this->description(),
             'order' => $this->order(),
+            'lastUsedAt' => $this->lastUsedAt(),
         ];
     }
 

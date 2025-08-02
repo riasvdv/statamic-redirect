@@ -23,6 +23,7 @@ use Rias\StatamicRedirect\Stache\Redirects\RedirectRepository as StacheRedirectR
 use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Rias\StatamicRedirect\UpdateScripts\AddDescriptionColumnToRedirectsTable;
 use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
+use Rias\StatamicRedirect\UpdateScripts\AddLastUsedAtToRedirectsTable;
 use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
 use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnErrors;
 use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnRedirects;
@@ -51,6 +52,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         AddDescriptionColumnToRedirectsTable::class,
         IncreaseUrlSizeOnRedirects::class,
         IncreaseUrlSizeOnErrors::class,
+        AddLastUsedAtToRedirectsTable::class,
     ];
 
     protected $vite = [

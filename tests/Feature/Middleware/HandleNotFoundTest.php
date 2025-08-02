@@ -118,6 +118,8 @@ class HandleNotFoundTest extends TestCase
         (new \AddDescriptionToRedirectRedirectsTable)->up();
         require_once __DIR__.'/../../../database/migrations/increase_redirect_redirects_table_url_length.php.stub';
         (new \IncreaseRedirectRedirectsTableUrlLength)->up();
+        include_once __DIR__.'/../../../database/migrations/add_last_used_at_to_redirects_table.php.stub';
+        (new \AddLastUsedAtToRedirectsTable)->up();
 
         app()->singleton(RedirectRepository::class, function () {
             return new \Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository(app('stache'));
@@ -311,6 +313,38 @@ class HandleNotFoundTest extends TestCase
         });
 
         $this->assertTrue($response->isRedirect('https://google.com?s=a'));
+    }
+
+    #[Test]
+    public function it_can_redirect_correctly_with_regex()
+    {
+        Redirect::make()
+            ->source('/notfound*')
+            ->destination('/')
+            ->matchType(MatchTypeEnum::REGEX)
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/notfound2'), function () {
+            return new Response('', 404);
+        });
+
+        $this->assertTrue($response->isRedirect(url('/')));
+    }
+
+    #[Test]
+    public function it_can_redirect_correctly_with_regex_placeholder()
+    {
+        Redirect::make()
+            ->source('/notfound(.*)')
+            ->destination('/$1')
+            ->matchType(MatchTypeEnum::REGEX)
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/notfound2'), function () {
+            return new Response('', 404);
+        });
+
+        $this->assertTrue($response->isRedirect(url('/2')));
     }
 
     #[Test]

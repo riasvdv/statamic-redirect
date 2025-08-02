@@ -50,6 +50,8 @@ class HandleNotFound
             $this->cachedRedirects = Cache::get('statamic.redirect.redirects', []);
 
             if (isset($this->cachedRedirects[$site->handle()][$uri])) {
+                $this->markRedirectUsed($this->cachedRedirects[$site->handle()][$uri]['id']);
+
                 if ($logErrors) {
                     $this->markErrorHandled($error, $this->cachedRedirects[$site->handle()][$uri]['destination']);
                 }
@@ -69,6 +71,8 @@ class HandleNotFound
             if (! $redirect = Redirect::findByUrl($site->handle(), $uri)) {
                 return $response;
             }
+
+            $this->markRedirectUsed($redirect->id());
 
             $this->cacheNewRedirect($site, $redirect, $uri);
 
@@ -127,12 +131,29 @@ class HandleNotFound
         $error->save();
     }
 
+    private function markRedirectUsed($id): void
+    {
+        if (! config('statamic.redirect.log_last_used_at', true)) {
+            return;
+        }
+
+        $redirect = Redirect::find($id);
+
+        if (! $redirect) {
+            return;
+        }
+
+        $redirect->lastUsedAt(now());
+        $redirect->save();
+    }
+
     /**
      * @param  \Rias\StatamicRedirect\Data\Redirect  $redirect
      */
     private function cacheNewRedirect(\Statamic\Sites\Site $site, RedirectContract $redirect, string $url): void
     {
         $this->cachedRedirects[$site->handle()][$url] = [
+            'id' => $redirect->id(),
             'destination' => $redirect->destination(),
             'type' => $redirect->type(),
         ];

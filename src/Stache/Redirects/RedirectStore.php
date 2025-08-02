@@ -37,6 +37,7 @@ class RedirectStore extends BasicStore
             ->matchType(Arr::pull($data, 'match_type'))
             ->enabled(Arr::pull($data, 'enabled'))
             ->order(Arr::pull($data, 'order'))
+            ->lastUsedAt(Arr::pull($data, 'lastUsedAt'))
             ->setSiteFromFilePath($path)
             ->initialPath($path);
 

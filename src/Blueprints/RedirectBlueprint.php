@@ -77,7 +77,7 @@ class RedirectBlueprint extends Blueprint
                     ],
                 ],
                 'sidebar' => [
-                    'fields' => [
+                    'fields' => array_filter([
                         [
                             'handle' => 'enabled',
                             'field' => [
@@ -99,7 +99,17 @@ class RedirectBlueprint extends Blueprint
                                 'validate' => 'required',
                             ],
                         ],
-                    ],
+                        [
+                            'handle' => 'last_used_at',
+                            'field' => [
+                                'type' => 'date',
+                                'time_enabled' => true,
+                                'display' => 'Last used',
+                                'visibility' => 'hidden',
+                                'listable' => config('statamic.redirect.log_last_used_at', true),
+                            ],
+                        ],
+                    ]),
                 ],
             ],
         ]);

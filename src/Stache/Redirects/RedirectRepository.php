@@ -70,11 +70,13 @@ class RedirectRepository implements RepositoryContract
                 $matchRegEx = '`'.$source.'`i';
 
                 if (preg_match($matchRegEx, $url) === 1) {
-                    $redirect->destination(preg_replace(
-                        $matchRegEx,
-                        $redirect->destination(),
-                        $url
-                    ));
+                    if (str_contains($redirect->destination(), '$')) {
+                        $redirect->destination(preg_replace(
+                            $matchRegEx,
+                            $redirect->destination(),
+                            $url
+                        ));
+                    }
 
                     return $redirect;
                 }
