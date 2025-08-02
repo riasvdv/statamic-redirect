@@ -4,12 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLastUsedAtToRedirectsTable extends Migration
+class Version4UpgradeMigration extends Migration
 {
     public function up(): void
     {
         Schema::table('redirects', function (Blueprint $table): void {
             $table->dateTime('last_used_at')->nullable();
+            $table->string('destination_type')->default('url');
+            $table->string('destination_entry')->nullable();
         });
     }
 
@@ -17,6 +19,8 @@ class AddLastUsedAtToRedirectsTable extends Migration
     {
         Schema::table('redirects', function (Blueprint $table): void {
             $table->dropColumn('last_used_at');
+            $table->dropColumn('destination_type');
+            $table->dropColumn('destination_entry');
         });
     }
 }

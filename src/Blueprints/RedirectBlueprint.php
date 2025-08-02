@@ -2,6 +2,7 @@
 
 namespace Rias\StatamicRedirect\Blueprints;
 
+use Illuminate\Validation\Rule;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Rules\SourceIsNotRedirected;
 use Statamic\Facades\Blueprint;
@@ -25,13 +26,54 @@ class RedirectBlueprint extends Blueprint
                             ],
                         ],
                         [
+                            'handle' => 'destination_type',
+                            'field' => [
+                                'type' => 'button_group',
+                                'options' => [
+                                    'url' => 'URL',
+                                    'entry' => 'Entry',
+                                ],
+                                'default' => 'url',
+                            ],
+                        ],
+                        [
                             'handle' => 'destination',
                             'field' => [
                                 'type' => 'text',
                                 'display' => 'Destination',
                                 'instructions' => 'Enter the destination URL that should be redirected to.  This can either be a fully qualified URL or a relative URL.  e.g.: Exact Match: `/new-recipes/` or RegEx Match: `/new-recipes/$1`',
                                 'listable' => true,
-                                'validate' => 'required_unless:type,410|nullable|string',
+                                'validate' => [
+                                    Rule::requiredIf(function () {
+                                        if ((string) request('type') == '410') {
+                                            return false;
+                                        }
+
+                                        return request('destination_type') == 'url';
+                                    }),
+                                    'nullable',
+                                    'string',
+                                ],
+                                'if' => [
+                                    'destination_type' => 'equals url',
+                                ],
+                            ],
+                        ],
+                        [
+                            'handle' => 'destination_entry',
+                            'field' => [
+                                'type' => 'entries',
+                                'instructions' => 'Choose an entry as the destination that should be redirected to.',
+                                'display' => 'Destination entry',
+                                'listable' => true,
+                                'max_items' => 1,
+                                'select_across_sites' => true,
+                                'if' => [
+                                    'destination_type' => 'equals entry',
+                                ],
+                                'validate' => [
+                                    'required_if:destination_type,entry',
+                                ],
                             ],
                         ],
                         [

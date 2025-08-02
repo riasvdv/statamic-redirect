@@ -64,11 +64,13 @@ class RedirectRepository implements RepositoryContract
                 $matchRegEx = '`'.$source.'`i';
 
                 if (preg_match($matchRegEx, $url) === 1) {
-                    $redirect->destination(preg_replace(
-                        $matchRegEx,
-                        $redirect->destination(),
-                        $url
-                    ));
+                    if (str_contains($redirect->destination(), '$')) {
+                        $redirect->destination(preg_replace(
+                            $matchRegEx,
+                            $redirect->destination(),
+                            $url
+                        ));
+                    }
 
                     return $redirect;
                 }
@@ -109,7 +111,9 @@ class RedirectRepository implements RepositoryContract
             ->id($model->id)
             ->source($model->source)
             ->source_md5(md5($model->source))
+            ->destination_type($model->destination_type)
             ->destination($model->destination)
+            ->destination_entry($model->destination_entry)
             ->type($model->type)
             ->matchType($model->match_type)
             ->enabled($model->enabled)
@@ -124,7 +128,9 @@ class RedirectRepository implements RepositoryContract
         $properties = [
             'source' => $redirect->source(),
             'source_md5' => md5($redirect->source()),
+            'destination_type' => $redirect->destination_type(),
             'destination' => $redirect->destination(),
+            'destination_entry' => $redirect->destination_entry(),
             'match_type' => $redirect->matchType(),
             'type' => $redirect->type(),
             'enabled' => $redirect->enabled(),
