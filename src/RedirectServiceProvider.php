@@ -161,7 +161,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         Nav::extend(function (\Statamic\CP\Navigation\Nav $nav) {
             $items = [];
 
-            if (config('statamic.redirect.log_errors')) {
+            if (config('statamic.redirect.log_errors') && config('statamic.redirect.dashboard_enabled', true)) {
                 $items['Dashboard'] = cp_route('redirect.index');
             }
 
@@ -174,7 +174,7 @@ class RedirectServiceProvider extends AddonServiceProvider
             $navItem = $nav->item('Redirect');
             $navItem->section('Tools');
             $navItem->route(
-                config('statamic.redirect.log_errors')
+                config('statamic.redirect.log_errors') && config('statamic.redirect.dashboard_enabled', true)
                     ? 'redirect.index'
                     : 'redirect.redirects.index'
             );

@@ -7,6 +7,11 @@ return [
     'enable' => env('REDIRECT_ENABLED', true),
 
     /**
+     * Whether the Redirect dashboard should be enabled.
+     */
+    'dashboard_enabled' => env('REDIRECT_DASHBOARD_ENABLED', true),
+
+    /**
      * Whether Redirect should automatically run database migrations or not
      */
     'run_migrations' => env('REDIRECT_RUN_MIGRATIONS', true),
