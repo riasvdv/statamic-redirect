@@ -2,18 +2,19 @@
 
 namespace Rias\StatamicRedirect\Http\Controllers\Redirects;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
 use Statamic\Exceptions\FatalException;
 use Statamic\Facades\File;
-use Statamic\Facades\User;
 use Statamic\Support\Str;
 
 class ExportController
 {
+    use AuthorizesRequests;
+
     public function __invoke($type)
     {
-        $user = User::fromUser(auth()->user());
-
-        abort_unless($user->isSuper() || $user->hasPermission('view redirects'), 401);
+        $this->authorize('view', RedirectContract::class);
 
         $exporter = 'Rias\StatamicRedirect\Exporters\\'.Str::studly($type).'Exporter';
 

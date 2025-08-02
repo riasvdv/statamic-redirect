@@ -2,31 +2,30 @@
 
 namespace Rias\StatamicRedirect\Http\Controllers\Redirects;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Spatie\SimpleExcel\SimpleExcelReader;
 use Statamic\Facades\Site;
-use Statamic\Facades\User;
 
 class ImportRedirectsController
 {
+    use AuthorizesRequests;
+
     public function index()
     {
-        $user = User::fromUser(auth()->user());
-
-        abort_unless($user->isSuper() || $user->hasPermission('create redirects'), 401);
+        $this->authorize('create', RedirectContract::class);
 
         return view('redirect::redirects.import');
     }
 
     public function store(Request $request)
     {
-        $user = User::fromUser(auth()->user());
-
-        abort_unless($user->isSuper() || $user->hasPermission('create redirects'), 401);
+        $this->authorize('create', RedirectContract::class);
 
         $request->validate([
             'file' => ['required', 'file'],

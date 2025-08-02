@@ -44,6 +44,7 @@ function reordered(value) {
         <ui-dropdown>
           <ui-dropdown-menu>
             <ui-dropdown-item
+                v-if="can('create redirects')"
                 icon="upload"
                 text="Import CSV"
                 :href="cp_url('redirect/redirects/import')"
@@ -61,6 +62,7 @@ function reordered(value) {
           </ui-dropdown-menu>
         </ui-dropdown>
         <ui-button
+            v-if="can('create redirects')"
             :href="cp_url('redirect/redirects/create')"
             text="Create Redirect"
             variant="primary"
@@ -73,17 +75,20 @@ function reordered(value) {
           :action-url="actionUrl"
           :preferences-prefix="preferencesPrefix"
           :filters="filters"
-          :filters-for-reordering="filtersForReordering"
           :reorderable="view === 'tree'"
           push-query
           @request-completed="requestComplete"
           @reordered="reordered"
       >
           <template v-slot:[`cell-source`]="{ row: redirect }">
-              <a class="title-index-field" :href="redirect.edit_url" @click.stop>
+              <a v-if="can('edit redirects')" class="title-index-field" :href="redirect.edit_url" @click.stop>
                   <StatusIndicator :status="redirect.enabled ? 'published' : 'hidden'" />
                   <span v-text="redirect.source" />
               </a>
+            <span v-else class="title-index-field">
+              <StatusIndicator :status="redirect.enabled ? 'published' : 'hidden'" />
+              <span v-text="redirect.source" />
+            </span>
           </template>
           <template #prepended-row-actions="{ row: redirect }">
               <DropdownItem
