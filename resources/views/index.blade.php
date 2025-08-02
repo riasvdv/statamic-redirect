@@ -25,7 +25,13 @@
             {!! app(\Rias\StatamicRedirect\Widgets\ErrorsLastDayWidget::class)->html() !!}
         </div>
     @endif
-    {!! app(\Rias\StatamicRedirect\Widgets\ErrorsWidget::class)->html() !!}
+
+    <div class="grid grid-cols-2 gap-8 mb-8" style="grid-template-columns: 1fr 1fr;">
+        {!! app(\Rias\StatamicRedirect\Widgets\ErrorsWidget::class)->html() !!}
+        @php($topWidget = app(\Rias\StatamicRedirect\Widgets\TopErrorsWidget::class))
+        @php($topWidget->setConfig(['actions' => false]))
+        {!! $topWidget->html() !!}
+    </div>
 
     <x-statamic::docs-callout
         topic="Statamic Redirect"
