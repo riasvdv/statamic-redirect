@@ -1,13 +1,22 @@
 <?php
 
-namespace Rias\StatamicRedirect\Http\Controllers;
+namespace Rias\StatamicRedirect\Http\Controllers\Errors;
 
 use Rias\StatamicRedirect\Data\Error;
 use Statamic\CP\Breadcrumbs\Breadcrumb;
 use Statamic\CP\Breadcrumbs\Breadcrumbs;
+use Statamic\Facades\Scope;
 
 class ErrorController
 {
+    public function index()
+    {
+        return view('redirect::errors.index', [
+            'filters' => Scope::filters('errors'),
+            'actionUrl' => cp_route('redirect.errors.actions.run'),
+        ]);
+    }
+
     public function clearAll()
     {
         Error::query()->delete();
@@ -28,16 +37,6 @@ class ErrorController
 
     public function show(Error $error)
     {
-        Breadcrumbs::push(new Breadcrumb(
-            text: 'Redirect',
-            url: cp_route('redirect.index'),
-        ));
-
-        Breadcrumbs::push(new Breadcrumb(
-            text: 'Errors',
-            url: cp_route('redirect.index'),
-        ));
-
         Breadcrumbs::push(new Breadcrumb(
             text: 'Error details',
         ));

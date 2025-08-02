@@ -51,12 +51,12 @@ function reordered(value) {
             <ui-dropdown-item
                 icon="download"
                 text="Export as CSV"
-                :href="cp_url('redirect/export/csv?download=true')"
+                :href="cp_url('redirect/redirects/export/csv?download=true')"
             ></ui-dropdown-item>
             <ui-dropdown-item
                 icon="download"
                 text="Export as JSON"
-                :href="cp_url('redirect/export/json?download=true')"
+                :href="cp_url('redirect/redirects/export/json?download=true')"
             ></ui-dropdown-item>
           </ui-dropdown-menu>
         </ui-dropdown>

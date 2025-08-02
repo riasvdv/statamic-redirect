@@ -1,7 +1,6 @@
 @extends('statamic::layout')
 
 @section('title', 'Error details - ' . $error->url)
-@section('wrapper_class', 'max-w-3xl')
 
 @section('content')
     <ui-header title="Error details" icon="link">
