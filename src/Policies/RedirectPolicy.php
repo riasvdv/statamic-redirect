@@ -16,27 +16,27 @@ class RedirectPolicy
         }
     }
 
-    public function view($user, Redirect $redirect = null)
+    public function view($user, ?Redirect $redirect = null)
     {
         return User::fromUser($user)->hasPermission('view redirects');
     }
 
-    public function create($user, Redirect $redirect = null)
+    public function create($user, ?Redirect $redirect = null)
     {
         return User::fromUser($user)->hasPermission('create redirects');
     }
 
-    public function edit($user, Redirect $redirect = null)
+    public function edit($user, ?Redirect $redirect = null)
     {
         return User::fromUser($user)->hasPermission('edit redirects');
     }
 
-    public function delete($user, Redirect $redirect = null)
+    public function delete($user, ?Redirect $redirect = null)
     {
         return User::fromUser($user)->hasPermission('delete redirects');
     }
 
-    public function publish($user, Redirect $redirect = null)
+    public function publish($user, ?Redirect $redirect = null)
     {
         return User::fromUser($user)->hasPermission('edit redirects');
     }
