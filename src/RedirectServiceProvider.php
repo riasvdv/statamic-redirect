@@ -23,12 +23,12 @@ use Rias\StatamicRedirect\Stache\Redirects\RedirectRepository as StacheRedirectR
 use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Rias\StatamicRedirect\UpdateScripts\AddDescriptionColumnToRedirectsTable;
 use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
-use Rias\StatamicRedirect\UpdateScripts\AddLastUsedAtToRedirectsTable;
 use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
 use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnErrors;
 use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnRedirects;
 use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
 use Rias\StatamicRedirect\UpdateScripts\RenameLocaleToSiteOnRedirectsTable;
+use Rias\StatamicRedirect\UpdateScripts\Version4Upgrade;
 use Rias\StatamicRedirect\Widgets\ErrorsLastDayWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsLastMonthWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsLastWeekWidget;
@@ -52,7 +52,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         AddDescriptionColumnToRedirectsTable::class,
         IncreaseUrlSizeOnRedirects::class,
         IncreaseUrlSizeOnErrors::class,
-        AddLastUsedAtToRedirectsTable::class,
+        Version4Upgrade::class,
     ];
 
     protected $vite = [
@@ -254,6 +254,8 @@ class RedirectServiceProvider extends AddonServiceProvider
             (new \AddDescriptionToRedirectRedirectsTable)->up();
             require_once __DIR__.'/../database/migrations/increase_redirect_redirects_table_url_length.php.stub';
             (new \IncreaseRedirectRedirectsTableUrlLength)->up();
+            require_once __DIR__.'/../database/migrations/version_4_upgrade.php.stub';
+            (new \Version4UpgradeMigration)->up();
 
             DB::setDefaultConnection($defaultConnection);
         }
