@@ -15,8 +15,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandleNotFound
 {
-    /** @var array */
-    private $cachedRedirects;
+    private array $cachedRedirects;
 
     public function handle(Request $request, Closure $next)
     {
@@ -39,7 +38,7 @@ class HandleNotFound
             // Make sure it starts with '/'
             $uri = Str::start($uri, '/');
             // Make sure we remove any trailing slash
-            $uri = Str::substr(Str::finish($uri, '/'), 0, -1);
+            $uri = Str::chopEnd($uri, '/');
 
             $logErrors = config('statamic.redirect.log_errors', true);
 
@@ -55,7 +54,7 @@ class HandleNotFound
                     $this->markErrorHandled($error, $this->cachedRedirects[$site->handle()][$uri]['destination']);
                 }
 
-                if ((string) $this->cachedRedirects[$site->handle()][$uri]['type'] === (string) 410) {
+                if ((string) $this->cachedRedirects[$site->handle()][$uri]['type'] === '410') {
                     abort(410);
                 }
 
