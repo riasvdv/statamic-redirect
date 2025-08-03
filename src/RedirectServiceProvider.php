@@ -34,6 +34,8 @@ use Rias\StatamicRedirect\Widgets\ErrorsLastDayWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsLastMonthWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsLastWeekWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsWidget;
+use Statamic\Events\CollectionTreeSaved;
+use Statamic\Events\CollectionTreeSaving;
 use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
 use Statamic\Facades\CP\Nav;
@@ -72,7 +74,13 @@ class RedirectServiceProvider extends AddonServiceProvider
         EntrySaving::class => [
             CacheOldUri::class,
         ],
+        CollectionTreeSaving::class => [
+            CacheOldUri::class,
+        ],
         EntrySaved::class => [
+            CreateRedirect::class,
+        ],
+        CollectionTreeSaved::class => [
             CreateRedirect::class,
         ],
     ];
