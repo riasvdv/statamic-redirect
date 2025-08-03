@@ -31,7 +31,7 @@
                 <ui-table-rows>
                     @forelse ($error->hits->reverse() as $hit)
                         <ui-table-row>
-                            <ui-table-cell><p class="m-0 truncate w-64" title="{{ $hit->data['userAgent'] ?? '' }}">{{ $hit->data['userAgent'] ?? '' }}</p></ui-table-cell>
+                            <ui-table-cell><p class="m-0 truncate" style="max-width: 40vw" title="{{ $hit->data['userAgent'] ?? '' }}">{{ $hit->data['userAgent'] ?? '' }}</p></ui-table-cell>
                             <ui-table-cell>{{ $hit->data['ip'] ?? '' }}</ui-table-cell>
                             <ui-table-cell>{{ $hit->data['referer'] ?? '' }}</ui-table-cell>
                             <ui-table-cell><time datetime="{{ \Illuminate\Support\Carbon::createFromTimestamp($hit->timestamp)->toIso8601String() }}">{!! isset($hit->timestamp) ? str_replace(' ', '&nbsp;', \Illuminate\Support\Carbon::createFromTimestamp($hit['timestamp'])->diffForHumans()) : '' !!}</time></ui-table-cell>
