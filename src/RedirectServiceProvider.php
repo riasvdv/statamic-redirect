@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Rias\StatamicRedirect\Actions\Delete;
+use Rias\StatamicRedirect\Actions\Export;
 use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
 use Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository as EloquentRedirectRepository;
@@ -85,6 +86,7 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected $actions = [
         Delete::class,
+        Export::class,
     ];
 
     public function register()

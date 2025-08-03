@@ -2,6 +2,7 @@
 
 namespace Rias\StatamicRedirect\Exporters;
 
+use Illuminate\Support\Collection;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Statamic\Forms\Exporters\Exporter;
 
@@ -9,12 +10,19 @@ class JsonExporter extends Exporter
 {
     protected static string $title = 'Redirects';
 
+    public function __construct(
+        /** @var Collection<\Rias\StatamicRedirect\Data\Redirect> $items */
+        private ?Collection $items = null
+    ) {
+        $this->items = $items ?? Redirect::all();
+    }
+
     /**
      * Perform the export.
      */
     public function export(): string
     {
-        $submissions = Redirect::all()->map(function (\Rias\StatamicRedirect\Data\Redirect $redirect) {
+        $submissions = $this->items->map(function (\Rias\StatamicRedirect\Data\Redirect $redirect) {
             $redirectData = $redirect->fileData();
 
             if (! isset($redirectData['site'])) {
