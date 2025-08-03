@@ -4,8 +4,6 @@ use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Statamic\Facades\Collection;
 use Statamic\Facades\Entry;
-use Statamic\Facades\User;
-use Statamic\Structures\CollectionStructure;
 
 it('creates redirects when the uri of an entry changes', function () {
     Collection::make('blog')->routes('/blog/{slug}')->save();
@@ -147,5 +145,3 @@ it('doesn\'t remove redirects with a source the same as the new uri when configu
 
     expect(Redirect::all())->toHaveCount(2);
 });
-
-

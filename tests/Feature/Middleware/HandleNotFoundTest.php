@@ -5,7 +5,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
 use Rias\StatamicRedirect\Data\Error;
@@ -13,7 +12,6 @@ use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-
 
 beforeEach(function () {
     $this->middleware = app(HandleNotFound::class);
