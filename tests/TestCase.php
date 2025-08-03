@@ -1,19 +1,23 @@
 <?php
 
-namespace Rias\StatamicRedirect\Tests;
+namespace Tests;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Data\Hit;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\RedirectServiceProvider;
+use Statamic\Facades\Entry;
+use Statamic\Facades\Stache;
 use Statamic\Facades\User;
 use Statamic\Testing\AddonTestCase;
 
 class TestCase extends AddonTestCase
 {
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
     use WithFaker;
 
     protected string $addonServiceProvider = RedirectServiceProvider::class;
@@ -29,9 +33,12 @@ class TestCase extends AddonTestCase
 
         $this->faker = $this->makeFaker();
 
+        File::deleteDirectory(base_path('content/redirects'));
+        Entry::all()->each->delete();
         Error::truncate();
         Hit::truncate();
         Redirect::all()->each->delete();
+        Stache::clear();
     }
 
     /**
