@@ -41,6 +41,6 @@ class GenerateCloudflareRedirects extends Command
 
         File::put(base_path('_redirects'), $lines->implode("\n"));
 
-        $this->components->success("Redirects file generated in: " . base_path('_redirects'));
+        $this->components->success('Redirects file generated in: '.base_path('_redirects'));
     }
 }

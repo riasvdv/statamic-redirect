@@ -5,7 +5,6 @@ namespace Rias\StatamicRedirect\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Rias\StatamicRedirect\Data\Redirect;
-use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Facades\Redirect as RedirectFacade;
 use Statamic\Console\RunsInPlease;
 
@@ -35,12 +34,12 @@ class GenerateNetlifyRedirects extends Command
             txt;
         });
 
-        if (File::exists(base_path('netlify.toml')) && !$this->components->confirm('netlify.toml already exists. Do you want to overwrite it?')) {
+        if (File::exists(base_path('netlify.toml')) && ! $this->components->confirm('netlify.toml already exists. Do you want to overwrite it?')) {
             return;
         }
 
         File::put(base_path('netlify.toml'), $lines->implode("\n"));
 
-        $this->components->success("Redirects file generated in: " . base_path('netlify.toml'));
+        $this->components->success('Redirects file generated in: '.base_path('netlify.toml'));
     }
 }
