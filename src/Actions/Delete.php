@@ -29,7 +29,7 @@ class Delete extends \Statamic\Actions\Delete
         }
 
         if ($item instanceof Error) {
-            return cp_route('redirect.index');
+            return cp_route('redirect.errors.index');
         }
 
         return parent::redirect($items, $values);
