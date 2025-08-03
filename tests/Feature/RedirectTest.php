@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Event;
-use PHPUnit\Framework\Attributes\Test;
 use Rias\StatamicRedirect\Events\RedirectSaved;
 use Rias\StatamicRedirect\Facades\Redirect;
 

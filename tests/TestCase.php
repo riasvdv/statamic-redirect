@@ -4,7 +4,6 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Data\Hit;
