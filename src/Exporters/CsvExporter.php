@@ -38,7 +38,7 @@ class CsvExporter extends Exporter
 
         $this->insertData();
 
-        return (string)$this->writer;
+        return (string) $this->writer;
     }
 
     /**
@@ -50,7 +50,7 @@ class CsvExporter extends Exporter
 
         $headers = Arr::except($headers, array_search('id', $headers, true));
 
-        if (!in_array('site', $headers)) {
+        if (! in_array('site', $headers)) {
             $headers[] = 'site';
         }
 
@@ -65,7 +65,7 @@ class CsvExporter extends Exporter
         $data = $this->items->map(function (\Rias\StatamicRedirect\Data\Redirect $redirect) {
             $redirectData = $redirect->fileData();
 
-            if (!isset($redirectData['site'])) {
+            if (! isset($redirectData['site'])) {
                 $redirectData['site'] = $redirect->site()
                     ? $redirect->site()
                     : null;

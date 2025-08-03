@@ -19,7 +19,7 @@ class Export extends Action
                 'json' => 'JSON',
             ],
             'validate' => 'required',
-        ]
+        ],
     ];
 
     public function visibleTo($item)
