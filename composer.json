@@ -10,7 +10,7 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.10",
         "orchestra/testbench": "^v10.0.0",
-        "phpunit/phpunit": "^9.6|^10.4|^11.0|^12.0"
+        "pestphp/pest": "^3.8"
     },
     "autoload": {
         "psr-4": {
@@ -19,7 +19,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Rias\\StatamicRedirect\\Tests\\": "tests"
+            "Tests\\": "tests"
         }
     },
     "scripts": {
@@ -43,7 +43,8 @@
     },
     "config": {
         "allow-plugins": {
-            "pixelfear/composer-dist-plugin": true
+            "pixelfear/composer-dist-plugin": true,
+            "pestphp/pest-plugin": true
         }
     }
 }

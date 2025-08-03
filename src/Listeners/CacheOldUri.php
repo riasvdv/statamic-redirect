@@ -16,6 +16,10 @@ class CacheOldUri
         }
 
         if ($event instanceof EntrySaving) {
+            if (! $event->entry->id()) {
+                return;
+            }
+
             $this->cacheEntryUri($event->entry->id());
 
             return;
