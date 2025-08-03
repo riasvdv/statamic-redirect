@@ -20,7 +20,7 @@ class CreateRedirect
             return;
         }
 
-        match(true) {
+        match (true) {
             $event instanceof EntrySaved => $this->createRedirect($event->entry),
             $event instanceof CollectionTreeSaved => $this->createRedirect($this->treeToEntries($event->tree->tree())),
         };
@@ -34,7 +34,7 @@ class CreateRedirect
             $ids = array_merge($ids, $this->gatherEntryIds($item));
         }
 
-        foreach($ids as $id) {
+        foreach ($ids as $id) {
             Blink::forget('eloquent-entry-'.$id);
         }
 
