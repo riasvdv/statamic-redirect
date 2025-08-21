@@ -4,7 +4,7 @@
         "ext-json": "*",
         "php": "^8.2",
         "spatie/simple-excel": "^1.0|^2.0|^3.0",
-        "statamic/cms": "dev-master",
+        "statamic/cms": "^v6.0.0",
         "doctrine/dbal": "^4.2"
     },
     "require-dev": {
