@@ -11,7 +11,9 @@ class RedirectModel extends Model
 
     protected $guarded = [];
 
-    protected $casts = [];
+    protected $casts = [
+        'last_used_at' => 'datetime',
+    ];
 
     protected $table = 'redirects';
 

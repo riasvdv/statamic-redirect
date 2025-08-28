@@ -64,11 +64,13 @@ class RedirectRepository implements RepositoryContract
                 $matchRegEx = '`'.$source.'`i';
 
                 if (preg_match($matchRegEx, $url) === 1) {
-                    $redirect->destination(preg_replace(
-                        $matchRegEx,
-                        $redirect->destination(),
-                        $url
-                    ));
+                    if (str_contains($redirect->destination(), '$')) {
+                        $redirect->destination(preg_replace(
+                            $matchRegEx,
+                            $redirect->destination(),
+                            $url
+                        ));
+                    }
 
                     return $redirect;
                 }
@@ -100,7 +102,7 @@ class RedirectRepository implements RepositoryContract
 
     public function make(): Redirect
     {
-        return new Redirect();
+        return new Redirect;
     }
 
     public static function fromModel(Model $model)
@@ -109,13 +111,16 @@ class RedirectRepository implements RepositoryContract
             ->id($model->id)
             ->source($model->source)
             ->source_md5(md5($model->source))
+            ->destination_type($model->destination_type)
             ->destination($model->destination)
+            ->destination_entry($model->destination_entry)
             ->type($model->type)
             ->matchType($model->match_type)
             ->enabled($model->enabled)
             ->order($model->order)
             ->site($model->site)
-            ->description($model->description);
+            ->description($model->description)
+            ->lastUsedAt($model->last_used_at);
     }
 
     private function toModel(Redirect $redirect)
@@ -123,13 +128,16 @@ class RedirectRepository implements RepositoryContract
         $properties = [
             'source' => $redirect->source(),
             'source_md5' => md5($redirect->source()),
+            'destination_type' => $redirect->destination_type(),
             'destination' => $redirect->destination(),
+            'destination_entry' => $redirect->destination_entry(),
             'match_type' => $redirect->matchType(),
             'type' => $redirect->type(),
             'enabled' => $redirect->enabled(),
             'order' => $redirect->order(),
             'site' => $redirect->site(),
             'description' => $redirect->description(),
+            'last_used_at' => $redirect->lastUsedAt(),
         ];
 
         $model = RedirectModel::firstOrNew(['id' => $redirect->id()], $properties);

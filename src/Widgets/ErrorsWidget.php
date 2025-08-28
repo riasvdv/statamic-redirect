@@ -14,7 +14,7 @@ class ErrorsWidget extends Widget
         $query->limit($this->config('limit', 5));
 
         return view('redirect::widgets.errors', [
-            'title' => $this->config('title', __('404 Errors')),
+            'title' => $this->config('title', __('Recent 404 Errors')),
             'errors' => $query->get(),
         ]);
     }

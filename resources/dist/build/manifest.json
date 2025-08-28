@@ -1,0 +1,2277 @@
+{
+  "_runtime-core.esm-bundler-ClfZ1o77.js": {
+    "file": "assets/runtime-core.esm-bundler-ClfZ1o77.js",
+    "name": "runtime-core.esm-bundler"
+  },
+  "resources/js/cp.js": {
+    "file": "assets/cp-DVIIN_Vt.js",
+    "name": "cp",
+    "src": "resources/js/cp.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "vendor/statamic/cms/resources/svg/icons/add-bookmark.svg",
+      "vendor/statamic/cms/resources/svg/icons/add-circle.svg",
+      "vendor/statamic/cms/resources/svg/icons/add-entry.svg",
+      "vendor/statamic/cms/resources/svg/icons/add-folder.svg",
+      "vendor/statamic/cms/resources/svg/icons/add-group.svg",
+      "vendor/statamic/cms/resources/svg/icons/add-item.svg",
+      "vendor/statamic/cms/resources/svg/icons/add-link.svg",
+      "vendor/statamic/cms/resources/svg/icons/add-list.svg",
+      "vendor/statamic/cms/resources/svg/icons/add-section.svg",
+      "vendor/statamic/cms/resources/svg/icons/add-sticky.svg",
+      "vendor/statamic/cms/resources/svg/icons/add-tag.svg",
+      "vendor/statamic/cms/resources/svg/icons/add-user.svg",
+      "vendor/statamic/cms/resources/svg/icons/addons.svg",
+      "vendor/statamic/cms/resources/svg/icons/ai.svg",
+      "vendor/statamic/cms/resources/svg/icons/align-center.svg",
+      "vendor/statamic/cms/resources/svg/icons/align-left.svg",
+      "vendor/statamic/cms/resources/svg/icons/align-right.svg",
+      "vendor/statamic/cms/resources/svg/icons/arrow-down.svg",
+      "vendor/statamic/cms/resources/svg/icons/arrow-left.svg",
+      "vendor/statamic/cms/resources/svg/icons/arrow-right.svg",
+      "vendor/statamic/cms/resources/svg/icons/arrow-up-right.svg",
+      "vendor/statamic/cms/resources/svg/icons/asset-folder.svg",
+      "vendor/statamic/cms/resources/svg/icons/assets.svg",
+      "vendor/statamic/cms/resources/svg/icons/avatar.svg",
+      "vendor/statamic/cms/resources/svg/icons/bell.svg",
+      "vendor/statamic/cms/resources/svg/icons/blueprint-edit.svg",
+      "vendor/statamic/cms/resources/svg/icons/blueprints.svg",
+      "vendor/statamic/cms/resources/svg/icons/book-next-page.svg",
+      "vendor/statamic/cms/resources/svg/icons/book-prev-page.svg",
+      "vendor/statamic/cms/resources/svg/icons/burger-menu.svg",
+      "vendor/statamic/cms/resources/svg/icons/cache.svg",
+      "vendor/statamic/cms/resources/svg/icons/calendar.svg",
+      "vendor/statamic/cms/resources/svg/icons/checkmark.svg",
+      "vendor/statamic/cms/resources/svg/icons/clipboard-check.svg",
+      "vendor/statamic/cms/resources/svg/icons/clipboard.svg",
+      "vendor/statamic/cms/resources/svg/icons/cog-solid.svg",
+      "vendor/statamic/cms/resources/svg/icons/cog.svg",
+      "vendor/statamic/cms/resources/svg/icons/collections.svg",
+      "vendor/statamic/cms/resources/svg/icons/columns.svg",
+      "vendor/statamic/cms/resources/svg/icons/configure.svg",
+      "vendor/statamic/cms/resources/svg/icons/container-add.svg",
+      "vendor/statamic/cms/resources/svg/icons/credit-card.svg",
+      "vendor/statamic/cms/resources/svg/icons/dashboard.svg",
+      "vendor/statamic/cms/resources/svg/icons/delete.svg",
+      "vendor/statamic/cms/resources/svg/icons/docs.svg",
+      "vendor/statamic/cms/resources/svg/icons/down-square.svg",
+      "vendor/statamic/cms/resources/svg/icons/download.svg",
+      "vendor/statamic/cms/resources/svg/icons/duplicate.svg",
+      "vendor/statamic/cms/resources/svg/icons/earth.svg",
+      "vendor/statamic/cms/resources/svg/icons/edit.svg",
+      "vendor/statamic/cms/resources/svg/icons/entry.svg",
+      "vendor/statamic/cms/resources/svg/icons/external-link-original.svg",
+      "vendor/statamic/cms/resources/svg/icons/external-link.svg",
+      "vendor/statamic/cms/resources/svg/icons/eye-closed.svg",
+      "vendor/statamic/cms/resources/svg/icons/eye-slash.svg",
+      "vendor/statamic/cms/resources/svg/icons/eye.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldsets.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-array.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-assets.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-bard.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-button_group.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-checkboxes.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-code.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-collections.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-color.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-date.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-dictionary.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-entries.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-float.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-form.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-grid.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-group.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-hidden.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-html.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-icon_picker.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-integer.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-link.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-list.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-markdown.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-navigation.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-radio.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-range.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-replicator.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-revealer.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-section.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-select.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-sites.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-slug.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-spacer.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-structures.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-table.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-taggable.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-taxonomy.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-template.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-text.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-textarea.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-time.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-toggle.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-user_groups.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-user_roles.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-users.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-video.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-width.svg",
+      "vendor/statamic/cms/resources/svg/icons/fieldtype-yaml.svg",
+      "vendor/statamic/cms/resources/svg/icons/filter-2.svg",
+      "vendor/statamic/cms/resources/svg/icons/filter.svg",
+      "vendor/statamic/cms/resources/svg/icons/fingerprint.svg",
+      "vendor/statamic/cms/resources/svg/icons/fit-height.svg",
+      "vendor/statamic/cms/resources/svg/icons/fit-width.svg",
+      "vendor/statamic/cms/resources/svg/icons/focus.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-add.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-ai.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-block.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-check.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-download.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-edit.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-ghost.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-history.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-lock.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-music.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-open.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-photos.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-play.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-remove.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-settings.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder-warning.svg",
+      "vendor/statamic/cms/resources/svg/icons/folder.svg",
+      "vendor/statamic/cms/resources/svg/icons/forms.svg",
+      "vendor/statamic/cms/resources/svg/icons/git.svg",
+      "vendor/statamic/cms/resources/svg/icons/globals.svg",
+      "vendor/statamic/cms/resources/svg/icons/graphql.svg",
+      "vendor/statamic/cms/resources/svg/icons/groups.svg",
+      "vendor/statamic/cms/resources/svg/icons/handles-sm.svg",
+      "vendor/statamic/cms/resources/svg/icons/handles.svg",
+      "vendor/statamic/cms/resources/svg/icons/heart.svg",
+      "vendor/statamic/cms/resources/svg/icons/hierarchy.svg",
+      "vendor/statamic/cms/resources/svg/icons/history.svg",
+      "vendor/statamic/cms/resources/svg/icons/home.svg",
+      "vendor/statamic/cms/resources/svg/icons/info-square.svg",
+      "vendor/statamic/cms/resources/svg/icons/info.svg",
+      "vendor/statamic/cms/resources/svg/icons/key.svg",
+      "vendor/statamic/cms/resources/svg/icons/layout-grid.svg",
+      "vendor/statamic/cms/resources/svg/icons/layout-list.svg",
+      "vendor/statamic/cms/resources/svg/icons/layout-masonry.svg",
+      "vendor/statamic/cms/resources/svg/icons/license.svg",
+      "vendor/statamic/cms/resources/svg/icons/link.svg",
+      "vendor/statamic/cms/resources/svg/icons/live-preview.svg",
+      "vendor/statamic/cms/resources/svg/icons/loading.svg",
+      "vendor/statamic/cms/resources/svg/icons/magnifying-glass.svg",
+      "vendor/statamic/cms/resources/svg/icons/mail-check.svg",
+      "vendor/statamic/cms/resources/svg/icons/mail-settings.svg",
+      "vendor/statamic/cms/resources/svg/icons/mail.svg",
+      "vendor/statamic/cms/resources/svg/icons/markdown.svg",
+      "vendor/statamic/cms/resources/svg/icons/mask.svg",
+      "vendor/statamic/cms/resources/svg/icons/maximize.svg",
+      "vendor/statamic/cms/resources/svg/icons/megaphone.svg",
+      "vendor/statamic/cms/resources/svg/icons/memory.svg",
+      "vendor/statamic/cms/resources/svg/icons/minimize.svg",
+      "vendor/statamic/cms/resources/svg/icons/monitor.svg",
+      "vendor/statamic/cms/resources/svg/icons/moon.svg",
+      "vendor/statamic/cms/resources/svg/icons/move-folder.svg",
+      "vendor/statamic/cms/resources/svg/icons/navigation.svg",
+      "vendor/statamic/cms/resources/svg/icons/page-ghost.svg",
+      "vendor/statamic/cms/resources/svg/icons/page.svg",
+      "vendor/statamic/cms/resources/svg/icons/palette.svg",
+      "vendor/statamic/cms/resources/svg/icons/pdf.svg",
+      "vendor/statamic/cms/resources/svg/icons/pencil-line.svg",
+      "vendor/statamic/cms/resources/svg/icons/pencil.svg",
+      "vendor/statamic/cms/resources/svg/icons/permissions.svg",
+      "vendor/statamic/cms/resources/svg/icons/phone-lock.svg",
+      "vendor/statamic/cms/resources/svg/icons/pin.svg",
+      "vendor/statamic/cms/resources/svg/icons/playground.svg",
+      "vendor/statamic/cms/resources/svg/icons/plus.svg",
+      "vendor/statamic/cms/resources/svg/icons/preferences.svg",
+      "vendor/statamic/cms/resources/svg/icons/pro-ribbon.svg",
+      "vendor/statamic/cms/resources/svg/icons/pulse.svg",
+      "vendor/statamic/cms/resources/svg/icons/rename.svg",
+      "vendor/statamic/cms/resources/svg/icons/replace.svg",
+      "vendor/statamic/cms/resources/svg/icons/return-square.svg",
+      "vendor/statamic/cms/resources/svg/icons/rewind.svg",
+      "vendor/statamic/cms/resources/svg/icons/rss.svg",
+      "vendor/statamic/cms/resources/svg/icons/save.svg",
+      "vendor/statamic/cms/resources/svg/icons/scaffold.svg",
+      "vendor/statamic/cms/resources/svg/icons/script.svg",
+      "vendor/statamic/cms/resources/svg/icons/sign-in.svg",
+      "vendor/statamic/cms/resources/svg/icons/sign-out.svg",
+      "vendor/statamic/cms/resources/svg/icons/site-settings.svg",
+      "vendor/statamic/cms/resources/svg/icons/site.svg",
+      "vendor/statamic/cms/resources/svg/icons/slider.svg",
+      "vendor/statamic/cms/resources/svg/icons/sliders-horizontal.svg",
+      "vendor/statamic/cms/resources/svg/icons/sliders-vertical.svg",
+      "vendor/statamic/cms/resources/svg/icons/star-half.svg",
+      "vendor/statamic/cms/resources/svg/icons/star.svg",
+      "vendor/statamic/cms/resources/svg/icons/statamic-logo-lime.svg",
+      "vendor/statamic/cms/resources/svg/icons/statamic-mark-lime.svg",
+      "vendor/statamic/cms/resources/svg/icons/steps.svg",
+      "vendor/statamic/cms/resources/svg/icons/sun.svg",
+      "vendor/statamic/cms/resources/svg/icons/support.svg",
+      "vendor/statamic/cms/resources/svg/icons/synced.svg",
+      "vendor/statamic/cms/resources/svg/icons/taxonomies.svg",
+      "vendor/statamic/cms/resources/svg/icons/team.svg",
+      "vendor/statamic/cms/resources/svg/icons/time-now.svg",
+      "vendor/statamic/cms/resources/svg/icons/trash.svg",
+      "vendor/statamic/cms/resources/svg/icons/tree-collapse.svg",
+      "vendor/statamic/cms/resources/svg/icons/tree-expand.svg",
+      "vendor/statamic/cms/resources/svg/icons/unsynced.svg",
+      "vendor/statamic/cms/resources/svg/icons/up-down.svg",
+      "vendor/statamic/cms/resources/svg/icons/up-square.svg",
+      "vendor/statamic/cms/resources/svg/icons/updates.svg",
+      "vendor/statamic/cms/resources/svg/icons/upload-cloud.svg",
+      "vendor/statamic/cms/resources/svg/icons/upload.svg",
+      "vendor/statamic/cms/resources/svg/icons/users.svg",
+      "vendor/statamic/cms/resources/svg/icons/utilities.svg",
+      "vendor/statamic/cms/resources/svg/icons/visit-website.svg",
+      "vendor/statamic/cms/resources/svg/icons/wand.svg",
+      "vendor/statamic/cms/resources/svg/icons/warning-diamond.svg",
+      "vendor/statamic/cms/resources/svg/icons/web.svg",
+      "vendor/statamic/cms/resources/svg/icons/workflow.svg",
+      "vendor/statamic/cms/resources/svg/icons/x.svg",
+      "vendor/statamic/cms/resources/svg/ui/architectural-lines.svg",
+      "vendor/statamic/cms/resources/svg/ui/chevron-down.svg",
+      "vendor/statamic/cms/resources/svg/ui/chevron-left.svg",
+      "vendor/statamic/cms/resources/svg/ui/chevron-right.svg",
+      "vendor/statamic/cms/resources/svg/ui/chevron-vertical.svg",
+      "vendor/statamic/cms/resources/svg/ui/dots.svg",
+      "vendor/statamic/cms/resources/svg/ui/drag-dots.svg"
+    ],
+    "css": [
+      "assets/cp-DCLkPxW3.css"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/add-bookmark.svg": {
+    "file": "assets/add-bookmark-D9j0KtVr.js",
+    "name": "add-bookmark",
+    "src": "vendor/statamic/cms/resources/svg/icons/add-bookmark.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/add-circle.svg": {
+    "file": "assets/add-circle-Cn5qhDDR.js",
+    "name": "add-circle",
+    "src": "vendor/statamic/cms/resources/svg/icons/add-circle.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/add-entry.svg": {
+    "file": "assets/add-entry-4lMS8iny.js",
+    "name": "add-entry",
+    "src": "vendor/statamic/cms/resources/svg/icons/add-entry.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/add-folder.svg": {
+    "file": "assets/add-folder-DONKkV5V.js",
+    "name": "add-folder",
+    "src": "vendor/statamic/cms/resources/svg/icons/add-folder.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/add-group.svg": {
+    "file": "assets/add-group-DmeVapEP.js",
+    "name": "add-group",
+    "src": "vendor/statamic/cms/resources/svg/icons/add-group.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/add-item.svg": {
+    "file": "assets/add-item-Bdi9R6LA.js",
+    "name": "add-item",
+    "src": "vendor/statamic/cms/resources/svg/icons/add-item.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/add-link.svg": {
+    "file": "assets/add-link-Cqp2YjZa.js",
+    "name": "add-link",
+    "src": "vendor/statamic/cms/resources/svg/icons/add-link.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/add-list.svg": {
+    "file": "assets/add-list-xKjXXf5K.js",
+    "name": "add-list",
+    "src": "vendor/statamic/cms/resources/svg/icons/add-list.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/add-section.svg": {
+    "file": "assets/add-section-ejXT_OuG.js",
+    "name": "add-section",
+    "src": "vendor/statamic/cms/resources/svg/icons/add-section.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/add-sticky.svg": {
+    "file": "assets/add-sticky-BbHvS7be.js",
+    "name": "add-sticky",
+    "src": "vendor/statamic/cms/resources/svg/icons/add-sticky.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/add-tag.svg": {
+    "file": "assets/add-tag-V_2SPva9.js",
+    "name": "add-tag",
+    "src": "vendor/statamic/cms/resources/svg/icons/add-tag.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/add-user.svg": {
+    "file": "assets/add-user-M0j17I3C.js",
+    "name": "add-user",
+    "src": "vendor/statamic/cms/resources/svg/icons/add-user.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/addons.svg": {
+    "file": "assets/addons-BqnzucEH.js",
+    "name": "addons",
+    "src": "vendor/statamic/cms/resources/svg/icons/addons.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/ai.svg": {
+    "file": "assets/ai-B768do-K.js",
+    "name": "ai",
+    "src": "vendor/statamic/cms/resources/svg/icons/ai.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/align-center.svg": {
+    "file": "assets/align-center-DH_jPa_4.js",
+    "name": "align-center",
+    "src": "vendor/statamic/cms/resources/svg/icons/align-center.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/align-left.svg": {
+    "file": "assets/align-left-BvL5N9rE.js",
+    "name": "align-left",
+    "src": "vendor/statamic/cms/resources/svg/icons/align-left.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/align-right.svg": {
+    "file": "assets/align-right-CiXLdLKa.js",
+    "name": "align-right",
+    "src": "vendor/statamic/cms/resources/svg/icons/align-right.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/arrow-down.svg": {
+    "file": "assets/arrow-down-1eT9E5Wd.js",
+    "name": "arrow-down",
+    "src": "vendor/statamic/cms/resources/svg/icons/arrow-down.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/arrow-left.svg": {
+    "file": "assets/arrow-left-9_JT7JdY.js",
+    "name": "arrow-left",
+    "src": "vendor/statamic/cms/resources/svg/icons/arrow-left.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/arrow-right.svg": {
+    "file": "assets/arrow-right-B4-w5u0e.js",
+    "name": "arrow-right",
+    "src": "vendor/statamic/cms/resources/svg/icons/arrow-right.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/arrow-up-right.svg": {
+    "file": "assets/arrow-up-right-DhkQ0CLf.js",
+    "name": "arrow-up-right",
+    "src": "vendor/statamic/cms/resources/svg/icons/arrow-up-right.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/asset-folder.svg": {
+    "file": "assets/asset-folder-BrshfFkH.js",
+    "name": "asset-folder",
+    "src": "vendor/statamic/cms/resources/svg/icons/asset-folder.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/assets.svg": {
+    "file": "assets/assets-BBcfdbCA.js",
+    "name": "assets",
+    "src": "vendor/statamic/cms/resources/svg/icons/assets.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/avatar.svg": {
+    "file": "assets/avatar-CUduWqC1.js",
+    "name": "avatar",
+    "src": "vendor/statamic/cms/resources/svg/icons/avatar.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/bell.svg": {
+    "file": "assets/bell-MfNsEAb1.js",
+    "name": "bell",
+    "src": "vendor/statamic/cms/resources/svg/icons/bell.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/blueprint-edit.svg": {
+    "file": "assets/blueprint-edit-CosP1Aod.js",
+    "name": "blueprint-edit",
+    "src": "vendor/statamic/cms/resources/svg/icons/blueprint-edit.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/blueprints.svg": {
+    "file": "assets/blueprints-fQ8CuLzz.js",
+    "name": "blueprints",
+    "src": "vendor/statamic/cms/resources/svg/icons/blueprints.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/book-next-page.svg": {
+    "file": "assets/book-next-page-Bk-oQFWL.js",
+    "name": "book-next-page",
+    "src": "vendor/statamic/cms/resources/svg/icons/book-next-page.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/book-prev-page.svg": {
+    "file": "assets/book-prev-page-CY12Dd38.js",
+    "name": "book-prev-page",
+    "src": "vendor/statamic/cms/resources/svg/icons/book-prev-page.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/burger-menu.svg": {
+    "file": "assets/burger-menu-BwnQmsHL.js",
+    "name": "burger-menu",
+    "src": "vendor/statamic/cms/resources/svg/icons/burger-menu.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/cache.svg": {
+    "file": "assets/cache-DTr0fn93.js",
+    "name": "cache",
+    "src": "vendor/statamic/cms/resources/svg/icons/cache.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/calendar.svg": {
+    "file": "assets/calendar-BVi5Mvqi.js",
+    "name": "calendar",
+    "src": "vendor/statamic/cms/resources/svg/icons/calendar.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/checkmark.svg": {
+    "file": "assets/checkmark-DNCK4byV.js",
+    "name": "checkmark",
+    "src": "vendor/statamic/cms/resources/svg/icons/checkmark.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/clipboard-check.svg": {
+    "file": "assets/clipboard-check-DXsKiGxG.js",
+    "name": "clipboard-check",
+    "src": "vendor/statamic/cms/resources/svg/icons/clipboard-check.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/clipboard.svg": {
+    "file": "assets/clipboard-BR2whdiX.js",
+    "name": "clipboard",
+    "src": "vendor/statamic/cms/resources/svg/icons/clipboard.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/cog-solid.svg": {
+    "file": "assets/cog-solid-CMpTQIy9.js",
+    "name": "cog-solid",
+    "src": "vendor/statamic/cms/resources/svg/icons/cog-solid.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/cog.svg": {
+    "file": "assets/cog-DdhK6uqd.js",
+    "name": "cog",
+    "src": "vendor/statamic/cms/resources/svg/icons/cog.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/collections.svg": {
+    "file": "assets/collections-QrVdoJGT.js",
+    "name": "collections",
+    "src": "vendor/statamic/cms/resources/svg/icons/collections.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/columns.svg": {
+    "file": "assets/columns-hK-aY-j_.js",
+    "name": "columns",
+    "src": "vendor/statamic/cms/resources/svg/icons/columns.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/configure.svg": {
+    "file": "assets/configure-DZkLFYFY.js",
+    "name": "configure",
+    "src": "vendor/statamic/cms/resources/svg/icons/configure.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/container-add.svg": {
+    "file": "assets/container-add-CGLORPYE.js",
+    "name": "container-add",
+    "src": "vendor/statamic/cms/resources/svg/icons/container-add.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/credit-card.svg": {
+    "file": "assets/credit-card-BL02ZZVN.js",
+    "name": "credit-card",
+    "src": "vendor/statamic/cms/resources/svg/icons/credit-card.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/dashboard.svg": {
+    "file": "assets/dashboard-CT8qw_WP.js",
+    "name": "dashboard",
+    "src": "vendor/statamic/cms/resources/svg/icons/dashboard.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/delete.svg": {
+    "file": "assets/delete-By2XnQAG.js",
+    "name": "delete",
+    "src": "vendor/statamic/cms/resources/svg/icons/delete.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/docs.svg": {
+    "file": "assets/docs-4hlcuFRJ.js",
+    "name": "docs",
+    "src": "vendor/statamic/cms/resources/svg/icons/docs.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/down-square.svg": {
+    "file": "assets/down-square-D8uISXvk.js",
+    "name": "down-square",
+    "src": "vendor/statamic/cms/resources/svg/icons/down-square.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/download.svg": {
+    "file": "assets/download-C4SVzDbH.js",
+    "name": "download",
+    "src": "vendor/statamic/cms/resources/svg/icons/download.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/duplicate.svg": {
+    "file": "assets/duplicate-BZMTR5g6.js",
+    "name": "duplicate",
+    "src": "vendor/statamic/cms/resources/svg/icons/duplicate.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/earth.svg": {
+    "file": "assets/earth-Bo1F5OvY.js",
+    "name": "earth",
+    "src": "vendor/statamic/cms/resources/svg/icons/earth.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/edit.svg": {
+    "file": "assets/edit-Dd9oD1WP.js",
+    "name": "edit",
+    "src": "vendor/statamic/cms/resources/svg/icons/edit.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/entry.svg": {
+    "file": "assets/entry-BKWNtmH4.js",
+    "name": "entry",
+    "src": "vendor/statamic/cms/resources/svg/icons/entry.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/external-link-original.svg": {
+    "file": "assets/external-link-original-DM7BwnY_.js",
+    "name": "external-link-original",
+    "src": "vendor/statamic/cms/resources/svg/icons/external-link-original.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/external-link.svg": {
+    "file": "assets/external-link-DAzdfvVF.js",
+    "name": "external-link",
+    "src": "vendor/statamic/cms/resources/svg/icons/external-link.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/eye-closed.svg": {
+    "file": "assets/eye-closed-BViZL2Vw.js",
+    "name": "eye-closed",
+    "src": "vendor/statamic/cms/resources/svg/icons/eye-closed.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/eye-slash.svg": {
+    "file": "assets/eye-slash-B_IoQfDb.js",
+    "name": "eye-slash",
+    "src": "vendor/statamic/cms/resources/svg/icons/eye-slash.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/eye.svg": {
+    "file": "assets/eye-C6DqJyf5.js",
+    "name": "eye",
+    "src": "vendor/statamic/cms/resources/svg/icons/eye.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldsets.svg": {
+    "file": "assets/fieldsets-B8ywnYle.js",
+    "name": "fieldsets",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldsets.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-array.svg": {
+    "file": "assets/fieldtype-array-TkPVTzEV.js",
+    "name": "fieldtype-array",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-array.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-assets.svg": {
+    "file": "assets/fieldtype-assets-B3JKPZqh.js",
+    "name": "fieldtype-assets",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-assets.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-bard.svg": {
+    "file": "assets/fieldtype-bard-CoisKYn6.js",
+    "name": "fieldtype-bard",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-bard.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-button_group.svg": {
+    "file": "assets/fieldtype-button_group-BXa94FXw.js",
+    "name": "fieldtype-button_group",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-button_group.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-checkboxes.svg": {
+    "file": "assets/fieldtype-checkboxes-CVCTWanS.js",
+    "name": "fieldtype-checkboxes",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-checkboxes.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-code.svg": {
+    "file": "assets/fieldtype-code-DyPQvvi2.js",
+    "name": "fieldtype-code",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-code.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-collections.svg": {
+    "file": "assets/fieldtype-collections-Ddb9_r5r.js",
+    "name": "fieldtype-collections",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-collections.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-color.svg": {
+    "file": "assets/fieldtype-color-B_zbLGYt.js",
+    "name": "fieldtype-color",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-color.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-date.svg": {
+    "file": "assets/fieldtype-date-BsIeC0sD.js",
+    "name": "fieldtype-date",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-date.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-dictionary.svg": {
+    "file": "assets/fieldtype-dictionary-ByDbLbY8.js",
+    "name": "fieldtype-dictionary",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-dictionary.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-entries.svg": {
+    "file": "assets/fieldtype-entries-IXE1J73R.js",
+    "name": "fieldtype-entries",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-entries.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-float.svg": {
+    "file": "assets/fieldtype-float-DUL_Lj8t.js",
+    "name": "fieldtype-float",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-float.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-form.svg": {
+    "file": "assets/fieldtype-form-DGgTnrwU.js",
+    "name": "fieldtype-form",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-form.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-grid.svg": {
+    "file": "assets/fieldtype-grid-B-yU2GtN.js",
+    "name": "fieldtype-grid",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-grid.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-group.svg": {
+    "file": "assets/fieldtype-group-08e1b5zz.js",
+    "name": "fieldtype-group",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-group.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-hidden.svg": {
+    "file": "assets/fieldtype-hidden-mDLfTM4v.js",
+    "name": "fieldtype-hidden",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-hidden.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-html.svg": {
+    "file": "assets/fieldtype-html-DFo4YvKT.js",
+    "name": "fieldtype-html",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-html.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-icon_picker.svg": {
+    "file": "assets/fieldtype-icon_picker-BGd0PCQ4.js",
+    "name": "fieldtype-icon_picker",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-icon_picker.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-integer.svg": {
+    "file": "assets/fieldtype-integer-CcyDSz53.js",
+    "name": "fieldtype-integer",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-integer.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-link.svg": {
+    "file": "assets/fieldtype-link-5uK5s4jF.js",
+    "name": "fieldtype-link",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-link.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-list.svg": {
+    "file": "assets/fieldtype-list-s0uDgmNl.js",
+    "name": "fieldtype-list",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-list.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-markdown.svg": {
+    "file": "assets/fieldtype-markdown-DI1FVKvr.js",
+    "name": "fieldtype-markdown",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-markdown.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-navigation.svg": {
+    "file": "assets/fieldtype-navigation-CEfE_8he.js",
+    "name": "fieldtype-navigation",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-navigation.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-radio.svg": {
+    "file": "assets/fieldtype-radio-zTnlc42Y.js",
+    "name": "fieldtype-radio",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-radio.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-range.svg": {
+    "file": "assets/fieldtype-range-CMzlb38r.js",
+    "name": "fieldtype-range",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-range.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-replicator.svg": {
+    "file": "assets/fieldtype-replicator-B6rfefH_.js",
+    "name": "fieldtype-replicator",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-replicator.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-revealer.svg": {
+    "file": "assets/fieldtype-revealer-BRrnb79g.js",
+    "name": "fieldtype-revealer",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-revealer.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-section.svg": {
+    "file": "assets/fieldtype-section-D4g0rpHO.js",
+    "name": "fieldtype-section",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-section.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-select.svg": {
+    "file": "assets/fieldtype-select-BS3KPqSx.js",
+    "name": "fieldtype-select",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-select.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-sites.svg": {
+    "file": "assets/fieldtype-sites-CDKzkyj8.js",
+    "name": "fieldtype-sites",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-sites.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-slug.svg": {
+    "file": "assets/fieldtype-slug-D1REVFlc.js",
+    "name": "fieldtype-slug",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-slug.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-spacer.svg": {
+    "file": "assets/fieldtype-spacer-BuRQflGQ.js",
+    "name": "fieldtype-spacer",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-spacer.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-structures.svg": {
+    "file": "assets/fieldtype-structures-DaSaD0Yj.js",
+    "name": "fieldtype-structures",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-structures.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-table.svg": {
+    "file": "assets/fieldtype-table-BcDIxkAa.js",
+    "name": "fieldtype-table",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-table.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-taggable.svg": {
+    "file": "assets/fieldtype-taggable-DxgZ3k3G.js",
+    "name": "fieldtype-taggable",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-taggable.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-taxonomy.svg": {
+    "file": "assets/fieldtype-taxonomy-BsfcyJg7.js",
+    "name": "fieldtype-taxonomy",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-taxonomy.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-template.svg": {
+    "file": "assets/fieldtype-template-DETOa4xb.js",
+    "name": "fieldtype-template",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-template.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-text.svg": {
+    "file": "assets/fieldtype-text-DTPDGNoS.js",
+    "name": "fieldtype-text",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-text.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-textarea.svg": {
+    "file": "assets/fieldtype-textarea-CRW3x1_4.js",
+    "name": "fieldtype-textarea",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-textarea.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-time.svg": {
+    "file": "assets/fieldtype-time-C3lCfe8I.js",
+    "name": "fieldtype-time",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-time.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-toggle.svg": {
+    "file": "assets/fieldtype-toggle-BCXx52yP.js",
+    "name": "fieldtype-toggle",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-toggle.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-user_groups.svg": {
+    "file": "assets/fieldtype-user_groups-CbZmf4vl.js",
+    "name": "fieldtype-user_groups",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-user_groups.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-user_roles.svg": {
+    "file": "assets/fieldtype-user_roles-Dhq0FRu_.js",
+    "name": "fieldtype-user_roles",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-user_roles.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-users.svg": {
+    "file": "assets/fieldtype-users-Bnw2468V.js",
+    "name": "fieldtype-users",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-users.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-video.svg": {
+    "file": "assets/fieldtype-video-BOVK9liA.js",
+    "name": "fieldtype-video",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-video.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-width.svg": {
+    "file": "assets/fieldtype-width-ClxIjGv3.js",
+    "name": "fieldtype-width",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-width.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fieldtype-yaml.svg": {
+    "file": "assets/fieldtype-yaml-TkPVTzEV.js",
+    "name": "fieldtype-yaml",
+    "src": "vendor/statamic/cms/resources/svg/icons/fieldtype-yaml.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/filter-2.svg": {
+    "file": "assets/filter-2-Dpd8BbpR.js",
+    "name": "filter-2",
+    "src": "vendor/statamic/cms/resources/svg/icons/filter-2.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/filter.svg": {
+    "file": "assets/filter-jyfxrNAw.js",
+    "name": "filter",
+    "src": "vendor/statamic/cms/resources/svg/icons/filter.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fingerprint.svg": {
+    "file": "assets/fingerprint-DpCRC6LC.js",
+    "name": "fingerprint",
+    "src": "vendor/statamic/cms/resources/svg/icons/fingerprint.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fit-height.svg": {
+    "file": "assets/fit-height-_qS5BS2d.js",
+    "name": "fit-height",
+    "src": "vendor/statamic/cms/resources/svg/icons/fit-height.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/fit-width.svg": {
+    "file": "assets/fit-width-BrvttCjg.js",
+    "name": "fit-width",
+    "src": "vendor/statamic/cms/resources/svg/icons/fit-width.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/focus.svg": {
+    "file": "assets/focus-CGiaj8LQ.js",
+    "name": "focus",
+    "src": "vendor/statamic/cms/resources/svg/icons/focus.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-add.svg": {
+    "file": "assets/folder-add-CLJeW3vf.js",
+    "name": "folder-add",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-add.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-ai.svg": {
+    "file": "assets/folder-ai-_86JXvzC.js",
+    "name": "folder-ai",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-ai.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-block.svg": {
+    "file": "assets/folder-block-DgFIPf-_.js",
+    "name": "folder-block",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-block.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-check.svg": {
+    "file": "assets/folder-check-BkqU1CPm.js",
+    "name": "folder-check",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-check.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-download.svg": {
+    "file": "assets/folder-download-vsODzg0l.js",
+    "name": "folder-download",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-download.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-edit.svg": {
+    "file": "assets/folder-edit-D-lp-yqq.js",
+    "name": "folder-edit",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-edit.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-ghost.svg": {
+    "file": "assets/folder-ghost-Bc28wiis.js",
+    "name": "folder-ghost",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-ghost.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-history.svg": {
+    "file": "assets/folder-history-C7_jU3JM.js",
+    "name": "folder-history",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-history.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-lock.svg": {
+    "file": "assets/folder-lock-B4n3JRSo.js",
+    "name": "folder-lock",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-lock.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-music.svg": {
+    "file": "assets/folder-music-C8xYBjiI.js",
+    "name": "folder-music",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-music.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-open.svg": {
+    "file": "assets/folder-open-G4pD3Dhc.js",
+    "name": "folder-open",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-open.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-photos.svg": {
+    "file": "assets/folder-photos-BXj6Y5E-.js",
+    "name": "folder-photos",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-photos.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-play.svg": {
+    "file": "assets/folder-play-AzsZf-w0.js",
+    "name": "folder-play",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-play.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-remove.svg": {
+    "file": "assets/folder-remove-Zu-FtC4n.js",
+    "name": "folder-remove",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-remove.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-settings.svg": {
+    "file": "assets/folder-settings-qu7FgEQB.js",
+    "name": "folder-settings",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-settings.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder-warning.svg": {
+    "file": "assets/folder-warning-CguhhSwZ.js",
+    "name": "folder-warning",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder-warning.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/folder.svg": {
+    "file": "assets/folder-Bq95_tVi.js",
+    "name": "folder",
+    "src": "vendor/statamic/cms/resources/svg/icons/folder.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/forms.svg": {
+    "file": "assets/forms-BR2whdiX.js",
+    "name": "forms",
+    "src": "vendor/statamic/cms/resources/svg/icons/forms.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/git.svg": {
+    "file": "assets/git-GUwrBCut.js",
+    "name": "git",
+    "src": "vendor/statamic/cms/resources/svg/icons/git.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/globals.svg": {
+    "file": "assets/globals-DRNTQra5.js",
+    "name": "globals",
+    "src": "vendor/statamic/cms/resources/svg/icons/globals.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/graphql.svg": {
+    "file": "assets/graphql-D-3iBEvV.js",
+    "name": "graphql",
+    "src": "vendor/statamic/cms/resources/svg/icons/graphql.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/groups.svg": {
+    "file": "assets/groups-DnTBJi5L.js",
+    "name": "groups",
+    "src": "vendor/statamic/cms/resources/svg/icons/groups.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/handles-sm.svg": {
+    "file": "assets/handles-sm-BAj__X7u.js",
+    "name": "handles-sm",
+    "src": "vendor/statamic/cms/resources/svg/icons/handles-sm.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/handles.svg": {
+    "file": "assets/handles-CHMgZDs1.js",
+    "name": "handles",
+    "src": "vendor/statamic/cms/resources/svg/icons/handles.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/heart.svg": {
+    "file": "assets/heart-DG4QaEbD.js",
+    "name": "heart",
+    "src": "vendor/statamic/cms/resources/svg/icons/heart.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/hierarchy.svg": {
+    "file": "assets/hierarchy-umhZ1BbB.js",
+    "name": "hierarchy",
+    "src": "vendor/statamic/cms/resources/svg/icons/hierarchy.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/history.svg": {
+    "file": "assets/history-DtNH_iJe.js",
+    "name": "history",
+    "src": "vendor/statamic/cms/resources/svg/icons/history.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/home.svg": {
+    "file": "assets/home-DadvEuBo.js",
+    "name": "home",
+    "src": "vendor/statamic/cms/resources/svg/icons/home.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/info-square.svg": {
+    "file": "assets/info-square-fvAQ1o-4.js",
+    "name": "info-square",
+    "src": "vendor/statamic/cms/resources/svg/icons/info-square.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/info.svg": {
+    "file": "assets/info-2uEPY2d1.js",
+    "name": "info",
+    "src": "vendor/statamic/cms/resources/svg/icons/info.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/key.svg": {
+    "file": "assets/key-DJvw_0Uf.js",
+    "name": "key",
+    "src": "vendor/statamic/cms/resources/svg/icons/key.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/layout-grid.svg": {
+    "file": "assets/layout-grid-D863stCF.js",
+    "name": "layout-grid",
+    "src": "vendor/statamic/cms/resources/svg/icons/layout-grid.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/layout-list.svg": {
+    "file": "assets/layout-list-0J_AUk7Q.js",
+    "name": "layout-list",
+    "src": "vendor/statamic/cms/resources/svg/icons/layout-list.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/layout-masonry.svg": {
+    "file": "assets/layout-masonry-CwaYktTQ.js",
+    "name": "layout-masonry",
+    "src": "vendor/statamic/cms/resources/svg/icons/layout-masonry.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/license.svg": {
+    "file": "assets/license-B8prhjLZ.js",
+    "name": "license",
+    "src": "vendor/statamic/cms/resources/svg/icons/license.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/link.svg": {
+    "file": "assets/link-DSif9w1Y.js",
+    "name": "link",
+    "src": "vendor/statamic/cms/resources/svg/icons/link.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/live-preview.svg": {
+    "file": "assets/live-preview-CSu30cc0.js",
+    "name": "live-preview",
+    "src": "vendor/statamic/cms/resources/svg/icons/live-preview.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/loading.svg": {
+    "file": "assets/loading-DSKA2QP6.js",
+    "name": "loading",
+    "src": "vendor/statamic/cms/resources/svg/icons/loading.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/magnifying-glass.svg": {
+    "file": "assets/magnifying-glass-JoJHsLLw.js",
+    "name": "magnifying-glass",
+    "src": "vendor/statamic/cms/resources/svg/icons/magnifying-glass.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/mail-check.svg": {
+    "file": "assets/mail-check-BhdpDZS2.js",
+    "name": "mail-check",
+    "src": "vendor/statamic/cms/resources/svg/icons/mail-check.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/mail-settings.svg": {
+    "file": "assets/mail-settings-D0VRb5Pw.js",
+    "name": "mail-settings",
+    "src": "vendor/statamic/cms/resources/svg/icons/mail-settings.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/mail.svg": {
+    "file": "assets/mail-DtZ55SP2.js",
+    "name": "mail",
+    "src": "vendor/statamic/cms/resources/svg/icons/mail.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/markdown.svg": {
+    "file": "assets/markdown-BfDOM2Fi.js",
+    "name": "markdown",
+    "src": "vendor/statamic/cms/resources/svg/icons/markdown.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/mask.svg": {
+    "file": "assets/mask-DEpIWi8P.js",
+    "name": "mask",
+    "src": "vendor/statamic/cms/resources/svg/icons/mask.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/maximize.svg": {
+    "file": "assets/maximize-Cf0rDywL.js",
+    "name": "maximize",
+    "src": "vendor/statamic/cms/resources/svg/icons/maximize.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/megaphone.svg": {
+    "file": "assets/megaphone-CMcfNc7c.js",
+    "name": "megaphone",
+    "src": "vendor/statamic/cms/resources/svg/icons/megaphone.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/memory.svg": {
+    "file": "assets/memory-6nrVuNY7.js",
+    "name": "memory",
+    "src": "vendor/statamic/cms/resources/svg/icons/memory.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/minimize.svg": {
+    "file": "assets/minimize-wrX47bRR.js",
+    "name": "minimize",
+    "src": "vendor/statamic/cms/resources/svg/icons/minimize.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/monitor.svg": {
+    "file": "assets/monitor-CLuPTfa0.js",
+    "name": "monitor",
+    "src": "vendor/statamic/cms/resources/svg/icons/monitor.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/moon.svg": {
+    "file": "assets/moon-BrV3OWG8.js",
+    "name": "moon",
+    "src": "vendor/statamic/cms/resources/svg/icons/moon.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/move-folder.svg": {
+    "file": "assets/move-folder-BcFnKrds.js",
+    "name": "move-folder",
+    "src": "vendor/statamic/cms/resources/svg/icons/move-folder.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/navigation.svg": {
+    "file": "assets/navigation-CK80bkq9.js",
+    "name": "navigation",
+    "src": "vendor/statamic/cms/resources/svg/icons/navigation.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/page-ghost.svg": {
+    "file": "assets/page-ghost-BmYsSw4Q.js",
+    "name": "page-ghost",
+    "src": "vendor/statamic/cms/resources/svg/icons/page-ghost.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/page.svg": {
+    "file": "assets/page-CS5dMn5H.js",
+    "name": "page",
+    "src": "vendor/statamic/cms/resources/svg/icons/page.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/palette.svg": {
+    "file": "assets/palette-2m96vhya.js",
+    "name": "palette",
+    "src": "vendor/statamic/cms/resources/svg/icons/palette.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/pdf.svg": {
+    "file": "assets/pdf-CLsBHA_-.js",
+    "name": "pdf",
+    "src": "vendor/statamic/cms/resources/svg/icons/pdf.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/pencil-line.svg": {
+    "file": "assets/pencil-line-BjICGMlv.js",
+    "name": "pencil-line",
+    "src": "vendor/statamic/cms/resources/svg/icons/pencil-line.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/pencil.svg": {
+    "file": "assets/pencil-DudZc-Jv.js",
+    "name": "pencil",
+    "src": "vendor/statamic/cms/resources/svg/icons/pencil.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/permissions.svg": {
+    "file": "assets/permissions-CXdD-_1m.js",
+    "name": "permissions",
+    "src": "vendor/statamic/cms/resources/svg/icons/permissions.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/phone-lock.svg": {
+    "file": "assets/phone-lock-B9ghuQle.js",
+    "name": "phone-lock",
+    "src": "vendor/statamic/cms/resources/svg/icons/phone-lock.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/pin.svg": {
+    "file": "assets/pin-Bcw7YL5R.js",
+    "name": "pin",
+    "src": "vendor/statamic/cms/resources/svg/icons/pin.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/playground.svg": {
+    "file": "assets/playground-De2CMu29.js",
+    "name": "playground",
+    "src": "vendor/statamic/cms/resources/svg/icons/playground.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/plus.svg": {
+    "file": "assets/plus-CDdBmX-D.js",
+    "name": "plus",
+    "src": "vendor/statamic/cms/resources/svg/icons/plus.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/preferences.svg": {
+    "file": "assets/preferences-Bs4iBeLh.js",
+    "name": "preferences",
+    "src": "vendor/statamic/cms/resources/svg/icons/preferences.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/pro-ribbon.svg": {
+    "file": "assets/pro-ribbon-D8M_ugWA.js",
+    "name": "pro-ribbon",
+    "src": "vendor/statamic/cms/resources/svg/icons/pro-ribbon.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/pulse.svg": {
+    "file": "assets/pulse-BA_6PIkK.js",
+    "name": "pulse",
+    "src": "vendor/statamic/cms/resources/svg/icons/pulse.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/rename.svg": {
+    "file": "assets/rename-C9MTQ65b.js",
+    "name": "rename",
+    "src": "vendor/statamic/cms/resources/svg/icons/rename.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/replace.svg": {
+    "file": "assets/replace-C3N6YEI8.js",
+    "name": "replace",
+    "src": "vendor/statamic/cms/resources/svg/icons/replace.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/return-square.svg": {
+    "file": "assets/return-square-Boiad0Jb.js",
+    "name": "return-square",
+    "src": "vendor/statamic/cms/resources/svg/icons/return-square.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/rewind.svg": {
+    "file": "assets/rewind-DllQ6D5z.js",
+    "name": "rewind",
+    "src": "vendor/statamic/cms/resources/svg/icons/rewind.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/rss.svg": {
+    "file": "assets/rss-B9yvo3QG.js",
+    "name": "rss",
+    "src": "vendor/statamic/cms/resources/svg/icons/rss.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/save.svg": {
+    "file": "assets/save-DYKeCJsf.js",
+    "name": "save",
+    "src": "vendor/statamic/cms/resources/svg/icons/save.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/scaffold.svg": {
+    "file": "assets/scaffold-C7tlzj5B.js",
+    "name": "scaffold",
+    "src": "vendor/statamic/cms/resources/svg/icons/scaffold.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/script.svg": {
+    "file": "assets/script-DXLH-Zz4.js",
+    "name": "script",
+    "src": "vendor/statamic/cms/resources/svg/icons/script.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/sign-in.svg": {
+    "file": "assets/sign-in-Dkk3BMhq.js",
+    "name": "sign-in",
+    "src": "vendor/statamic/cms/resources/svg/icons/sign-in.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/sign-out.svg": {
+    "file": "assets/sign-out-Ca3B8gPu.js",
+    "name": "sign-out",
+    "src": "vendor/statamic/cms/resources/svg/icons/sign-out.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/site-settings.svg": {
+    "file": "assets/site-settings-BhngTE3o.js",
+    "name": "site-settings",
+    "src": "vendor/statamic/cms/resources/svg/icons/site-settings.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/site.svg": {
+    "file": "assets/site-BhngTE3o.js",
+    "name": "site",
+    "src": "vendor/statamic/cms/resources/svg/icons/site.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/slider.svg": {
+    "file": "assets/slider-Kmk4KyU6.js",
+    "name": "slider",
+    "src": "vendor/statamic/cms/resources/svg/icons/slider.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/sliders-horizontal.svg": {
+    "file": "assets/sliders-horizontal-CZRfZ1wJ.js",
+    "name": "sliders-horizontal",
+    "src": "vendor/statamic/cms/resources/svg/icons/sliders-horizontal.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/sliders-vertical.svg": {
+    "file": "assets/sliders-vertical-D5VcsJir.js",
+    "name": "sliders-vertical",
+    "src": "vendor/statamic/cms/resources/svg/icons/sliders-vertical.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/star-half.svg": {
+    "file": "assets/star-half-DL6POV59.js",
+    "name": "star-half",
+    "src": "vendor/statamic/cms/resources/svg/icons/star-half.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/star.svg": {
+    "file": "assets/star-Bxfl49eC.js",
+    "name": "star",
+    "src": "vendor/statamic/cms/resources/svg/icons/star.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/statamic-logo-lime.svg": {
+    "file": "assets/statamic-logo-lime-DJwEvQDy.js",
+    "name": "statamic-logo-lime",
+    "src": "vendor/statamic/cms/resources/svg/icons/statamic-logo-lime.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/statamic-mark-lime.svg": {
+    "file": "assets/statamic-mark-lime-BKsBttoD.js",
+    "name": "statamic-mark-lime",
+    "src": "vendor/statamic/cms/resources/svg/icons/statamic-mark-lime.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/steps.svg": {
+    "file": "assets/steps-D7M1qton.js",
+    "name": "steps",
+    "src": "vendor/statamic/cms/resources/svg/icons/steps.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/sun.svg": {
+    "file": "assets/sun-DRKurZIG.js",
+    "name": "sun",
+    "src": "vendor/statamic/cms/resources/svg/icons/sun.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/support.svg": {
+    "file": "assets/support-Dn0gXQAt.js",
+    "name": "support",
+    "src": "vendor/statamic/cms/resources/svg/icons/support.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/synced.svg": {
+    "file": "assets/synced-LngTZoqF.js",
+    "name": "synced",
+    "src": "vendor/statamic/cms/resources/svg/icons/synced.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/taxonomies.svg": {
+    "file": "assets/taxonomies-kQLv_OwR.js",
+    "name": "taxonomies",
+    "src": "vendor/statamic/cms/resources/svg/icons/taxonomies.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/team.svg": {
+    "file": "assets/team-a4vD-3Ux.js",
+    "name": "team",
+    "src": "vendor/statamic/cms/resources/svg/icons/team.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/time-now.svg": {
+    "file": "assets/time-now-B5SieJHE.js",
+    "name": "time-now",
+    "src": "vendor/statamic/cms/resources/svg/icons/time-now.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/trash.svg": {
+    "file": "assets/trash-5OYWtFqe.js",
+    "name": "trash",
+    "src": "vendor/statamic/cms/resources/svg/icons/trash.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/tree-collapse.svg": {
+    "file": "assets/tree-collapse-DeVRBXAw.js",
+    "name": "tree-collapse",
+    "src": "vendor/statamic/cms/resources/svg/icons/tree-collapse.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/tree-expand.svg": {
+    "file": "assets/tree-expand-90n1_Ctn.js",
+    "name": "tree-expand",
+    "src": "vendor/statamic/cms/resources/svg/icons/tree-expand.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/unsynced.svg": {
+    "file": "assets/unsynced-D3EES5kK.js",
+    "name": "unsynced",
+    "src": "vendor/statamic/cms/resources/svg/icons/unsynced.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/up-down.svg": {
+    "file": "assets/up-down-BgdVK-CB.js",
+    "name": "up-down",
+    "src": "vendor/statamic/cms/resources/svg/icons/up-down.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/up-square.svg": {
+    "file": "assets/up-square-Dx4kLqpV.js",
+    "name": "up-square",
+    "src": "vendor/statamic/cms/resources/svg/icons/up-square.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/updates.svg": {
+    "file": "assets/updates-VgnOx0Xn.js",
+    "name": "updates",
+    "src": "vendor/statamic/cms/resources/svg/icons/updates.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/upload-cloud.svg": {
+    "file": "assets/upload-cloud-CdxzxrR1.js",
+    "name": "upload-cloud",
+    "src": "vendor/statamic/cms/resources/svg/icons/upload-cloud.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/upload.svg": {
+    "file": "assets/upload-DWl-Y96S.js",
+    "name": "upload",
+    "src": "vendor/statamic/cms/resources/svg/icons/upload.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/users.svg": {
+    "file": "assets/users-BzHxziju.js",
+    "name": "users",
+    "src": "vendor/statamic/cms/resources/svg/icons/users.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/utilities.svg": {
+    "file": "assets/utilities-rQ9wGZRS.js",
+    "name": "utilities",
+    "src": "vendor/statamic/cms/resources/svg/icons/utilities.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/visit-website.svg": {
+    "file": "assets/visit-website-Bm7VGn-R.js",
+    "name": "visit-website",
+    "src": "vendor/statamic/cms/resources/svg/icons/visit-website.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/wand.svg": {
+    "file": "assets/wand-DqJOnTfy.js",
+    "name": "wand",
+    "src": "vendor/statamic/cms/resources/svg/icons/wand.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/warning-diamond.svg": {
+    "file": "assets/warning-diamond-C2lZxtIN.js",
+    "name": "warning-diamond",
+    "src": "vendor/statamic/cms/resources/svg/icons/warning-diamond.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/web.svg": {
+    "file": "assets/web-BZyuMDiX.js",
+    "name": "web",
+    "src": "vendor/statamic/cms/resources/svg/icons/web.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/workflow.svg": {
+    "file": "assets/workflow-BLwhi_cV.js",
+    "name": "workflow",
+    "src": "vendor/statamic/cms/resources/svg/icons/workflow.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/icons/x.svg": {
+    "file": "assets/x-DeINZq1A.js",
+    "name": "x",
+    "src": "vendor/statamic/cms/resources/svg/icons/x.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/ui/architectural-lines.svg": {
+    "file": "assets/architectural-lines-CVxWKjB6.js",
+    "name": "architectural-lines",
+    "src": "vendor/statamic/cms/resources/svg/ui/architectural-lines.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/ui/chevron-down.svg": {
+    "file": "assets/chevron-down-Erwd23Of.js",
+    "name": "chevron-down",
+    "src": "vendor/statamic/cms/resources/svg/ui/chevron-down.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/ui/chevron-left.svg": {
+    "file": "assets/chevron-left-CE6nDq-L.js",
+    "name": "chevron-left",
+    "src": "vendor/statamic/cms/resources/svg/ui/chevron-left.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/ui/chevron-right.svg": {
+    "file": "assets/chevron-right-DyJBi5n6.js",
+    "name": "chevron-right",
+    "src": "vendor/statamic/cms/resources/svg/ui/chevron-right.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/ui/chevron-vertical.svg": {
+    "file": "assets/chevron-vertical-bgC_01Ju.js",
+    "name": "chevron-vertical",
+    "src": "vendor/statamic/cms/resources/svg/ui/chevron-vertical.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/ui/dots.svg": {
+    "file": "assets/dots-CB17Ludq.js",
+    "name": "dots",
+    "src": "vendor/statamic/cms/resources/svg/ui/dots.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  },
+  "vendor/statamic/cms/resources/svg/ui/drag-dots.svg": {
+    "file": "assets/drag-dots-ht0RNlEe.js",
+    "name": "drag-dots",
+    "src": "vendor/statamic/cms/resources/svg/ui/drag-dots.svg",
+    "isDynamicEntry": true,
+    "imports": [
+      "_runtime-core.esm-bundler-ClfZ1o77.js"
+    ]
+  }
+}

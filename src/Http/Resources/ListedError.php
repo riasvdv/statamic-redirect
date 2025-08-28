@@ -3,6 +3,8 @@
 namespace Rias\StatamicRedirect\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Rias\StatamicRedirect\Contracts\Redirect;
+use Statamic\Facades\User;
 
 class ListedError extends JsonResource
 {
@@ -24,6 +26,7 @@ class ListedError extends JsonResource
             'handledDestination' => $this->handledDestination,
             'lastSeenAt' => $this->lastSeenAt,
             'hitsCount' => $this->hitsCount,
+            'canCreateRedirect' => ! $this->handled && User::fromUser(auth()->user())->can('create', Redirect::class),
         ];
     }
 }

@@ -15,8 +15,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandleNotFound
 {
-    /** @var array */
-    private $cachedRedirects;
+    private array $cachedRedirects;
 
     public function handle(Request $request, Closure $next)
     {
@@ -39,7 +38,7 @@ class HandleNotFound
             // Make sure it starts with '/'
             $uri = Str::start($uri, '/');
             // Make sure we remove any trailing slash
-            $uri = Str::substr(Str::finish($uri, '/'), 0, -1);
+            $uri = Str::chopEnd($uri, '/');
 
             $logErrors = config('statamic.redirect.log_errors', true);
 
@@ -51,11 +50,13 @@ class HandleNotFound
             $this->cachedRedirects = Cache::get('statamic.redirect.redirects', []);
 
             if (isset($this->cachedRedirects[$site->handle()][$uri])) {
+                $this->markRedirectUsed($this->cachedRedirects[$site->handle()][$uri]['id']);
+
                 if ($logErrors) {
                     $this->markErrorHandled($error, $this->cachedRedirects[$site->handle()][$uri]['destination']);
                 }
 
-                if ((string) $this->cachedRedirects[$site->handle()][$uri]['type'] === (string) 410) {
+                if ((string) $this->cachedRedirects[$site->handle()][$uri]['type'] === '410') {
                     abort(410);
                 }
 
@@ -71,13 +72,15 @@ class HandleNotFound
                 return $response;
             }
 
+            $this->markRedirectUsed($redirect->id());
+
             $this->cacheNewRedirect($site, $redirect, $uri);
 
             if ($logErrors) {
                 $this->markErrorHandled($error, $redirect->destination());
             }
 
-            if ((string) $redirect->type() === "410") {
+            if ((string) $redirect->type() === '410') {
                 abort(410);
             }
 
@@ -112,7 +115,6 @@ class HandleNotFound
         $error->lastSeenAt = now()->timestamp;
         $error->save();
 
-
         $error->addHit(now()->timestamp, [
             'userAgent' => $request->userAgent(),
             'ip' => $request->ip(),
@@ -129,14 +131,29 @@ class HandleNotFound
         $error->save();
     }
 
+    private function markRedirectUsed($id): void
+    {
+        if (! config('statamic.redirect.log_last_used_at', true)) {
+            return;
+        }
+
+        $redirect = Redirect::find($id);
+
+        if (! $redirect) {
+            return;
+        }
+
+        $redirect->lastUsedAt(now());
+        $redirect->save();
+    }
+
     /**
-     * @param \Statamic\Sites\Site $site
-     * @param \Rias\StatamicRedirect\Data\Redirect $redirect
-     * @param string $url
+     * @param  \Rias\StatamicRedirect\Data\Redirect  $redirect
      */
     private function cacheNewRedirect(\Statamic\Sites\Site $site, RedirectContract $redirect, string $url): void
     {
         $this->cachedRedirects[$site->handle()][$url] = [
+            'id' => $redirect->id(),
             'destination' => $redirect->destination(),
             'type' => $redirect->type(),
         ];
@@ -167,7 +184,7 @@ class HandleNotFound
 
         if (count($query)) {
             // make sure to preserve fragment if specified in destination
-            $fragment = isset($destination_parsed['fragment']) ? '#' . $destination_parsed['fragment'] : '';
+            $fragment = isset($destination_parsed['fragment']) ? '#'.$destination_parsed['fragment'] : '';
             if (($urlBeforeFragment = strstr($destination, '#', true)) === false) {
                 $urlBeforeFragment = $destination;
             }
@@ -175,7 +192,7 @@ class HandleNotFound
                 $urlBeforeQuery = $destination;
             }
 
-            $destination = $urlBeforeQuery . '?' . http_build_query($query) . $fragment;
+            $destination = $urlBeforeQuery.'?'.http_build_query($query).$fragment;
         }
 
         return $destination;

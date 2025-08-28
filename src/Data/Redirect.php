@@ -14,8 +14,8 @@ use Statamic\Support\Traits\FluentlyGetsAndSets;
 
 class Redirect implements RedirectContract
 {
-    use FluentlyGetsAndSets;
     use ExistsAsFile;
+    use FluentlyGetsAndSets;
     use TracksQueriedColumns;
     use TracksQueriedRelations;
 
@@ -32,7 +32,13 @@ class Redirect implements RedirectContract
     protected $source_md5;
 
     /** @var string */
+    protected $destination_type = 'url';
+
+    /** @var string */
     protected $destination;
+
+    /** @var string */
+    protected $destination_entry;
 
     /** @var int */
     protected $type = 301;
@@ -48,6 +54,14 @@ class Redirect implements RedirectContract
 
     /** @var string|null */
     protected $description;
+
+    /** @var null|\Carbon\CarbonInterface */
+    protected $lastUsedAt;
+
+    public function title()
+    {
+        return "{$this->source()} --> {$this->destination()}";
+    }
 
     public function id($id = null)
     {
@@ -69,9 +83,19 @@ class Redirect implements RedirectContract
         return $this->fluentlyGetOrSet('source_md5')->args(func_get_args());
     }
 
+    public function destination_type($destination_type = null)
+    {
+        return $this->fluentlyGetOrSet('destination_type')->args(func_get_args());
+    }
+
     public function destination($destination = null)
     {
         return $this->fluentlyGetOrSet('destination')->args(func_get_args());
+    }
+
+    public function destination_entry($destination_entry = null)
+    {
+        return $this->fluentlyGetOrSet('destination_entry')->args(func_get_args());
     }
 
     public function type($type = null)
@@ -87,6 +111,11 @@ class Redirect implements RedirectContract
     public function order($order = null)
     {
         return $this->fluentlyGetOrSet('order')->args(func_get_args());
+    }
+
+    public function lastUsedAt($lastUsedAt = null)
+    {
+        return $this->fluentlyGetOrSet('lastUsedAt')->args(func_get_args());
     }
 
     public function setSiteFromFilePath($path)
@@ -119,7 +148,7 @@ class Redirect implements RedirectContract
         return vsprintf('%s/%s/%s%s.yaml', [
             rtrim(Stache::store('redirects')->directory(), '/'),
             $this->site(),
-            ! is_null($this->order()) ? $this->order() . '_' : '',
+            ! is_null($this->order()) ? $this->order().'_' : '',
             $this->id(),
         ]);
     }
@@ -146,12 +175,15 @@ class Redirect implements RedirectContract
             'enabled' => $this->enabled(),
             'source' => $this->source(),
             'source_md5' => $this->source_md5(),
+            'destination_type' => $this->destination_type(),
             'destination' => $this->destination(),
+            'destination_entry' => $this->destination_entry(),
             'type' => $this->type(),
             'site' => $this->site(),
             'match_type' => $this->matchType(),
             'description' => $this->description(),
             'order' => $this->order(),
+            'lastUsedAt' => $this->lastUsedAt(),
         ];
     }
 

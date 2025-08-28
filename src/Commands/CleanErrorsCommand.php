@@ -17,20 +17,20 @@ class CleanErrorsCommand extends Command
     public function handle()
     {
         if (! config('statamic.redirect.clean_errors', true)) {
-            $this->info('Not cleaning errors. Change the config setting to enable cleaning.');
+            $this->components->info('Not cleaning errors. Change the config setting to enable cleaning.');
 
             return;
         }
 
         if (! config('statamic.redirect.log_errors', true)) {
-            $this->info('Errors are not being logged. Change the statamic.redirect.log_errors config setting to enable cleaning.');
+            $this->components->info('Errors are not being logged. Change the statamic.redirect.log_errors config setting to enable cleaning.');
 
             return;
         }
 
-        $this->info('Cleaning errors older than ' . config('statamic.redirect.clean_older_than', '1 month'));
+        $this->components->info('Cleaning errors older than '.config('statamic.redirect.clean_older_than', '1 month'));
 
-        (new CleanErrorsJob())->handle();
+        (new CleanErrorsJob)->handle();
 
         $this->info('Done!');
     }

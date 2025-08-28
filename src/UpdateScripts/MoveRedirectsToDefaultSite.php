@@ -26,10 +26,10 @@ class MoveRedirectsToDefaultSite extends UpdateScript
             ->depth(0)
             ->name('*.yaml');
 
-        File::ensureDirectoryExists($redirectsDirectory . $site->handle());
+        File::ensureDirectoryExists($redirectsDirectory.$site->handle());
 
         foreach ($finder->files() as $file) {
-            File::move($file->getPathname(), $file->getPath() . '/' . $site->handle() . '/' . $file->getFilename());
+            File::move($file->getPathname(), $file->getPath().'/'.$site->handle().'/'.$file->getFilename());
         }
 
         Stache::store('redirects')->clear();

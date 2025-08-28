@@ -7,6 +7,11 @@ return [
     'enable' => env('REDIRECT_ENABLED', true),
 
     /**
+     * Whether the Redirect dashboard should be enabled.
+     */
+    'dashboard_enabled' => env('REDIRECT_DASHBOARD_ENABLED', true),
+
+    /**
      * Whether Redirect should automatically run database migrations or not
      */
     'run_migrations' => env('REDIRECT_RUN_MIGRATIONS', true),
@@ -39,6 +44,11 @@ return [
     'log_hits' => env('REDIRECT_LOG_HITS', true),
 
     /**
+     * Controls whether Redirect logs the last_used_at on redirects.
+     */
+    'log_last_used_at' => env('REDIRECT_LOG_LAST_USED_AT', true),
+
+    /**
      * Should error logs be cleaned? Make sure your schedule is running.
      */
     'clean_errors' => env('REDIRECT_CLEAN_ERRORS', true),
@@ -50,6 +60,7 @@ return [
 
     /**
      * Error logs older than this will be deleted.
+     *
      * @link http://php.net/manual/en/dateinterval.createfromdatestring.php
      */
     'clean_older_than' => '1 month',
