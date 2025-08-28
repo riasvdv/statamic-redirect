@@ -10,6 +10,7 @@ class Version4UpgradeMigration extends Migration
     {
         Schema::table('redirects', function (Blueprint $table): void {
             $table->dateTime('last_used_at')->nullable();
+            $table->string('destination')->nullable()->change();
             $table->string('destination_type')->default('url');
             $table->string('destination_entry')->nullable();
         });
