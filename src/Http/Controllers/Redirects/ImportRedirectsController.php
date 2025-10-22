@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Spatie\SimpleExcel\SimpleExcelReader;
@@ -20,7 +21,9 @@ class ImportRedirectsController
     {
         $this->authorize('create', RedirectContract::class);
 
-        return view('redirect::redirects.import');
+        return Inertia::render('redirect::Redirects/Import', [
+            'importUrl' => cp_route('redirect.redirects.handleImport'),
+        ]);
     }
 
     public function store(Request $request)
@@ -43,28 +46,28 @@ class ImportRedirectsController
 
         $skipped = 0;
         $reader->getRows()->each(function (array $data) use (&$skipped) {
-            if (! $data['source']) {
+            if (! isset($data['source'])) {
                 Log::error('Redirect has no source', $data);
                 $skipped++;
 
                 return;
             }
 
-            if (! $data['type']) {
+            if (! isset($data['type'])) {
                 Log::error('Redirect has no type', $data);
                 $skipped++;
 
                 return;
             }
 
-            if (! $data['match_type']) {
+            if (! isset($data['match_type'])) {
                 Log::error('Redirect has no match_type', $data);
                 $skipped++;
 
                 return;
             }
 
-            if ((! $data['destination'] && ($data['type'] != 410))) {
+            if ((! isset($data['destination']) && (($data['type'] ?? null) != 410))) {
                 Log::error('Redirect has no destination, it is required when type is not 410', $data);
                 $skipped++;
 

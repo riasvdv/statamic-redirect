@@ -2,16 +2,33 @@
 
 namespace Rias\StatamicRedirect\Widgets;
 
-use Rias\StatamicRedirect\Http\Controllers\DashboardController;
+use Illuminate\Contracts\View\View;
+use Rias\StatamicRedirect\Data\Hit;
 use Statamic\Widgets\Widget;
 
-class ErrorsLastWeekWidget extends Widget
+final class ErrorsLastWeekWidget extends Widget
 {
-    public function html()
+    public function html(): View
     {
-        $data = app(DashboardController::class)->getStatsPastWeek();
+        $data = $this->getStatsPastWeek();
         $title = $this->config('title', __('Errors last week'));
 
         return view('redirect::widgets.errors_chart', compact('data', 'title'));
+    }
+
+    private function getStatsPastWeek(): array
+    {
+        $days = [];
+        for ($day = now()->subWeek(); $day < now(); $day->addDay()) {
+            $days[] = $day->copy();
+        }
+
+        $notFoundWeek = [];
+        foreach ($days as $day) {
+            $count = Hit::whereBetween('timestamp', [$day->startOfDay()->timestamp, $day->endOfDay()->timestamp])->count();
+            $notFoundWeek[] = [$count, $day->format('d')];
+        }
+
+        return $notFoundWeek;
     }
 }

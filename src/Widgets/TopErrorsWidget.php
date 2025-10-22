@@ -2,20 +2,27 @@
 
 namespace Rias\StatamicRedirect\Widgets;
 
+use Illuminate\Contracts\View\View;
 use Rias\StatamicRedirect\Data\Error;
 use Statamic\Widgets\Widget;
 
-class TopErrorsWidget extends Widget
+final class TopErrorsWidget extends Widget
 {
-    public function html()
+    public function setConfig($config): self
     {
-        $query = Error::query();
-        $query->orderBy('hitsCount', 'desc');
-        $query->limit($this->config('limit', 5));
+        parent::setConfig($config);
 
+        return $this;
+    }
+
+    public function html(): View
+    {
         return view('redirect::widgets.errors', [
             'title' => $this->config('title', __('Top 404 Errors')),
-            'errors' => $query->get(),
+            'errors' => Error::query()
+                ->orderBy('hitsCount', 'desc')
+                ->limit($this->config('limit', 5))
+                ->get(),
         ]);
     }
 }

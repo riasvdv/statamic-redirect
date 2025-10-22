@@ -50,9 +50,9 @@
         </div>
     @endif
 
-    <div class="text-center mb-1">
+    <div class="text-center mb-3">
         <a href="{{ cp_route('redirect.errors.index') }}">
-            <ui-button size="sm">View all</ui-button>
+            <ui-button size="xs">View all</ui-button>
         </a>
     </div>
 </ui-widget>

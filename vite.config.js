@@ -1,9 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import statamic from './vendor/statamic/cms/resources/js/vite-plugin';
-import vue from '@vitejs/plugin-vue';
-import { viteExternalsPlugin } from 'vite-plugin-externals';
-import svgLoader from 'vite-svg-loader';
+import statamic from '@statamic/cms/vite-plugin';
 
 export default defineConfig({
     plugins: [
@@ -13,15 +10,5 @@ export default defineConfig({
             publicDirectory: 'resources/dist',
             input: ['resources/js/cp.js'],
         }),
-        vue(),
-        viteExternalsPlugin({
-            vue: 'Vue',
-            pinia: 'Pinia',
-            'vue-demi': 'Vue',
-        }),
-        svgLoader(),
     ],
-    server: {
-        hmr: false,
-    },
 });

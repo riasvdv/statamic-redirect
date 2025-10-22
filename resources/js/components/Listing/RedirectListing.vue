@@ -1,5 +1,6 @@
 <script setup>
-import { StatusIndicator, DropdownItem, Listing, Header } from '@statamic/ui';
+import { Link } from '@statamic/cms/inertia';
+import { StatusIndicator, DropdownItem, Listing, Header } from '@statamic/cms/ui';
 import { ref } from 'vue';
 import axios from 'axios';
 
@@ -81,10 +82,10 @@ function reordered(value) {
           @reordered="reordered"
       >
           <template v-slot:[`cell-source`]="{ row: redirect }">
-              <a v-if="can('edit redirects')" class="title-index-field" :href="redirect.edit_url" @click.stop>
+              <Link v-if="can('edit redirects')" class="title-index-field" :href="redirect.edit_url" @click.stop>
                   <StatusIndicator :status="redirect.enabled ? 'published' : 'hidden'" />
                   <span v-text="redirect.source" />
-              </a>
+              </Link>
             <span v-else class="title-index-field">
               <StatusIndicator :status="redirect.enabled ? 'published' : 'hidden'" />
               <span v-text="redirect.source" />

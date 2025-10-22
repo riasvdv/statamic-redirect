@@ -5,6 +5,7 @@ namespace Rias\StatamicRedirect\Http\Controllers\Redirects;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Inertia\Inertia;
 use Rias\StatamicRedirect\Blueprints\RedirectBlueprint;
 use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
 use Rias\StatamicRedirect\Facades\Redirect;
@@ -22,7 +23,9 @@ class RedirectController
         $this->authorize('view', RedirectContract::class);
 
         if (Redirect::all()->isEmpty()) {
-            return view('redirect::redirects.empty');
+            return Inertia::render('redirect::Redirects/Empty', [
+                'createUrl' => cp_route('redirect.redirects.create'),
+            ]);
         }
 
         $blueprint = new RedirectBlueprint;
@@ -33,7 +36,7 @@ class RedirectController
             ->rejectUnlisted()
             ->values();
 
-        return view('redirect::redirects.index', [
+        return Inertia::render('redirect::Redirects/Index', [
             'actionUrl' => cp_route('redirect.redirects.actions.run'),
             'filters' => Scope::filters('redirects'),
             'columns' => $columns,
@@ -51,18 +54,17 @@ class RedirectController
         $blueprint = new RedirectBlueprint;
         $fields = $blueprint()->fields()->preProcess();
 
-        return view('statamic::publish.form', [
+        return Inertia::render('redirect::Redirects/Publish', [
+            'isCreating' => true,
             'icon' => 'arrow-up-right',
-            'title' => 'Create Redirect',
+            'title' => __('Create Redirect'),
             'blueprint' => $blueprint()->toPublishArray(),
             'values' => $fields->values()->merge([
                 'source' => request('source'),
-            ]),
-            'meta' => $fields->meta(),
+            ])->all(),
             'submitUrl' => cp_route('redirect.redirects.store'),
-            'submitMethod' => 'POST',
+            'meta' => $fields->meta()->all(),
             'asConfig' => false,
-            'readOnly' => false,
         ]);
     }
 
@@ -80,16 +82,15 @@ class RedirectController
         $redirectBlueprint = new RedirectBlueprint;
         $redirectFields = $redirectBlueprint()->fields()->addValues($redirectValues)->preProcess();
 
-        return view('statamic::publish.form', [
+        return Inertia::render('redirect::Redirects/Publish', [
+            'isCreating' => false,
             'icon' => 'arrow-up-right',
-            'title' => 'Update Redirect',
+            'title' => __('Update Redirect'),
             'blueprint' => $redirectBlueprint()->toPublishArray(),
             'values' => $redirectFields->values(),
-            'meta' => $redirectFields->meta(),
             'submitUrl' => cp_route('redirect.redirects.update', $id),
-            'submitMethod' => 'POST',
+            'meta' => $redirectFields->meta(),
             'asConfig' => false,
-            'readOnly' => false,
         ]);
     }
 
