@@ -4,7 +4,6 @@ namespace Rias\StatamicRedirect\Widgets;
 
 use Illuminate\Contracts\View\View;
 use Rias\StatamicRedirect\Data\Hit;
-use Rias\StatamicRedirect\Http\Controllers\DashboardController;
 use Statamic\Widgets\Widget;
 
 final class ErrorsLastMonthWidget extends Widget

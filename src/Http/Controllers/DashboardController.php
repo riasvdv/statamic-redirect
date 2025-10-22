@@ -2,21 +2,17 @@
 
 namespace Rias\StatamicRedirect\Http\Controllers;
 
-use Exception;
-use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 use Inertia\Response;
 use Rias\StatamicRedirect\Contracts\Redirect;
-use Rias\StatamicRedirect\Data\Hit;
 use Rias\StatamicRedirect\Widgets\ErrorsLastDayWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsLastMonthWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsLastWeekWidget;
 use Rias\StatamicRedirect\Widgets\ErrorsWidget;
 use Rias\StatamicRedirect\Widgets\TopErrorsWidget;
-use Statamic\Facades\Scope;
 use Throwable;
 
 class DashboardController
@@ -29,8 +25,7 @@ class DashboardController
         ErrorsLastDayWidget $errorsLastDayWidget,
         ErrorsWidget $errorsWidget,
         TopErrorsWidget $topErrorsWidget,
-    ): Response
-    {
+    ): Response {
         $this->authorize('view', Redirect::class);
 
         $cleanupLastRanAt = null;
@@ -42,7 +37,7 @@ class DashboardController
         }
 
         $cleanupHasRun = app()->environment('local')
-            || !$cleanupLastRanAt
+            || ! $cleanupLastRanAt
             || Carbon::createFromTimestamp($cleanupLastRanAt) > now()->subDays(2);
 
         return Inertia::render('redirect::Dashboard', [
