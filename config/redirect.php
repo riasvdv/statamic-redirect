@@ -92,5 +92,5 @@ return [
      * Set the default redirect type for new redirects.
      * Can be one of: 301, 302, 410.
      */
-    'default_redirect_type' => 302,
+    'default_redirect_type' => env('REDIRECT_DEFAULT_REDIRECT_TYPE', 302),
 ];
