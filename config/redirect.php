@@ -7,6 +7,11 @@ return [
     'enable' => env('REDIRECT_ENABLED', true),
 
     /**
+     * The model to use for redirects
+     */
+    'model' => \Rias\StatamicRedirect\Eloquent\Redirects\RedirectModel::class,
+
+    /**
      * Whether Redirect should automatically run database migrations or not
      */
     'run_migrations' => env('REDIRECT_RUN_MIGRATIONS', true),
