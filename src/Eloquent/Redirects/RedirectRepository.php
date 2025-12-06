@@ -95,7 +95,8 @@ class RedirectRepository implements RepositoryContract
 
     public function query()
     {
-        return new RedirectQueryBuilder(RedirectModel::query());
+        $modelClass = config('statamic.redirect.model');
+        return new RedirectQueryBuilder($modelClass::query());
     }
 
     public function make(): Redirect
@@ -132,7 +133,9 @@ class RedirectRepository implements RepositoryContract
             'description' => $redirect->description(),
         ];
 
-        $model = RedirectModel::firstOrNew(['id' => $redirect->id()], $properties);
+        $modelClass = config('statamic.redirect.model');
+
+        $model = $modelClass::firstOrNew(['id' => $redirect->id()], $properties);
 
         if ($model->exists) {
             $model->fill($properties);

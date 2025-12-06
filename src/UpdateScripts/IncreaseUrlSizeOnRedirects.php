@@ -66,7 +66,9 @@ class IncreaseUrlSizeOnRedirects extends UpdateScript
                 $table->string('destination', 2048)->change();
             });
 
-            RedirectModel::each(function (RedirectModel $redirect) {
+            $modelClass = config('statamic.redirect.model');
+
+            $modelClass::each(function (RedirectModel $redirect) {
                 $redirect->update(['source_md5' => md5($redirect->source)]);
             });
 
