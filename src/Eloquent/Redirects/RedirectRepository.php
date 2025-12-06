@@ -96,6 +96,7 @@ class RedirectRepository implements RepositoryContract
     public function query()
     {
         $modelClass = config('statamic.redirect.model');
+
         return new RedirectQueryBuilder($modelClass::query());
     }
 
