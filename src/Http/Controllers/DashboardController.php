@@ -51,7 +51,7 @@ class DashboardController
                 'topErrors' => (string) $topErrorsWidget->setConfig(['actions' => false])->html(),
             ],
             'cleanupHasRun' => $cleanupHasRun,
-            'cleanupLastRanAtHuman' => $cleanupHasRun
+            'cleanupLastRanAtHuman' => $cleanupHasRun && $cleanupLastRanAt
                 ? Carbon::createFromTimestamp($cleanupLastRanAt)->diffForHumans(syntax: 1)
                 : '2 days',
             'actionUrl' => cp_route('redirect.errors.actions.run'),
