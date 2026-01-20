@@ -251,7 +251,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         }
 
         if (config('statamic.redirect.run_migrations')
-            && !Schema::connection($connection)->hasTable('redirects')
+            && ! Schema::connection($connection)->hasTable('redirects')
         ) {
             $defaultConnection = DB::getDefaultConnection();
             DB::setDefaultConnection($connection);
