@@ -93,7 +93,7 @@ class Redirect implements RedirectContract
     {
         return $this->fluentlyGetOrSet('destination')
             ->getter(function () {
-                return match($this->destination_type) {
+                return match ($this->destination_type) {
                     'url' => $this->destination,
                     'entry' => Entry::find($this->destination_entry)->in($this->site())->url(),
                 };
