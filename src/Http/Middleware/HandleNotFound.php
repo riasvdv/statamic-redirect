@@ -62,10 +62,12 @@ class HandleNotFound
 
                 $destination = $this->cachedRedirects[$site->handle()][$uri]['destination'];
 
-                return redirect(
-                    $this->mergeQuery($request, $destination),
-                    $this->cachedRedirects[$site->handle()][$uri]['type'],
-                );
+                if (! is_null($destination)) {
+                    return redirect(
+                        $this->mergeQuery($request, $destination),
+                        $this->cachedRedirects[$site->handle()][$uri]['type'],
+                    );
+                }
             }
 
             if (! $redirect = Redirect::findByUrl($site->handle(), $uri)) {

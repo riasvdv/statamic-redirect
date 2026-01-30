@@ -8,6 +8,7 @@ use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Facades\Redirect as RedirectFacade;
 use Statamic\Data\ExistsAsFile;
 use Statamic\Data\TracksQueriedColumns;
+use Statamic\Facades\Entry;
 use Statamic\Facades\Site;
 use Statamic\Facades\Stache;
 use Statamic\Support\Traits\FluentlyGetsAndSets;
@@ -90,7 +91,14 @@ class Redirect implements RedirectContract
 
     public function destination($destination = null)
     {
-        return $this->fluentlyGetOrSet('destination')->args(func_get_args());
+        return $this->fluentlyGetOrSet('destination')
+            ->getter(function () {
+                return match($this->destination_type) {
+                    'url' => $this->destination,
+                    'entry' => Entry::find($this->destination_entry)->in($this->site())->url(),
+                };
+            })
+            ->args(func_get_args());
     }
 
     public function destination_entry($destination_entry = null)
