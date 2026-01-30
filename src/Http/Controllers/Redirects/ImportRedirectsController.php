@@ -46,28 +46,28 @@ class ImportRedirectsController
 
         $skipped = 0;
         $reader->getRows()->each(function (array $data) use (&$skipped) {
-            if (! isset($data['source'])) {
+            if (empty($data['source'])) {
                 Log::error('Redirect has no source', $data);
                 $skipped++;
 
                 return;
             }
 
-            if (! isset($data['type'])) {
+            if (empty($data['type'])) {
                 Log::error('Redirect has no type', $data);
                 $skipped++;
 
                 return;
             }
 
-            if (! isset($data['match_type'])) {
+            if (empty($data['match_type'])) {
                 Log::error('Redirect has no match_type', $data);
                 $skipped++;
 
                 return;
             }
 
-            if ((! isset($data['destination']) && (($data['type'] ?? null) != 410))) {
+            if ((empty($data['destination']) && ((int) $data['type'] !== 410))) {
                 Log::error('Redirect has no destination, it is required when type is not 410', $data);
                 $skipped++;
 
