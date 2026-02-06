@@ -12,6 +12,7 @@ use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Exceptions\GoneHttpException;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
+use Statamic\Facades\Site;
 
 beforeEach(function () {
     $this->middleware = app(HandleNotFound::class);
@@ -391,6 +392,87 @@ it('doesnt log hits if log hits is false', function () {
     expect(Error::findByUrl('/abc')->hitsCount)->toEqual(1);
     // Still add count
     expect($response->status())->toEqual(404);
+});
+
+it('prepends the site prefix to the redirect destination in multisite', function () {
+    Site::setSites([
+        'default' => [
+            'name' => 'English',
+            'url' => '/',
+            'locale' => 'en_US',
+        ],
+        'nl' => [
+            'name' => 'Dutch',
+            'url' => '/nl/',
+            'locale' => 'nl_NL',
+        ],
+    ]);
+
+    Redirect::make()
+        ->site('nl')
+        ->source('/old-page')
+        ->destination('/new-page')
+        ->save();
+
+    $response = $this->middleware->handle(Request::create('/nl/old-page'), function () {
+        return new Response('', 404);
+    });
+
+    expect($response->isRedirect(url('/nl/new-page')))->toBeTrue();
+});
+
+it('does not double-prefix the destination when it already includes the site prefix', function () {
+    Site::setSites([
+        'default' => [
+            'name' => 'English',
+            'url' => '/',
+            'locale' => 'en_US',
+        ],
+        'nl' => [
+            'name' => 'Dutch',
+            'url' => '/nl/',
+            'locale' => 'nl_NL',
+        ],
+    ]);
+
+    Redirect::make()
+        ->site('nl')
+        ->source('/old-page')
+        ->destination('/nl/new-page')
+        ->save();
+
+    $response = $this->middleware->handle(Request::create('/nl/old-page'), function () {
+        return new Response('', 404);
+    });
+
+    expect($response->isRedirect(url('/nl/new-page')))->toBeTrue();
+});
+
+it('does not prefix external URLs in multisite', function () {
+    Site::setSites([
+        'default' => [
+            'name' => 'English',
+            'url' => '/',
+            'locale' => 'en_US',
+        ],
+        'nl' => [
+            'name' => 'Dutch',
+            'url' => '/nl/',
+            'locale' => 'nl_NL',
+        ],
+    ]);
+
+    Redirect::make()
+        ->site('nl')
+        ->source('/old-page')
+        ->destination('https://external.com/page')
+        ->save();
+
+    $response = $this->middleware->handle(Request::create('/nl/old-page'), function () {
+        return new Response('', 404);
+    });
+
+    expect($response->isRedirect('https://external.com/page'))->toBeTrue();
 });
 
 /** @test * */

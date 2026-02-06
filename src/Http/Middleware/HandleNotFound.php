@@ -64,7 +64,7 @@ class HandleNotFound
 
                 if (! is_null($destination)) {
                     return redirect(
-                        $this->mergeQuery($request, $destination),
+                        $this->mergeQuery($request, $this->prependSitePrefix($site, $destination)),
                         $this->cachedRedirects[$site->handle()][$uri]['type'],
                     );
                 }
@@ -87,7 +87,7 @@ class HandleNotFound
             }
 
             return redirect(
-                $this->mergeQuery($request, $redirect->destination()),
+                $this->mergeQuery($request, $this->prependSitePrefix($site, $redirect->destination())),
                 $redirect->type()
             );
         } catch (\Exception $e) {
@@ -161,6 +161,25 @@ class HandleNotFound
         ];
 
         Cache::put('statamic.redirect.redirects', $this->cachedRedirects);
+    }
+
+    private function prependSitePrefix(\Statamic\Sites\Site $site, string $destination): string
+    {
+        if (Str::startsWith($destination, ['http://', 'https://'])) {
+            return $destination;
+        }
+
+        $siteUrl = rtrim($site->url(), '/');
+
+        if (empty($siteUrl) || $siteUrl === '/' || Str::startsWith($siteUrl, ['http://', 'https://'])) {
+            return $destination;
+        }
+
+        if (Str::startsWith($destination, $siteUrl.'/') || $destination === $siteUrl) {
+            return $destination;
+        }
+
+        return $siteUrl.'/'.ltrim($destination, '/');
     }
 
     public function mergeQuery(Request $request, string $destination): string
