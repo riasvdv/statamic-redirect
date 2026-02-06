@@ -6,6 +6,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Rias\StatamicRedirect\Actions\Delete;
 use Rias\StatamicRedirect\Actions\Export;
@@ -38,8 +39,12 @@ use Statamic\Events\CollectionTreeSaved;
 use Statamic\Events\CollectionTreeSaving;
 use Statamic\Events\EntrySaved;
 use Statamic\Events\EntrySaving;
+use Rias\StatamicRedirect\GraphQL\RedirectQuery;
+use Rias\StatamicRedirect\GraphQL\RedirectsQuery;
+use Rias\StatamicRedirect\GraphQL\RedirectType;
 use Statamic\Facades\CP\Nav;
 use Statamic\Facades\Git;
+use Statamic\Facades\GraphQL;
 use Statamic\Facades\Permission;
 use Statamic\Providers\AddonServiceProvider;
 use Statamic\Stache\Stache;
@@ -110,6 +115,8 @@ class RedirectServiceProvider extends AddonServiceProvider
     {
         parent::boot();
 
+        $this->bootApi();
+
         $this->commands([
             CleanErrorsCommand::class,
         ]);
@@ -136,7 +143,8 @@ class RedirectServiceProvider extends AddonServiceProvider
                 ->bootAddonNav()
                 ->bootErrors()
                 ->bootRedirects()
-                ->bootPermissions();
+                ->bootPermissions()
+                ->bootGraphQL();
         });
 
         if (! $this->app->runningInConsole()) {
@@ -348,6 +356,24 @@ class RedirectServiceProvider extends AddonServiceProvider
                     ]);
             });
         });
+
+        return $this;
+    }
+
+    protected function bootGraphQL(): self
+    {
+        GraphQL::addType(RedirectType::class);
+        GraphQL::addQuery(RedirectsQuery::class);
+        GraphQL::addQuery(RedirectQuery::class);
+
+        return $this;
+    }
+
+    protected function bootApi(): self
+    {
+        Route::middleware(config('statamic.api.middleware', []))
+            ->prefix(config('statamic.api.route', 'api'))
+            ->group(__DIR__.'/../routes/api.php');
 
         return $this;
     }

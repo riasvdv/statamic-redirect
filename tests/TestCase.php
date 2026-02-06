@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\File;
@@ -38,6 +39,15 @@ class TestCase extends AddonTestCase
         Hit::truncate();
         Redirect::all()->each->delete();
         Stache::clear();
+    }
+
+    protected function getEnvironmentSetUp($app): void
+    {
+        parent::getEnvironmentSetUp($app);
+
+        $app['config']->set('statamic.api.enabled', true);
+        $app['config']->set('statamic.graphql.enabled', true);
+        $app['config']->set('statamic.editions.pro', true);
     }
 
     /**

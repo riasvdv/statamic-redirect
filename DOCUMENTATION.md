@@ -129,6 +129,164 @@ Unlike the other commands, this will **merge** the redirects into an existing `v
   - Vercel: `(.*)` → `:path*`, `$1` → `:path*`
 - Exact match redirects are left unchanged.
 
+## REST API
+
+Statamic Redirect integrates with Statamic's REST API to provide read-only access to your redirects.
+
+### Enabling the API
+
+Make sure Statamic's REST API is enabled in `config/statamic/api.php`:
+
+```php
+'enabled' => true,
+```
+
+### Endpoints
+
+#### List all redirects
+
+```
+GET /api/redirects
+```
+
+Returns a paginated list of all redirects.
+
+#### Get a single redirect
+
+```
+GET /api/redirects/{id}
+```
+
+Returns a single redirect by its ID.
+
+### Filtering
+
+You can filter results using query parameters:
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `filter[site]` | Filter by site handle | `?filter[site]=default` |
+| `filter[enabled]` | Filter by enabled status | `?filter[enabled]=true` |
+| `filter[match_type]` | Filter by match type (exact or regex) | `?filter[match_type]=exact` |
+| `filter[type]` | Filter by redirect type (301, 302, 410) | `?filter[type]=301` |
+
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "abc-123",
+      "enabled": true,
+      "source": "/old-page",
+      "destination": "/new-page",
+      "destination_type": "url",
+      "destination_entry": null,
+      "type": 301,
+      "match_type": "exact",
+      "site": "default",
+      "order": 0,
+      "description": null,
+      "last_used_at": "2024-01-15T10:30:00+00:00"
+    }
+  ],
+  "links": {
+    "first": "...",
+    "last": "...",
+    "prev": null,
+    "next": "..."
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 5,
+    "per_page": 15,
+    "to": 15,
+    "total": 75
+  }
+}
+```
+
+## GraphQL API
+
+Statamic Redirect also integrates with Statamic's GraphQL API.
+
+### Enabling GraphQL
+
+Make sure Statamic's GraphQL is enabled in `config/statamic/graphql.php`:
+
+```php
+'enabled' => true,
+```
+
+### Queries
+
+#### List redirects
+
+```graphql
+{
+  redirects(limit: 20, page: 1) {
+    data {
+      id
+      enabled
+      source
+      destination
+      destination_type
+      destination_entry
+      type
+      match_type
+      site
+      order
+      description
+      last_used_at
+    }
+  }
+}
+```
+
+##### Arguments
+
+| Argument | Type | Default | Description |
+|----------|------|---------|-------------|
+| `limit` | Int | 20 | Number of redirects per page |
+| `page` | Int | 1 | Page number |
+| `site` | String | null | Filter by site handle |
+| `enabled` | Boolean | null | Filter by enabled status |
+| `match_type` | String | null | Filter by match type (exact or regex) |
+| `type` | Int | null | Filter by redirect type (301, 302, 410) |
+
+#### Get a single redirect
+
+```graphql
+{
+  redirect(id: "abc-123") {
+    id
+    enabled
+    source
+    destination
+    type
+    match_type
+    site
+  }
+}
+```
+
+### Example Usage
+
+Filter enabled redirects for a specific site:
+
+```graphql
+{
+  redirects(site: "default", enabled: true, limit: 10) {
+    data {
+      source
+      destination
+      type
+    }
+  }
+}
+```
+
 ## Different storage
 
 If you want to use a different storage method for errors or redirects, change them in the config file.
