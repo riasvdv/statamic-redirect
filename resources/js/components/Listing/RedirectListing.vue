@@ -91,6 +91,18 @@ function reordered(value) {
               <span v-text="redirect.source" />
             </span>
           </template>
+          <template v-slot:[`cell-destination`]="{ row: redirect }">
+            <a
+                v-if="redirect.destination"
+                :href="redirect.destination"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-blue hover:text-blue-dark"
+                @click.stop
+                v-text="redirect.destination"
+            ></a>
+            <span v-else class="text-gray-600">—</span>
+          </template>
           <template v-slot:[`cell-last_used_at`]="{ row: redirect }">
             <span v-text="redirect.last_used_at"></span>
           </template>
