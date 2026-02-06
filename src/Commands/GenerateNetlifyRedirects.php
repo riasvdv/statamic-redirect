@@ -5,6 +5,7 @@ namespace Rias\StatamicRedirect\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Rias\StatamicRedirect\Data\Redirect;
+use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Facades\Redirect as RedirectFacade;
 use Statamic\Console\RunsInPlease;
 
@@ -25,10 +26,18 @@ class GenerateNetlifyRedirects extends Command
                 $type = 301; // Netlify doesn't support 410
             }
 
+            $source = $redirect->source();
+            $destination = $redirect->destination();
+
+            if ($redirect->matchType() === MatchTypeEnum::REGEX) {
+                $source = str_replace('(.*)', '*', $source);
+                $destination = str_replace('$1', ':splat', $destination);
+            }
+
             return <<<txt
             [[redirects]]
-            from = "{$redirect->source()}"
-            to = "{$redirect->destination()}"
+            from = "{$source}"
+            to = "{$destination}"
             status = {$type}
 
             txt;

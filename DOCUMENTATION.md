@@ -89,6 +89,46 @@ You can disable the cleaning by setting the `clean_errors` config value to `fals
 
 > Make sure your [Schedule](https://laravel.com/docs/8.x/scheduling#introduction) is running for error cleaning to work.
 
+## Static Site Redirects
+
+When using Statamic's Static Site Generator, server-side redirects won't work out of the box. Statamic Redirect can generate platform-specific redirect files for popular static hosting providers.
+
+### Netlify
+
+Generate a `netlify.toml` file with redirect rules:
+
+```
+php please redirect:generate-netlify-redirects
+```
+
+If a `netlify.toml` file already exists, you will be asked for confirmation before overwriting it.
+
+### Cloudflare Pages
+
+Generate a `_redirects` file:
+
+```
+php please redirect:generate-cloudflare-redirects
+```
+
+### Vercel
+
+Generate or update a `vercel.json` file with redirect rules:
+
+```
+php please redirect:generate-vercel-redirects
+```
+
+Unlike the other commands, this will **merge** the redirects into an existing `vercel.json` file, preserving any other configuration you have (build settings, rewrites, headers, etc.).
+
+### Notes
+
+- **410 status codes** are converted to 301, as none of these platforms support 410 in their redirect configuration.
+- **Regex redirects** are automatically converted to each platform's native syntax:
+  - Netlify & Cloudflare: `(.*)` → `*`, `$1` → `:splat`
+  - Vercel: `(.*)` → `:path*`, `$1` → `:path*`
+- Exact match redirects are left unchanged.
+
 ## Different storage
 
 If you want to use a different storage method for errors or redirects, change them in the config file.

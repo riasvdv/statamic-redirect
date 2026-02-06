@@ -15,6 +15,8 @@ Unlike utilizing .htaccess to do redirects, Redirect does not add overhead to ea
 
 Redirect has no impact on your website's performance until a 404 exception happens.
 
+Redirect can also generate static redirect files for Netlify, Cloudflare Pages, and Vercel when using the [Static Site Generator](https://github.com/statamic/ssg). See [Static Site Redirects](DOCUMENTATION.md#static-site-redirects) in the documentation.
+
 Read more in [the documentation](https://statamic.com/addons/rias/redirect/docs)
 
 ## License
