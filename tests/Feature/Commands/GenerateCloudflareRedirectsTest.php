@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\File;
-use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
+use Rias\StatamicRedirect\Facades\Redirect;
 
 afterEach(function () {
     File::delete(base_path('_redirects'));
