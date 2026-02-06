@@ -46,6 +46,7 @@ Route::prefix('redirect')->name('redirect.')->group(function () {
 
         Route::get('/{id}', [RedirectController::class, 'edit'])->name('edit');
         Route::post('/{id}', [RedirectController::class, 'update'])->name('update');
+        Route::patch('/{id}', [RedirectController::class, 'update'])->name('update');
         Route::delete('/{id}', [RedirectController::class, 'destroy'])->name('delete');
     });
 });

@@ -65,6 +65,8 @@ class RedirectController
             'submitUrl' => cp_route('redirect.redirects.store'),
             'meta' => $fields->meta()->all(),
             'asConfig' => false,
+            'listingUrl' => cp_route('redirect.redirects.index'),
+            'createUrl' => cp_route('redirect.redirects.create'),
         ]);
     }
 
@@ -91,6 +93,8 @@ class RedirectController
             'submitUrl' => cp_route('redirect.redirects.update', $id),
             'meta' => $redirectFields->meta(),
             'asConfig' => false,
+            'listingUrl' => cp_route('redirect.redirects.index'),
+            'createUrl' => cp_route('redirect.redirects.create'),
         ]);
     }
 
