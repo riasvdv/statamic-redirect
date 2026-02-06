@@ -9,9 +9,9 @@ use PHPUnit\Framework\Attributes\Test;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
+use Rias\StatamicRedirect\Exceptions\GoneHttpException;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
-use Rias\StatamicRedirect\Exceptions\GoneHttpException;
 
 beforeEach(function () {
     $this->middleware = app(HandleNotFound::class);

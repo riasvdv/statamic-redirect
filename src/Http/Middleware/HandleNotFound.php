@@ -7,12 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
 use Rias\StatamicRedirect\Data\Error;
-use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Exceptions\GoneHttpException;
+use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Jobs\CleanErrorsJob;
 use Statamic\Facades\Site;
 use Statamic\Support\Str;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandleNotFound
 {
@@ -58,7 +57,7 @@ class HandleNotFound
                 }
 
                 if ((string) $this->cachedRedirects[$site->handle()][$uri]['type'] === '410') {
-                    throw new GoneHttpException();
+                    throw new GoneHttpException;
                 }
 
                 $destination = $this->cachedRedirects[$site->handle()][$uri]['destination'];
@@ -84,7 +83,7 @@ class HandleNotFound
             }
 
             if ((string) $redirect->type() === '410') {
-                throw new GoneHttpException();
+                throw new GoneHttpException;
             }
 
             return redirect(
