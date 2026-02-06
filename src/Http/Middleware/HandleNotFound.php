@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Rias\StatamicRedirect\Contracts\Redirect as RedirectContract;
 use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Facades\Redirect;
+use Rias\StatamicRedirect\Exceptions\GoneHttpException;
 use Rias\StatamicRedirect\Jobs\CleanErrorsJob;
 use Statamic\Facades\Site;
 use Statamic\Support\Str;
@@ -57,7 +58,7 @@ class HandleNotFound
                 }
 
                 if ((string) $this->cachedRedirects[$site->handle()][$uri]['type'] === '410') {
-                    abort(410);
+                    throw new GoneHttpException();
                 }
 
                 $destination = $this->cachedRedirects[$site->handle()][$uri]['destination'];
@@ -83,7 +84,7 @@ class HandleNotFound
             }
 
             if ((string) $redirect->type() === '410') {
-                abort(410);
+                throw new GoneHttpException();
             }
 
             return redirect(
@@ -91,7 +92,7 @@ class HandleNotFound
                 $redirect->type()
             );
         } catch (\Exception $e) {
-            if ($e instanceof HttpException && $e->getStatusCode() === 410) {
+            if ($e instanceof GoneHttpException) {
                 throw $e;
             }
 

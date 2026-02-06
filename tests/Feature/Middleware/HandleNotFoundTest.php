@@ -11,7 +11,7 @@ use Rias\StatamicRedirect\Data\Error;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Rias\StatamicRedirect\Exceptions\GoneHttpException;
 
 beforeEach(function () {
     $this->middleware = app(HandleNotFound::class);
@@ -129,8 +129,7 @@ dataset('provideRedirects', function () {
     ];
 });
 
-it('handles 401 redirects', function () {
-    // $this->withExceptionHandling();
+it('handles 410 redirects', function () {
     Redirect::make()
         ->source('/abc')
         ->type(410)
@@ -140,7 +139,7 @@ it('handles 401 redirects', function () {
         $this->middleware->handle(Request::create('/abc'), function () {
             return new Response('', 404);
         });
-    } catch (HttpException $e) {
+    } catch (GoneHttpException $e) {
         expect($e->getStatusCode())->toEqual(410);
     }
 
