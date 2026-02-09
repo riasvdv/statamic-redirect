@@ -45,8 +45,7 @@ Route::prefix('redirect')->name('redirect.')->group(function () {
         Route::post('actions/run/list', [RedirectActionController::class, 'bulkActions'])->name('actions.bulk');
 
         Route::get('/{id}', [RedirectController::class, 'edit'])->name('edit');
-        Route::post('/{id}', [RedirectController::class, 'update'])->name('update');
-        Route::patch('/{id}', [RedirectController::class, 'update'])->name('update');
+        Route::match(['post', 'patch'], '/{id}', [RedirectController::class, 'update'])->name('update');
         Route::delete('/{id}', [RedirectController::class, 'destroy'])->name('delete');
     });
 });
