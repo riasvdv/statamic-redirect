@@ -371,6 +371,10 @@ class RedirectServiceProvider extends AddonServiceProvider
 
     protected function bootApi(): self
     {
+        if (! config('statamic.api.enabled')) {
+            return $this;
+        }
+
         Route::middleware(config('statamic.api.middleware', []))
             ->prefix(config('statamic.api.route', 'api'))
             ->group(__DIR__.'/../routes/api.php');
