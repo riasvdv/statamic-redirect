@@ -9,11 +9,6 @@ use Rias\StatamicRedirect\Http\Resources\Api\RedirectResource;
 
 class RedirectsController extends Controller
 {
-    public function __construct()
-    {
-        abort_unless(config('statamic.api.enabled'), 404);
-    }
-
     public function index(Request $request)
     {
         $query = Redirect::query();
