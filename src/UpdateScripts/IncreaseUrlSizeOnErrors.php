@@ -2,6 +2,7 @@
 
 namespace Rias\StatamicRedirect\UpdateScripts;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,11 @@ class IncreaseUrlSizeOnErrors extends UpdateScript
             $errorConnection = config('database.default');
         }
 
-        return ! Schema::connection($errorConnection)->hasColumn('errors', 'url_md5');
+        try {
+            return ! Schema::connection($errorConnection)->hasColumn('errors', 'url_md5');
+        } catch (QueryException) {
+            return false;
+        }
     }
 
     public function update()
