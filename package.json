@@ -6,7 +6,7 @@
     "format": "prettier 'resources/**/*.{css,js,json,css,ts,tsx,vue}' '*.{js,css}' --write"
   },
   "dependencies": {
-    "axios": "^1.11.0",
+    "axios": "^1.13.6",
     "vite-svg-loader": "^5.1.0",
     "@statamic/cms": "file:./vendor/statamic/cms/resources/dist-package"
   },
