@@ -22,5 +22,5 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, mysql, mysqli, pdo_mysql, bcmath, soap, intl, gd, exif, iconv, imagick
           coverage: none
       
-      - uses: "ramsey/composer-install@v3"
+      - uses: "ramsey/composer-install@v4"
       - run: ./vendor/bin/pest --ci
