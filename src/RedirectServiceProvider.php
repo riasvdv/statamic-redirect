@@ -254,22 +254,29 @@ class RedirectServiceProvider extends AddonServiceProvider
             $connection = DB::getDefaultConnection();
         }
 
-        if (Schema::connection($connection)->hasTable('redirects')) {
-            return $this;
-        }
-
         if (config('statamic.redirect.run_migrations')) {
             $defaultConnection = DB::getDefaultConnection();
             DB::setDefaultConnection($connection);
 
-            require_once __DIR__.'/../database/migrations/create_redirect_redirects_table.php.stub';
-            (new \CreateRedirectRedirectsTable)->up();
-            require_once __DIR__.'/../database/migrations/add_description_to_redirect_redirects_table.php.stub';
-            (new \AddDescriptionToRedirectRedirectsTable)->up();
-            require_once __DIR__.'/../database/migrations/increase_redirect_redirects_table_url_length.php.stub';
-            (new \IncreaseRedirectRedirectsTableUrlLength)->up();
-            require_once __DIR__.'/../database/migrations/version_4_upgrade.php.stub';
-            (new \Version4UpgradeMigration)->up();
+            if (! Schema::hasTable('redirects')) {
+                require_once __DIR__.'/../database/migrations/create_redirect_redirects_table.php.stub';
+                (new \CreateRedirectRedirectsTable)->up();
+            }
+
+            if (! Schema::hasColumn('redirects', 'description')) {
+                require_once __DIR__.'/../database/migrations/add_description_to_redirect_redirects_table.php.stub';
+                (new \AddDescriptionToRedirectRedirectsTable)->up();
+            }
+
+            if (! Schema::hasColumn('redirects', 'source_md5')) {
+                require_once __DIR__.'/../database/migrations/increase_redirect_redirects_table_url_length.php.stub';
+                (new \IncreaseRedirectRedirectsTableUrlLength)->up();
+            }
+
+            if (! Schema::hasColumn('redirects', 'last_used_at')) {
+                require_once __DIR__.'/../database/migrations/version_4_upgrade.php.stub';
+                (new \Version4UpgradeMigration)->up();
+            }
 
             DB::setDefaultConnection($defaultConnection);
         }
