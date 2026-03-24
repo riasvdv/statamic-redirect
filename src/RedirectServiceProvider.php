@@ -155,7 +155,7 @@ class RedirectServiceProvider extends AddonServiceProvider
             __DIR__.'/../database/migrations/create_redirect_redirects_table.php.stub' => $this->migrationPath('create_redirect_redirects_table.php'),
             __DIR__.'/../database/migrations/add_description_to_redirect_redirects_table.php.stub' => $this->migrationPath('add_description_to_redirect_redirects_table.php', 1),
             __DIR__.'/../database/migrations/increase_redirect_redirects_table_url_length.php.stub' => $this->migrationPath('increase_redirect_redirects_table_url_length.php', 2),
-            __DIR__.'/../database/migrations/version_4_upgrade.php.stub' => $this->migrationPath('add_last_used_at_and_destination_columns_to_redirects_table.php', 3),
+            __DIR__.'/../database/migrations/version_4_upgrade.php.stub' => $this->migrationPath('version_4_upgrade_migration.php', 3),
         ], 'statamic-redirect-redirect-migrations');
     }
 
