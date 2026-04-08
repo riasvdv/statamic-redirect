@@ -12,6 +12,7 @@ use Rias\StatamicRedirect\Actions\Delete;
 use Rias\StatamicRedirect\Actions\Export;
 use Rias\StatamicRedirect\Commands\CleanErrorsCommand;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
+use Rias\StatamicRedirect\Data\Redirect;
 use Rias\StatamicRedirect\Eloquent\Redirects\RedirectRepository as EloquentRedirectRepository;
 use Rias\StatamicRedirect\Events\RedirectSaved;
 use Rias\StatamicRedirect\GraphQL\RedirectQuery;
@@ -104,6 +105,9 @@ class RedirectServiceProvider extends AddonServiceProvider
     public function register()
     {
         $this->registerAddonConfig();
+        $this->registerSerializableClasses([
+            Redirect::class,
+        ]);
 
         $this->app->singleton(RedirectRepository::class, function () {
             return $this->app->get($this->getRedirectRepository());
