@@ -15,6 +15,7 @@ use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Rias\StatamicRedirect\Tests\TestCase;
+use Statamic\Facades\Site;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class HandleNotFoundTest extends TestCase
@@ -416,6 +417,93 @@ class HandleNotFoundTest extends TestCase
         $this->assertEquals(0, count(Error::findByUrl('/abc')->hits ?? []));
         $this->assertEquals(1, Error::findByUrl('/abc')->hitsCount); // Still add count
         $this->assertEquals(404, $response->status());
+    }
+
+    #[Test]
+    public function it_prepends_the_site_prefix_to_the_redirect_destination_in_multisite()
+    {
+        Site::setSites([
+            'default' => [
+                'name' => 'English',
+                'url' => '/',
+                'locale' => 'en_US',
+            ],
+            'nl' => [
+                'name' => 'Dutch',
+                'url' => '/nl/',
+                'locale' => 'nl_NL',
+            ],
+        ]);
+
+        Redirect::make()
+            ->site('nl')
+            ->source('/old-page')
+            ->destination('/new-page')
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/nl/old-page'), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect(url('/nl/new-page')));
+    }
+
+    #[Test]
+    public function it_does_not_double_prefix_the_destination_when_it_already_includes_the_site_prefix()
+    {
+        Site::setSites([
+            'default' => [
+                'name' => 'English',
+                'url' => '/',
+                'locale' => 'en_US',
+            ],
+            'nl' => [
+                'name' => 'Dutch',
+                'url' => '/nl/',
+                'locale' => 'nl_NL',
+            ],
+        ]);
+
+        Redirect::make()
+            ->site('nl')
+            ->source('/old-page')
+            ->destination('/nl/new-page')
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/nl/old-page'), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect(url('/nl/new-page')));
+    }
+
+    #[Test]
+    public function it_does_not_prefix_external_urls_in_multisite()
+    {
+        Site::setSites([
+            'default' => [
+                'name' => 'English',
+                'url' => '/',
+                'locale' => 'en_US',
+            ],
+            'nl' => [
+                'name' => 'Dutch',
+                'url' => '/nl/',
+                'locale' => 'nl_NL',
+            ],
+        ]);
+
+        Redirect::make()
+            ->site('nl')
+            ->source('/old-page')
+            ->destination('https://external.com/page')
+            ->save();
+
+        $response = $this->middleware->handle(Request::create('/nl/old-page'), function () {
+            return (new Response('', 404));
+        });
+
+        $this->assertTrue($response->isRedirect('https://external.com/page'));
     }
 
     /** @test * */
