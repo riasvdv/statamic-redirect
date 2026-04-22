@@ -26,7 +26,7 @@ class CreateRedirect
             $existingRedirect->delete();
         }
 
-        if (! $oldUri = Cache::pull('redirect-entry-uri-before')) {
+        if (! $oldUri = Cache::pull($this->cacheKey($entry->id()))) {
             return;
         }
 
@@ -44,5 +44,10 @@ class CreateRedirect
             ->destination($entry->uri())
             ->matchType(MatchTypeEnum::EXACT)
             ->save();
+    }
+
+    protected function cacheKey(string $entryId): string
+    {
+        return "redirect-entry-uri-before:{$entryId}";
     }
 }

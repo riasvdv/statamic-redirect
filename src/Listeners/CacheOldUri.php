@@ -28,6 +28,11 @@ class CacheOldUri
             return;
         }
 
-        Cache::put('redirect-entry-uri-before', $uri);
+        Cache::put($this->cacheKey($entry->id()), $uri, now()->addMinute());
+    }
+
+    protected function cacheKey(string $entryId): string
+    {
+        return "redirect-entry-uri-before:{$entryId}";
     }
 }
