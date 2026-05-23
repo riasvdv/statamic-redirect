@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Error extends Model
 {
+    public const MAX_URL_LENGTH = 2048;
+
     protected $guarded = [];
 
     protected $casts = [
@@ -38,8 +40,13 @@ class Error extends Model
     protected static function booted()
     {
         self::saving(function ($model) {
+            if ($model->isDirty('url')) {
+                $model->url = self::normalizeUrl($model->url);
+            }
+
             $model->url_md5 = md5($model->url);
         });
+
         self::deleting(function ($error) {
             $error->hits()->delete();
         });
@@ -73,6 +80,13 @@ class Error extends Model
 
     public static function findByUrl(string $url): ?self
     {
+        $url = self::normalizeUrl($url);
+
         return self::where('url_md5', md5($url))->where('url', $url)->first();
+    }
+
+    public static function normalizeUrl(string $url): string
+    {
+        return mb_substr($url, 0, self::MAX_URL_LENGTH, 'UTF-8');
     }
 }
