@@ -65,6 +65,21 @@ it('creates an error when the response is 404 and saves metadata', function () {
     });
 });
 
+it('truncates long error urls before logging them', function () {
+    $url = '/'.str_repeat('a', Error::MAX_URL_LENGTH + 100);
+
+    $response = $this->middleware->handle(Request::create($url), function () {
+        return new Response('', 404);
+    });
+
+    $error = Error::query()->first();
+
+    expect($response->status())->toEqual(404);
+    expect(Error::query()->count())->toEqual(1);
+    expect(strlen($error->url))->toEqual(Error::MAX_URL_LENGTH);
+    expect(Error::findByUrl($url)->is($error))->toBeTrue();
+});
+
 it('redirects and sets handled if a redirect is found', function (string $source, string $destination, string $requestUrl, string $result) {
     Redirect::make()
         ->source($source)
