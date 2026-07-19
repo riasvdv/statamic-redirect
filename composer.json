@@ -26,7 +26,7 @@
     "scripts": {
         "lint": "php-cs-fixer fix --verbose --dry-run --diff",
         "lint:fix": "php-cs-fixer fix --verbose --diff",
-        "test": "phpunit",
+        "test": "pest",
         "test:coverage": "phpdbg -qrr vendor/bin/phpunit --color --coverage-html tests/_reports"
     },
     "minimum-stability": "dev",

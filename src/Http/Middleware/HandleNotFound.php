@@ -29,7 +29,10 @@ class HandleNotFound
 
         try {
             $site = Site::findByUrl($request->url()) ?? Site::default();
-            $uri = $request->getRequestUri();
+            $requestUri = $request->getRequestUri();
+            $hasQueryString = str_contains($requestUri, '?');
+            $queryString = $hasQueryString ? Str::after($requestUri, '?') : null;
+            $uri = Str::before($requestUri, '?');
 
             // Remove site URI
             $siteUri = Str::after($site->url(), '/');
@@ -41,6 +44,10 @@ class HandleNotFound
             // Make sure we remove any trailing slash
             $uri = Str::chopEnd($uri, '/');
 
+            if ($hasQueryString) {
+                $uri = "{$uri}?{$queryString}";
+            }
+
             $logErrors = config('statamic.redirect.log_errors', true);
 
             if ($logErrors) {
@@ -48,7 +55,9 @@ class HandleNotFound
                 CleanErrorsJob::dispatchIf(config('statamic.redirect.clean_errors_on_save'));
             }
 
-            $this->cachedRedirects = Cache::get('statamic.redirect.redirects', []);
+            $this->cachedRedirects = $hasQueryString
+                ? []
+                : Cache::get('statamic.redirect.redirects', []);
 
             if (isset($this->cachedRedirects[$site->handle()][$uri])) {
                 $this->markRedirectUsed($this->cachedRedirects[$site->handle()][$uri]['id']);
@@ -77,7 +86,9 @@ class HandleNotFound
 
             $this->markRedirectUsed($redirect->id());
 
-            $this->cacheNewRedirect($site, $redirect, $uri);
+            if (! $hasQueryString) {
+                $this->cacheNewRedirect($site, $redirect, $uri);
+            }
 
             if ($logErrors) {
                 $this->markErrorHandled($error, $redirect->destination());

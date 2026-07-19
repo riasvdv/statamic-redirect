@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use PHPUnit\Framework\Attributes\Test;
@@ -356,6 +357,55 @@ it('handles if the source has a trailing slash', function () {
     });
 
     expect($response->isRedirect(url('/bar')))->toBeTrue();
+});
+
+it('matches an exact redirect when a trailing slash precedes a query string', function () {
+    Redirect::make()
+        ->source('/foo')
+        ->destination('/bar')
+        ->matchType(MatchTypeEnum::EXACT)
+        ->save();
+
+    $response = $this->middleware->handle(Request::create('/foo/?utm_source=x'), function () {
+        return new Response('', 404);
+    });
+
+    expect($response->isRedirect(url('/bar')))->toBeTrue();
+});
+
+it('keeps the query string when normalizing a trailing slash', function () {
+    Redirect::make()
+        ->source('/foo?lang=nl')
+        ->destination('/nl')
+        ->matchType(MatchTypeEnum::EXACT)
+        ->save();
+
+    $response = $this->middleware->handle(Request::create('/foo/?lang=nl'), function () {
+        return new Response('', 404);
+    });
+
+    expect($response->isRedirect(url('/nl')))->toBeTrue();
+});
+
+it('does not cache redirects requested with query strings', function () {
+    Cache::forget('statamic.redirect.redirects');
+
+    Redirect::make()
+        ->source('/foo')
+        ->destination('/bar')
+        ->matchType(MatchTypeEnum::EXACT)
+        ->save();
+
+    $firstResponse = $this->middleware->handle(Request::create('/foo?utm_source=one'), function () {
+        return new Response('', 404);
+    });
+    $secondResponse = $this->middleware->handle(Request::create('/foo?utm_source=two'), function () {
+        return new Response('', 404);
+    });
+
+    expect($firstResponse->isRedirect(url('/bar')))->toBeTrue()
+        ->and($secondResponse->isRedirect(url('/bar')))->toBeTrue()
+        ->and(Cache::get('statamic.redirect.redirects', []))->toBe([]);
 });
 
 it('cleans if config is set to clean', function () {
