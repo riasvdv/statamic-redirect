@@ -23,7 +23,8 @@ it('reuses existing redirect migration filenames when publishing', function () {
             File::put($migration, '<?php');
         }
 
-        $provider = new class($this->app) extends RedirectServiceProvider {
+        $provider = new class($this->app) extends RedirectServiceProvider
+        {
             public function resolveMigrationPath(string $migrationFileName, int $timestampOffset = 0): string
             {
                 return $this->migrationPath($migrationFileName, $timestampOffset);
