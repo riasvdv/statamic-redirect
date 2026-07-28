@@ -57,6 +57,7 @@ it('creates an error when the response is 404 and saves metadata', function () {
     expect(Error::query()->count())->toEqual(1);
     expect($response->status())->toEqual(404);
     tap(Error::findByUrl('/abc'), function (Error $error) {
+        expect($error->site)->toEqual(Site::default()->handle());
         expect($error->url)->toEqual('/abc');
         expect(count($error->hits))->toEqual(1);
         expect($error->lastSeenAt)->toEqual(now()->timestamp);
@@ -64,6 +65,29 @@ it('creates an error when the response is 404 and saves metadata', function () {
         expect($error->hits[0]['data']['ip'])->toEqual('127.0.0.1');
         expect($error->hits[0]['data']['referer'])->toEqual('some-referer');
     });
+});
+
+it('logs the same error separately for each site', function () {
+    Site::setSites([
+        'default' => [
+            'name' => 'English',
+            'url' => '/',
+            'locale' => 'en_US',
+        ],
+        'nl' => [
+            'name' => 'Dutch',
+            'url' => '/nl/',
+            'locale' => 'nl_NL',
+        ],
+    ]);
+
+    foreach (['/missing', '/nl/missing'] as $url) {
+        $this->middleware->handle(Request::create($url), fn () => new Response('', 404));
+    }
+
+    expect(Error::query()->count())->toBe(2)
+        ->and(Error::findByUrl('/missing', 'default')->site)->toBe('default')
+        ->and(Error::findByUrl('/missing', 'nl')->site)->toBe('nl');
 });
 
 it('truncates long error urls before logging them', function () {

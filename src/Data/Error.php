@@ -78,11 +78,14 @@ class Error extends Model
         return null;
     }
 
-    public static function findByUrl(string $url): ?self
+    public static function findByUrl(string $url, ?string $site = null): ?self
     {
         $url = self::normalizeUrl($url);
 
-        return self::where('url_md5', md5($url))->where('url', $url)->first();
+        return self::where('url_md5', md5($url))
+            ->where('url', $url)
+            ->when($site, fn ($query) => $query->where('site', $site))
+            ->first();
     }
 
     public static function normalizeUrl(string $url): string

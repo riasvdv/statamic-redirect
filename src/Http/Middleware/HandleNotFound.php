@@ -51,7 +51,7 @@ class HandleNotFound
             $logErrors = config('statamic.redirect.log_errors', true);
 
             if ($logErrors) {
-                $error = $this->createError($request, $uri);
+                $error = $this->createError($request, $site->handle(), $uri);
                 CleanErrorsJob::dispatchIf(config('statamic.redirect.clean_errors_on_save'));
             }
 
@@ -118,12 +118,12 @@ class HandleNotFound
         }
     }
 
-    private function createError(Request $request, string $url): Error
+    private function createError(Request $request, string $site, string $url): Error
     {
-        $error = Error::findByUrl($url);
+        $error = Error::findByUrl($url, $site);
 
         if (! $error) {
-            $error = new Error(['url' => $url]);
+            $error = new Error(['site' => $site, 'url' => $url]);
         }
 
         $error->lastSeenAt = now()->timestamp;

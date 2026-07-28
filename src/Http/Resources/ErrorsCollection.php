@@ -22,6 +22,7 @@ class ErrorsCollection extends ResourceCollection
     private function setColumns()
     {
         $columns = [
+            Column::make('site')->label('Site'),
             Column::make('url')->label('Path'),
             Column::make('hitsCount')->label('Hits'),
             Column::make('lastSeenAt')->label('Latest error'),
