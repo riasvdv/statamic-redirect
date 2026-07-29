@@ -21,6 +21,7 @@ class ListedError extends JsonResource
     {
         return [
             'id' => $this->id,
+            'site' => $this->site,
             'url' => $this->url,
             'handled' => $this->handled,
             'handledDestination' => $this->handledDestination,

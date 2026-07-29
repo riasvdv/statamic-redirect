@@ -83,7 +83,9 @@ function relativeDate(unixTimestamp) {
           :href="
             cp_url('redirect/redirects/create') +
             '?source=' +
-            encodeURI(error.url)
+            encodeURIComponent(error.url) +
+            '&site=' +
+            encodeURIComponent(error.site)
           "
           icon="plus"
       />

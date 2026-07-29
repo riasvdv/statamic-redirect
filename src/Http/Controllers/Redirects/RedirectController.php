@@ -61,6 +61,7 @@ class RedirectController
             'blueprint' => $blueprint()->toPublishArray(),
             'values' => $fields->values()->merge([
                 'source' => request('source'),
+                'site' => request('site') ? [request('site')] : $fields->values()->get('site'),
             ])->all(),
             'submitUrl' => cp_route('redirect.redirects.store'),
             'meta' => $fields->meta()->all(),

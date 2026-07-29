@@ -29,6 +29,7 @@ use Rias\StatamicRedirect\Stache\Redirects\RedirectRepository as StacheRedirectR
 use Rias\StatamicRedirect\Stache\Redirects\RedirectStore;
 use Rias\StatamicRedirect\UpdateScripts\AddDescriptionColumnToRedirectsTable;
 use Rias\StatamicRedirect\UpdateScripts\AddHitsCount;
+use Rias\StatamicRedirect\UpdateScripts\AddSiteToErrors;
 use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
 use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnErrors;
 use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnRedirects;
@@ -61,6 +62,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         IncreaseUrlSizeOnRedirects::class,
         IncreaseUrlSizeOnErrors::class,
         Version4Upgrade::class,
+        AddSiteToErrors::class,
     ];
 
     protected $vite = [
@@ -153,6 +155,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         $this->publishes([
             __DIR__.'/../database/migrations/create_redirect_error_tables.php.stub' => $this->migrationPath('create_redirect_error_tables.php'),
             __DIR__.'/../database/migrations/increase_redirect_error_table_url_length.php.stub' => $this->migrationPath('increase_redirect_error_table_url_length.php', 1),
+            __DIR__.'/../database/migrations/add_site_to_redirect_errors_table.php.stub' => $this->migrationPath('add_site_to_redirect_errors_table.php', 2),
         ], 'statamic-redirect-error-migrations');
 
         $this->publishes([
@@ -230,6 +233,11 @@ class RedirectServiceProvider extends AddonServiceProvider
             if (! Schema::hasColumn('errors', 'url_md5')) {
                 require_once __DIR__.'/../database/migrations/increase_redirect_error_table_url_length.php.stub';
                 (new \IncreaseRedirectErrorTableUrlLength)->up();
+            }
+
+            if (! Schema::hasColumn('errors', 'site')) {
+                require_once __DIR__.'/../database/migrations/add_site_to_redirect_errors_table.php.stub';
+                (new \AddSiteToRedirectErrorsTable)->up();
             }
 
             DB::setDefaultConnection($defaultConnection);

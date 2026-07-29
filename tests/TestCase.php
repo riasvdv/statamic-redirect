@@ -35,6 +35,7 @@ class TestCase extends AddonTestCase
         $this->faker = $this->makeFaker();
 
         File::deleteDirectory(base_path('content/redirects'));
+
         try {
             Entry::all()->each->delete();
         } catch (\Throwable) {
@@ -78,5 +79,8 @@ class TestCase extends AddonTestCase
 
         include_once __DIR__.'/../database/migrations/increase_redirect_error_table_url_length.php.stub';
         (new \IncreaseRedirectErrorTableUrlLength)->up();
+
+        include_once __DIR__.'/../database/migrations/add_site_to_redirect_errors_table.php.stub';
+        (new \AddSiteToRedirectErrorsTable)->up();
     }
 }
