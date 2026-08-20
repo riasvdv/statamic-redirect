@@ -537,6 +537,33 @@ it('does not double-prefix the destination when it already includes the site pre
     expect($response->isRedirect(url('/nl/new-page')))->toBeTrue();
 });
 
+it('does not prefix a destination for another site', function () {
+    Site::setSites([
+        'de' => [
+            'name' => 'German',
+            'url' => '/de/',
+            'locale' => 'de_DE',
+        ],
+        'fr' => [
+            'name' => 'French',
+            'url' => '/fr/',
+            'locale' => 'fr_FR',
+        ],
+    ]);
+
+    Redirect::make()
+        ->site('de')
+        ->source('/test-redirect')
+        ->destination('/fr/target-page')
+        ->save();
+
+    $response = $this->middleware->handle(Request::create('/de/test-redirect'), function () {
+        return new Response('', 404);
+    });
+
+    expect($response->isRedirect(url('/fr/target-page')))->toBeTrue();
+});
+
 it('does not prefix external URLs in multisite', function () {
     Site::setSites([
         'default' => [
