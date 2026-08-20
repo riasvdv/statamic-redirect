@@ -20,7 +20,6 @@ use Rias\StatamicRedirect\GraphQL\RedirectsQuery;
 use Rias\StatamicRedirect\GraphQL\RedirectType;
 use Rias\StatamicRedirect\Http\Filters\ErrorHandled;
 use Rias\StatamicRedirect\Http\Filters\MatchType;
-use Rias\StatamicRedirect\Http\Filters\RedirectSite;
 use Rias\StatamicRedirect\Http\Filters\Type;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Rias\StatamicRedirect\Listeners\CacheOldUri;
@@ -34,6 +33,7 @@ use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
 use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnErrors;
 use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnRedirects;
 use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
+use Rias\StatamicRedirect\UpdateScripts\PreserveEntryDestinations;
 use Rias\StatamicRedirect\UpdateScripts\RenameLocaleToSiteOnRedirectsTable;
 use Rias\StatamicRedirect\UpdateScripts\Version4Upgrade;
 use Rias\StatamicRedirect\Widgets\ErrorsLastDayWidget;
@@ -63,6 +63,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         IncreaseUrlSizeOnErrors::class,
         Version4Upgrade::class,
         AddSiteToErrors::class,
+        PreserveEntryDestinations::class,
     ];
 
     protected $vite = [
@@ -131,7 +132,6 @@ class RedirectServiceProvider extends AddonServiceProvider
         ErrorHandled::register();
         MatchType::register();
         Type::register();
-        RedirectSite::register();
 
         if (config('statamic.git.enabled')) {
             Git::listen(RedirectSaved::class);

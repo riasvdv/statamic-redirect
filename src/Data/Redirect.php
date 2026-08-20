@@ -12,6 +12,7 @@ use Statamic\Data\TracksQueriedColumns;
 use Statamic\Facades\Entry;
 use Statamic\Facades\Site;
 use Statamic\Facades\Stache;
+use Statamic\Support\Str;
 use Statamic\Support\Traits\FluentlyGetsAndSets;
 
 class Redirect implements RedirectContract
@@ -34,7 +35,7 @@ class Redirect implements RedirectContract
     protected $source_md5;
 
     /** @var string */
-    protected $destination_type = 'url';
+    protected $destination_type;
 
     /** @var string */
     protected $destination;
@@ -88,7 +89,9 @@ class Redirect implements RedirectContract
     public function destination_type($destination_type = null)
     {
         return $this->fluentlyGetOrSet('destination_type')
-            ->getter(fn ($destinationType) => $destinationType ?? 'url')
+            ->getter(fn ($destinationType) => Str::startsWith($this->destination ?? '', 'entry::')
+                ? 'entry'
+                : ($destinationType ?? 'url'))
             ->args(func_get_args());
     }
 
@@ -98,7 +101,7 @@ class Redirect implements RedirectContract
             ->getter(function () {
                 return match ($this->destination_type()) {
                     'url' => $this->destination,
-                    'entry' => Entry::find($this->destination_entry)->in($this->site())->url(),
+                    'entry' => Entry::find($this->destination_entry())->url(),
                     default => $this->destination,
                 };
             })
@@ -107,7 +110,16 @@ class Redirect implements RedirectContract
 
     public function destination_entry($destination_entry = null)
     {
-        return $this->fluentlyGetOrSet('destination_entry')->args(func_get_args());
+        return $this->fluentlyGetOrSet('destination_entry')
+            ->getter(fn ($destinationEntry) => Str::startsWith($this->destination ?? '', 'entry::')
+                ? Str::after($this->destination, 'entry::')
+                : $destinationEntry)
+            ->args(func_get_args());
+    }
+
+    public function rawDestination()
+    {
+        return $this->destination;
     }
 
     public function type($type = null)
@@ -188,7 +200,7 @@ class Redirect implements RedirectContract
             'source' => $this->source(),
             'source_md5' => $this->source_md5(),
             'destination_type' => $this->destination_type(),
-            'destination' => $this->destination(),
+            'destination' => $this->rawDestination(),
             'destination_entry' => $this->destination_entry(),
             'type' => $this->type(),
             'site' => $this->site(),

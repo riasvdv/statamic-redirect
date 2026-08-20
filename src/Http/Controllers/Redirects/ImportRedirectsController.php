@@ -91,6 +91,8 @@ class ImportRedirectsController
             /** @var \Rias\StatamicRedirect\Data\Redirect $redirect */
             $redirect
                 ->destination($data['destination'] ?? null)
+                ->destination_type('url')
+                ->destination_entry(null)
                 ->enabled($data['enabled'] ?? true)
                 ->type((int) $data['type'])
                 ->site($siteHandle)

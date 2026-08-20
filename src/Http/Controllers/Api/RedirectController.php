@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Rias\StatamicRedirect\Contracts\RedirectQueryBuilder;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Http\Resources\RedirectsCollection;
+use Statamic\Facades\Site;
 use Statamic\Http\Requests\FilteredRequest;
 use Statamic\Query\Scopes\Filters\Concerns\QueriesFilters;
 
@@ -55,7 +56,7 @@ class RedirectController
 
     protected function indexQuery(): RedirectQueryBuilder
     {
-        $query = Redirect::query();
+        $query = Redirect::query()->where('site', Site::selected()->handle());
 
         if ($search = request('search')) {
             $query->where(function ($query) use ($search) {

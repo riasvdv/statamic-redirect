@@ -16,67 +16,6 @@ class RedirectBlueprint extends Blueprint
                 'main' => [
                     'fields' => [
                         [
-                            'handle' => 'source',
-                            'field' => [
-                                'type' => 'text',
-                                'display' => 'Source',
-                                'instructions' => 'Enter the URL pattern that Redirect should match. This matches against the path only e.g.: Exact Match: `/recipes/`, or RegEx Match: `.*RecipeID=(.*)`',
-                                'listable' => true,
-                                'validate' => ['required', 'string', new SourceIsNotRedirected],
-                            ],
-                        ],
-                        [
-                            'handle' => 'destination_type',
-                            'field' => [
-                                'type' => 'button_group',
-                                'options' => [
-                                    'url' => 'URL',
-                                    'entry' => 'Entry',
-                                ],
-                                'default' => 'url',
-                            ],
-                        ],
-                        [
-                            'handle' => 'destination',
-                            'field' => [
-                                'type' => 'text',
-                                'display' => 'Destination',
-                                'instructions' => 'Enter the destination URL that should be redirected to.  This can either be a fully qualified URL or a relative URL.  e.g.: Exact Match: `/new-recipes/` or RegEx Match: `/new-recipes/$1`',
-                                'listable' => true,
-                                'validate' => [
-                                    Rule::requiredIf(function () {
-                                        if ((string) request('type') == '410') {
-                                            return false;
-                                        }
-
-                                        return request('destination_type') == 'url';
-                                    }),
-                                    'nullable',
-                                    'string',
-                                ],
-                                'if' => [
-                                    'destination_type' => 'equals url',
-                                ],
-                            ],
-                        ],
-                        [
-                            'handle' => 'destination_entry',
-                            'field' => [
-                                'type' => 'entries',
-                                'instructions' => 'Choose an entry as the destination that should be redirected to.',
-                                'display' => 'Destination entry',
-                                'listable' => true,
-                                'max_items' => 1,
-                                'select_across_sites' => true,
-                                'if' => [
-                                    'destination_type' => 'equals entry',
-                                ],
-                                'validate' => [
-                                    'required_if:destination_type,entry',
-                                ],
-                            ],
-                        ],
-                        [
                             'handle' => 'match_type',
                             'field' => [
                                 'type' => 'select',
@@ -89,6 +28,33 @@ class RedirectBlueprint extends Blueprint
                                     MatchTypeEnum::REGEX => 'RegEx Match',
                                 ],
                                 'default' => MatchTypeEnum::EXACT,
+                            ],
+                        ],
+                        [
+                            'handle' => 'source',
+                            'field' => [
+                                'type' => 'text',
+                                'display' => 'Source',
+                                'instructions' => 'Enter the URL pattern that Redirect should match. This matches against the path only e.g.: Exact Match: `/recipes/`, or RegEx Match: `.*RecipeID=(.*)`',
+                                'listable' => true,
+                                'validate' => ['required', 'string', new SourceIsNotRedirected],
+                            ],
+                        ],
+                        [
+                            'handle' => 'destination',
+                            'field' => [
+                                'type' => 'link',
+                                'display' => 'Destination',
+                                'instructions' => 'Choose an entry or enter a fully qualified or relative URL. RegEx destinations may use captures such as `/new-recipes/$1`.',
+                                'listable' => true,
+                                'select_across_sites' => true,
+                                'validate' => [
+                                    Rule::requiredIf(function () {
+                                        return (string) request('type') !== '410';
+                                    }),
+                                    'nullable',
+                                    'string',
+                                ],
                             ],
                         ],
                         [
@@ -128,17 +94,6 @@ class RedirectBlueprint extends Blueprint
                                 'display' => 'Enabled',
                                 'listable' => false,
                                 'validate' => 'required|boolean',
-                            ],
-                        ],
-                        [
-                            'handle' => 'site',
-                            'field' => [
-                                'type' => 'sites',
-                                'display' => 'Site',
-                                'max_items' => 1,
-                                'mode' => 'select',
-                                'listable' => true,
-                                'validate' => 'required',
                             ],
                         ],
                         [
