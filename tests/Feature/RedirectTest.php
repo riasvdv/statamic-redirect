@@ -17,7 +17,7 @@ it('dispatches an event when saving', function () {
 });
 
 it('redirects to the selected entry localization', function () {
-    $french = Mockery::mock(\Statamic\Contracts\Entries\Entry::class);
+    $french = Mockery::mock(Statamic\Contracts\Entries\Entry::class);
     $french->shouldReceive('url')->once()->andReturn('/fr/french-page');
     Entry::shouldReceive('find')->once()->with('page-fr')->andReturn($french);
 
@@ -36,9 +36,9 @@ it('preserves existing entry redirect behavior during the update', function () {
         'fr' => ['name' => 'French', 'url' => '/fr/', 'locale' => 'fr_FR'],
     ]);
 
-    $english = Mockery::mock(\Statamic\Contracts\Entries\Entry::class);
+    $english = Mockery::mock(Statamic\Contracts\Entries\Entry::class);
     $english->shouldReceive('id')->andReturn('page-en');
-    $english->shouldReceive('in')->once()->with('fr')->andReturn($french = Mockery::mock(\Statamic\Contracts\Entries\Entry::class));
+    $english->shouldReceive('in')->once()->with('fr')->andReturn($french = Mockery::mock(Statamic\Contracts\Entries\Entry::class));
     $french->shouldReceive('id')->andReturn('page-fr');
 
     Entry::shouldReceive('find')->with('page-en')->andReturn($english);
@@ -72,7 +72,7 @@ it('keeps an entry in its existing site when the redirect site has no localizati
         'fr' => ['name' => 'French', 'url' => '/fr/', 'locale' => 'fr_FR'],
     ]);
 
-    $english = Mockery::mock(\Statamic\Contracts\Entries\Entry::class);
+    $english = Mockery::mock(Statamic\Contracts\Entries\Entry::class);
     $english->shouldReceive('id')->andReturn('page-en');
     $english->shouldReceive('in')->once()->with('fr')->andReturnNull();
 
