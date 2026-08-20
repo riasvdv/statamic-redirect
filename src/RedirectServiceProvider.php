@@ -34,6 +34,7 @@ use Rias\StatamicRedirect\UpdateScripts\ClearErrors;
 use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnErrors;
 use Rias\StatamicRedirect\UpdateScripts\IncreaseUrlSizeOnRedirects;
 use Rias\StatamicRedirect\UpdateScripts\MoveRedirectsToDefaultSite;
+use Rias\StatamicRedirect\UpdateScripts\PreserveEntryDestinations;
 use Rias\StatamicRedirect\UpdateScripts\RenameLocaleToSiteOnRedirectsTable;
 use Rias\StatamicRedirect\UpdateScripts\Version4Upgrade;
 use Rias\StatamicRedirect\Widgets\ErrorsLastDayWidget;
@@ -63,6 +64,7 @@ class RedirectServiceProvider extends AddonServiceProvider
         IncreaseUrlSizeOnErrors::class,
         Version4Upgrade::class,
         AddSiteToErrors::class,
+        PreserveEntryDestinations::class,
     ];
 
     protected $vite = [

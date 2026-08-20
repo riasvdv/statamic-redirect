@@ -129,7 +129,7 @@ class RedirectRepository implements RepositoryContract
             'source' => $redirect->source(),
             'source_md5' => md5($redirect->source()),
             'destination_type' => $redirect->destination_type(),
-            'destination' => $redirect->destination(),
+            'destination' => $redirect->rawDestination(),
             'destination_entry' => $redirect->destination_entry(),
             'match_type' => $redirect->matchType(),
             'type' => $redirect->type(),

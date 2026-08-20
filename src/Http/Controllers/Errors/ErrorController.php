@@ -50,7 +50,6 @@ class ErrorController
         return Inertia::render('redirect::Errors/Show', [
             'title' => $title,
             'createUrl' => cp_route('redirect.redirects.create', [
-                'site' => $error->site,
                 'source' => $error->url,
             ]),
             'deleteUrl' => cp_route('redirect.errors.delete', $error),

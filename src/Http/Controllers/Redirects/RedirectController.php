@@ -13,6 +13,7 @@ use Rias\StatamicRedirect\Http\Resources\ListedRedirect;
 use Statamic\CP\Breadcrumbs\Breadcrumb;
 use Statamic\CP\Breadcrumbs\Breadcrumbs;
 use Statamic\Facades\Scope;
+use Statamic\Facades\Site;
 
 class RedirectController
 {
@@ -61,7 +62,6 @@ class RedirectController
             'blueprint' => $blueprint()->toPublishArray(),
             'values' => $fields->values()->merge([
                 'source' => request('source'),
-                'site' => request('site') ? [request('site')] : $fields->values()->get('site'),
             ])->all(),
             'submitUrl' => cp_route('redirect.redirects.store'),
             'meta' => $fields->meta()->all(),
@@ -103,21 +103,17 @@ class RedirectController
     {
         $this->authorize('create', RedirectContract::class);
 
-        if (empty($request->get('site'))) {
-            abort(402, 'Site is required');
-        }
-
         $blueprint = new RedirectBlueprint;
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
 
         $redirect = Redirect::make()
-            ->site($request->get('site')[0])
+            ->site(Site::selected()->handle())
             ->source($request->get('source'))
             ->source_md5(md5($request->get('source')))
             ->destination($request->get('destination'))
-            ->destination_type($request->get('destination_type'))
-            ->destination_entry($request->get('destination_entry')[0] ?? null)
+            ->destination_type('url')
+            ->destination_entry(null)
             ->enabled($request->get('enabled'))
             ->type((int) $request->get('type'))
             ->matchType($request->get('match_type'))
@@ -148,12 +144,11 @@ class RedirectController
         }
 
         $redirect
-            ->site($request->get('site')[0])
             ->source($request->get('source'))
             ->source_md5(md5($request->get('source')))
             ->destination($request->get('destination'))
-            ->destination_type($request->get('destination_type'))
-            ->destination_entry($request->get('destination_entry')[0] ?? null)
+            ->destination_type('url')
+            ->destination_entry(null)
             ->enabled($request->get('enabled'))
             ->type((int) $request->get('type'))
             ->matchType($request->get('match_type'))
