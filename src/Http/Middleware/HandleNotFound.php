@@ -12,6 +12,7 @@ use Rias\StatamicRedirect\Exceptions\GoneHttpException;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Jobs\CleanErrorsJob;
 use Statamic\Facades\Site;
+use Statamic\Sites\Site as StatamicSite;
 use Statamic\Support\Str;
 
 class HandleNotFound
@@ -164,7 +165,7 @@ class HandleNotFound
     /**
      * @param  \Rias\StatamicRedirect\Data\Redirect  $redirect
      */
-    private function cacheNewRedirect(\Statamic\Sites\Site $site, RedirectContract $redirect, string $url): void
+    private function cacheNewRedirect(StatamicSite $site, RedirectContract $redirect, string $url): void
     {
         $this->cachedRedirects[$site->handle()][$url] = [
             'id' => $redirect->id(),
@@ -175,7 +176,7 @@ class HandleNotFound
         Cache::put('statamic.redirect.redirects', $this->cachedRedirects);
     }
 
-    private function prependSitePrefix(\Statamic\Sites\Site $site, string $destination): string
+    private function prependSitePrefix(StatamicSite $site, string $destination): string
     {
         if (Str::startsWith($destination, ['http://', 'https://'])) {
             return $destination;
@@ -187,7 +188,15 @@ class HandleNotFound
             return $destination;
         }
 
-        if (Str::startsWith($destination, $siteUrl.'/') || $destination === $siteUrl) {
+        $hasSitePrefix = Site::all()->contains(function (StatamicSite $site) use ($destination) {
+            $siteUrl = rtrim($site->url(), '/');
+
+            return ! empty($siteUrl)
+                && $siteUrl !== '/'
+                && (Str::startsWith($destination, $siteUrl.'/') || $destination === $siteUrl);
+        });
+
+        if ($hasSitePrefix) {
             return $destination;
         }
 
