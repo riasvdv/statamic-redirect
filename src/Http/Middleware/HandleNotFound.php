@@ -165,7 +165,7 @@ class HandleNotFound
     /**
      * @param  \Rias\StatamicRedirect\Data\Redirect  $redirect
      */
-    private function cacheNewRedirect(\Statamic\Sites\Site $site, RedirectContract $redirect, string $url): void
+    private function cacheNewRedirect(StatamicSite $site, RedirectContract $redirect, string $url): void
     {
         $this->cachedRedirects[$site->handle()][$url] = [
             'id' => $redirect->id(),
