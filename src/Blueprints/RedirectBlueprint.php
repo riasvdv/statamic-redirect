@@ -16,6 +16,21 @@ class RedirectBlueprint extends Blueprint
                 'main' => [
                     'fields' => [
                         [
+                            'handle' => 'match_type',
+                            'field' => [
+                                'type' => 'select',
+                                'display' => 'Match type',
+                                'instructions' => 'Details on RegEx matching can be found at [regexr.com](http://regexr.com/)',
+                                'listable' => true,
+                                'validate' => 'required|string',
+                                'options' => [
+                                    MatchTypeEnum::EXACT => 'Exact Match',
+                                    MatchTypeEnum::REGEX => 'RegEx Match',
+                                ],
+                                'default' => MatchTypeEnum::EXACT,
+                            ],
+                        ],
+                        [
                             'handle' => 'source',
                             'field' => [
                                 'type' => 'text',
@@ -40,21 +55,6 @@ class RedirectBlueprint extends Blueprint
                                     'nullable',
                                     'string',
                                 ],
-                            ],
-                        ],
-                        [
-                            'handle' => 'match_type',
-                            'field' => [
-                                'type' => 'select',
-                                'display' => 'Match type',
-                                'instructions' => 'Details on RegEx matching can be found at [regexr.com](http://regexr.com/)',
-                                'listable' => true,
-                                'validate' => 'required|string',
-                                'options' => [
-                                    MatchTypeEnum::EXACT => 'Exact Match',
-                                    MatchTypeEnum::REGEX => 'RegEx Match',
-                                ],
-                                'default' => MatchTypeEnum::EXACT,
                             ],
                         ],
                         [
