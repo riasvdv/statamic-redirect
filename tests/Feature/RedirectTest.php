@@ -152,6 +152,35 @@ it('uses the selected site on creation and preserves it on update', function () 
     expect(Redirect::find($redirect->id())->site())->toBe('fr');
 });
 
+it('lists redirects for the globally selected site', function () {
+    Site::setSites([
+        'en' => ['name' => 'English', 'url' => '/', 'locale' => 'en_US'],
+        'fr' => ['name' => 'French', 'url' => '/fr/', 'locale' => 'fr_FR'],
+    ]);
+
+    Redirect::make()
+        ->id('english-redirect')
+        ->site('en')
+        ->source('/english')
+        ->destination('/english-new')
+        ->save();
+
+    Redirect::make()
+        ->id('french-redirect')
+        ->site('fr')
+        ->source('/french')
+        ->destination('/french-new')
+        ->save();
+
+    $this->asAdmin();
+    Site::setSelected('fr');
+
+    $this->getJson(cp_route('redirect.api.redirects.index'))
+        ->assertOk()
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.id', 'french-redirect');
+});
+
 it('registers the entry destination update script', function () {
     expect(app('statamic.update-scripts')->pluck('class'))->toContain(PreserveEntryDestinations::class);
 });

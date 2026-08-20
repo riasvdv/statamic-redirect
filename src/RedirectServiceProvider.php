@@ -20,7 +20,6 @@ use Rias\StatamicRedirect\GraphQL\RedirectsQuery;
 use Rias\StatamicRedirect\GraphQL\RedirectType;
 use Rias\StatamicRedirect\Http\Filters\ErrorHandled;
 use Rias\StatamicRedirect\Http\Filters\MatchType;
-use Rias\StatamicRedirect\Http\Filters\RedirectSite;
 use Rias\StatamicRedirect\Http\Filters\Type;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
 use Rias\StatamicRedirect\Listeners\CacheOldUri;
@@ -133,7 +132,6 @@ class RedirectServiceProvider extends AddonServiceProvider
         ErrorHandled::register();
         MatchType::register();
         Type::register();
-        RedirectSite::register();
 
         if (config('statamic.git.enabled')) {
             Git::listen(RedirectSaved::class);
