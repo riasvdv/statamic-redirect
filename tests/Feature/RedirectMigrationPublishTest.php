@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 use Rias\StatamicRedirect\RedirectServiceProvider;
 
 it('reuses existing redirect migration filenames when publishing', function () {
@@ -38,5 +39,26 @@ it('reuses existing redirect migration filenames when publishing', function () {
     } finally {
         File::deleteDirectory($isolatedDatabasePath);
         $this->app->useDatabasePath($originalDatabasePath);
+    }
+});
+
+it('leaves migrations on application connections to Laravel', function () {
+    config()->set('statamic.redirect.redirect_connection', 'default');
+    config()->set('statamic.redirect.run_migrations', true);
+
+    $provider = new class($this->app) extends RedirectServiceProvider
+    {
+        public function bootRedirectsForTest(): void
+        {
+            $this->bootRedirects();
+        }
+    };
+
+    try {
+        $provider->bootRedirectsForTest();
+
+        expect(Schema::hasTable('redirects'))->toBeFalse();
+    } finally {
+        Schema::dropIfExists('redirects');
     }
 });

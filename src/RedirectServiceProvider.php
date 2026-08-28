@@ -258,9 +258,11 @@ class RedirectServiceProvider extends AddonServiceProvider
             return $this;
         }
 
-        if ($this->generalConnectionIsBuiltinSqlite()) {
-            $this->createSqliteConnection();
+        if ($connection !== 'redirect-sqlite' && ! $this->generalConnectionIsBuiltinSqlite()) {
+            return $this;
         }
+
+        $this->createSqliteConnection();
 
         if ($connection === 'default') {
             $connection = DB::getDefaultConnection();
