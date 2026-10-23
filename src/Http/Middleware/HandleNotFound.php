@@ -49,11 +49,13 @@ class HandleNotFound
                 $uri = "{$uri}?{$queryString}";
             }
 
-            $logErrors = config('statamic.redirect.log_errors', true);
+            $error = null;
 
-            if ($logErrors) {
-                $error = $this->createError($request, $site->handle(), $uri);
-                CleanErrorsJob::dispatchIf(config('statamic.redirect.clean_errors_on_save'));
+            if (config('statamic.redirect.log_errors', true)) {
+                $error = rescue(fn () => $this->createError($request, $site->handle(), $uri));
+                rescue(function () {
+                    CleanErrorsJob::dispatchIf(config('statamic.redirect.clean_errors_on_save'));
+                });
             }
 
             $this->cachedRedirects = $hasQueryString
@@ -61,10 +63,10 @@ class HandleNotFound
                 : Cache::get('statamic.redirect.redirects', []);
 
             if (isset($this->cachedRedirects[$site->handle()][$uri])) {
-                $this->markRedirectUsed($this->cachedRedirects[$site->handle()][$uri]['id']);
+                rescue(fn () => $this->markRedirectUsed($this->cachedRedirects[$site->handle()][$uri]['id']));
 
-                if ($logErrors) {
-                    $this->markErrorHandled($error, $this->cachedRedirects[$site->handle()][$uri]['destination']);
+                if ($error) {
+                    rescue(fn () => $this->markErrorHandled($error, $this->cachedRedirects[$site->handle()][$uri]['destination']));
                 }
 
                 if ((string) $this->cachedRedirects[$site->handle()][$uri]['type'] === '410') {
@@ -85,14 +87,14 @@ class HandleNotFound
                 return $response;
             }
 
-            $this->markRedirectUsed($redirect->id());
+            rescue(fn () => $this->markRedirectUsed($redirect->id()));
 
             if (! $hasQueryString) {
                 $this->cacheNewRedirect($site, $redirect, $uri);
             }
 
-            if ($logErrors) {
-                $this->markErrorHandled($error, $redirect->destination());
+            if ($error) {
+                rescue(fn () => $this->markErrorHandled($error, $redirect->destination()));
             }
 
             if ((string) $redirect->type() === '410') {
@@ -108,11 +110,7 @@ class HandleNotFound
                 throw $e;
             }
 
-            /*
-             * If something goes wrong when logging the error
-             * we don't want to crash the application, so
-             * we just log the exception that occured.
-             */
+            // Preserve the original 404 if resolving the redirect itself fails.
             report($e);
 
             return $response;
@@ -121,22 +119,26 @@ class HandleNotFound
 
     private function createError(Request $request, string $site, string $url): Error
     {
-        $error = Error::findByUrl($url, $site);
+        return (new Error)->getConnection()->transaction(function () use ($request, $site, $url) {
+            // A current, locking read also protects existing errors from cleanup
+            // until their counter and hit have both been saved.
+            $error = Error::findByUrl($url, $site, lockForUpdate: true);
 
-        if (! $error) {
-            $error = new Error(['site' => $site, 'url' => $url]);
-        }
+            if (! $error) {
+                $error = new Error(['site' => $site, 'url' => $url]);
+            }
 
-        $error->lastSeenAt = now()->timestamp;
-        $error->save();
+            $error->lastSeenAt = now()->timestamp;
+            $error->save();
 
-        $error->addHit(now()->timestamp, [
-            'userAgent' => $request->userAgent(),
-            'ip' => $request->ip(),
-            'referer' => $request->header('referer'),
-        ]);
+            $error->addHit(now()->timestamp, [
+                'userAgent' => $request->userAgent(),
+                'ip' => $request->ip(),
+                'referer' => $request->header('referer'),
+            ]);
 
-        return $error;
+            return $error;
+        }, 3);
     }
 
     private function markErrorHandled(Error $error, ?string $destination): void

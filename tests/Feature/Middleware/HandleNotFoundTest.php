@@ -5,14 +5,17 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Exceptions;
 use Illuminate\Support\Facades\Schema;
 use PHPUnit\Framework\Attributes\Test;
 use Rias\StatamicRedirect\Contracts\RedirectRepository;
 use Rias\StatamicRedirect\Data\Error;
+use Rias\StatamicRedirect\Data\Hit;
 use Rias\StatamicRedirect\Enums\MatchTypeEnum;
 use Rias\StatamicRedirect\Exceptions\GoneHttpException;
 use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\Http\Middleware\HandleNotFound;
+use Rias\StatamicRedirect\Jobs\CleanErrorsJob;
 use Statamic\Facades\Site;
 
 beforeEach(function () {
@@ -482,6 +485,81 @@ it('doesnt log hits if log hits is false', function () {
     // Still add count
     expect($response->status())->toEqual(404);
 });
+
+it('delivers redirects even when tracking fails', function (string $failureAt, bool $cached, int $status) {
+    Exceptions::fake();
+    $failure = new RuntimeException('Tracking unavailable');
+    $redirect = Redirect::make()->source('/abc')->destination('/def')->type($status);
+    $redirect->save();
+
+    if ($cached) {
+        Cache::put('statamic.redirect.redirects', [Site::default()->handle() => [
+            '/abc' => ['id' => $redirect->id(), 'destination' => '/def', 'type' => $status],
+        ]]);
+    }
+
+    $dispatcher = Error::getEventDispatcher();
+    Error::setEventDispatcher(clone $dispatcher);
+    $repository = Redirect::getFacadeRoot();
+
+    try {
+        match ($failureAt) {
+            'error' => Error::creating(fn () => throw $failure),
+            'hit' => Hit::creating(fn () => throw $failure),
+            'cleanup' => app()->bindMethod([CleanErrorsJob::class, 'handle'], fn () => throw $failure),
+            'handled' => Error::saving(function (Error $error) use ($failure) {
+                if ($error->handled) {
+                    throw $failure;
+                }
+            }),
+            'last_used' => Redirect::swap(tap(Mockery::mock($repository), function ($mock) use ($failure) {
+                $mock->shouldReceive('save')->andThrow($failure);
+            })),
+        };
+
+        $handle = fn () => $this->middleware->handle(Request::create('/abc'), fn () => new Response('', 404));
+
+        if ($status === 410) {
+            expect($handle)->toThrow(GoneHttpException::class);
+        } else {
+            $response = $handle();
+            expect($response->getStatusCode())->toBe($status)
+                ->and($response->headers->get('Location'))->toBe(url('/def'));
+        }
+
+        Exceptions::assertReported(fn (RuntimeException $e) => $e === $failure);
+    } finally {
+        Error::setEventDispatcher($dispatcher);
+        Redirect::swap($repository);
+    }
+})->with(['error', 'hit', 'cleanup', 'handled', 'last_used'])->with([false, true])->with([301, 302, 410]);
+
+it('rolls back failed hit writes without changing the original 404', function (bool $existing) {
+    config()->set('statamic.redirect.clean_errors_on_save', false);
+    Exceptions::fake();
+
+    if ($existing) {
+        Error::create(['site' => Site::default()->handle(), 'url' => '/abc'])
+            ->addHit(now()->subDay()->timestamp);
+    }
+
+    $before = Error::findByUrl('/abc')?->getAttributes();
+    $dispatcher = Hit::getEventDispatcher();
+    Hit::setEventDispatcher(clone $dispatcher);
+
+    try {
+        Hit::creating(fn () => throw new RuntimeException('Hit unavailable'));
+        $original = new Response('Not found', 404);
+
+        $response = $this->middleware->handle(Request::create('/abc'), fn () => $original);
+
+        expect($response)->toBe($original)
+            ->and(Error::findByUrl('/abc')?->getAttributes())->toBe($before)
+            ->and(Hit::count())->toBe($existing ? 1 : 0);
+    } finally {
+        Hit::setEventDispatcher($dispatcher);
+    }
+})->with([false, true]);
 
 it('prepends the site prefix to the redirect destination in multisite', function () {
     Site::setSites([
