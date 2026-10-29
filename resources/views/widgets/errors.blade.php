@@ -20,7 +20,8 @@
                             <ui-table-cell>
                                 <div class="flex items-center">
                                     <div class="size-2 rounded-full mr-2 {{ $error->handled ? 'bg-green-600' : 'bg-red-500' }}"></div>
-                                        <a class="" href="{{ cp_route('redirect.errors.show', $error->id) }}" style="word-break: break-all">
+                                        {{-- v-pre: this HTML is compiled as a Vue template, so user-controlled URLs must not be interpolated --}}
+                                        <a v-pre class="" href="{{ cp_route('redirect.errors.show', $error->id) }}" style="word-break: break-all">
                                             {{ $error->url }}
                                             @if($error->handled)
                                                 &rarr; {{ $error->handledDestination }}
