@@ -7,7 +7,7 @@
     <div class="page-wrapper max-w-3xl">
         <div>
             <div class="flex items-center mb-3">
-                <h1 class="flex-1 flex items-center">Error details for <p class="ml-1 inline-block truncate w-128"
+                <h1 class="flex-1 flex items-center">Error details for <p v-pre class="ml-1 inline-block truncate w-128"
                                                                           title="{{ $error->url() }}">{{ $error->url() }}</p>
                 </h1>
                 <a href="{{ cp_route('redirect.errors.delete', $error->id()) }}" class="mr-1 btn">Delete error</a>
@@ -23,7 +23,8 @@
                         <th class="sortable-column"><span>Time</span></th>
                     </tr>
                     </thead>
-                    <tbody tabindex="0">
+                    {{-- v-pre: the CP compiles this page as a Vue template, so logged URLs and headers must not be interpolated --}}
+                    <tbody v-pre tabindex="0">
                         @forelse (array_reverse($hits) as $hit)
                             <tr class="row outline-none" tabindex="0">
                                 <td><p class="truncate m-0 w-48" title="{{ $hit['data']['userAgent'] ?? '' }}">{{ $hit['data']['userAgent'] ?? '' }}</p></td>
