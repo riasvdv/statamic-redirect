@@ -24,7 +24,8 @@
                         <td class="">
                             <div class="flex items-center">
                                 <div class="little-dot mr-2 {{ $error->handled ? 'bg-green-600' : 'bg-red-500' }}"></div>
-                                <a class="text-blue hover:text-blue-dark" href="{{ cp_route('redirect.errors.show', $error->id) }}" style="word-break: break-all">{{ $error->url }}</a>
+                                {{-- v-pre: the CP compiles this HTML as a Vue template, so logged URLs must not be interpolated --}}
+                                <a v-pre class="text-blue hover:text-blue-dark" href="{{ cp_route('redirect.errors.show', $error->id) }}" style="word-break: break-all">{{ $error->url }}</a>
                             </div>
                         </td>
                         <td class="">
