@@ -16,6 +16,21 @@ it('dispatches an event when saving', function () {
     Event::assertDispatched(RedirectSaved::class);
 });
 
+it('keeps the description when a stache redirect is loaded and saved again', function () {
+    Redirect::make()
+        ->id('described')
+        ->source('/old')
+        ->destination('/new')
+        ->description('Keep me')
+        ->save();
+
+    Statamic\Facades\Stache::clear();
+    Redirect::find('described')->save();
+    Statamic\Facades\Stache::clear();
+
+    expect(Redirect::find('described')->description())->toBe('Keep me');
+});
+
 it('redirects to the selected entry localization', function () {
     $french = Mockery::mock(Statamic\Contracts\Entries\Entry::class);
     $french->shouldReceive('url')->once()->andReturn('/fr/french-page');
