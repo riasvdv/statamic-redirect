@@ -7,6 +7,7 @@ use Rias\StatamicRedirect\Facades\Redirect;
 use Rias\StatamicRedirect\UpdateScripts\PreserveEntryDestinations;
 use Statamic\Facades\Entry;
 use Statamic\Facades\Site;
+use Statamic\Facades\Stache;
 
 it('dispatches an event when saving', function () {
     Event::fake();
@@ -24,9 +25,9 @@ it('keeps the description when a stache redirect is loaded and saved again', fun
         ->description('Keep me')
         ->save();
 
-    Statamic\Facades\Stache::clear();
+    Stache::clear();
     Redirect::find('described')->save();
-    Statamic\Facades\Stache::clear();
+    Stache::clear();
 
     expect(Redirect::find('described')->description())->toBe('Keep me');
 });
