@@ -119,7 +119,17 @@ class HandleNotFound
 
     private function createError(Request $request, string $site, string $url): Error
     {
-        return (new Error)->getConnection()->transaction(function () use ($request, $site, $url) {
+        $connection = (new Error)->getConnection();
+
+        return $connection->transaction(function () use ($connection, $request, $site, $url) {
+            // SQLite ignores lockForUpdate and starts transactions deferred, so two
+            // requests that both read first deadlock when they upgrade to write, and
+            // one fails at once with "database is locked". An UPDATE takes the write
+            // lock even when it matches no rows, so the other request waits instead.
+            if ($connection->getDriverName() === 'sqlite') {
+                Error::query()->whereRaw('0 = 1')->update(['lastSeenAt' => 0]);
+            }
+
             // A current, locking read also protects existing errors from cleanup
             // until their counter and hit have both been saved.
             $error = Error::findByUrl($url, $site, lockForUpdate: true);
